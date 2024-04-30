@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.hide-scroll::-webkit-scrollbar {
+    width: 12px;
+    display: none;
+  }
+
+  .hide-scroll::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 3px solid #1F9C00; /* Adjust border color */
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .group:hover .arrow-icon {
+    transform: rotate(90deg);
+    transition-delay: 0.2s;
+    color: #1F9C00;
+  }
+
+.card-shadow {
+    box-shadow: 0px 3px 15px 0px #1E221D33;
+}
+
+.active {
+  background-color: #1F9C00;
+  color: white;
+}
+
+/* .popup-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.popup-container.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.show-popup {
+
+}
+
+.popup-box {
+
+} */
+
+/* CSS */
+
+.clicked-text-color {
+  color: #1F9C00;
+}
+
+.router-link-exact-active {
+    @apply bg-secondary bg-opacity-20 border-r-secondary border-r-8 text-secondary
+}
+
+
