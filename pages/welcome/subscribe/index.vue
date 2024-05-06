@@ -204,10 +204,12 @@
             body: {
                 planId: selectedPlans.value.id
             },
-            onResponse({ request, response, options }) {
+            async onResponse({ request, response, options }) {
                 if (response.ok) {
                     $toast.success(response._data.message);
-                    navigateTo(response._data.data.url)
+                    await getSession()
+                    $router.push('/')
+                    // navigateTo(response._data.data.url)
                 }
             },
             async onResponseError(  { request, response, options }) {

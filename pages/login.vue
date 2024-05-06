@@ -1,6 +1,7 @@
 <template>
-  <div class="max-w-screen-xl px-16 mx-auto grid grid-cols-3 h-full">
-    <div class="col-span-2 shadow-lg bg-login-image4 bg-cover bg-bottom rounded-[47px] h-full flex flex-col justify-end items-start gap-8 p-5">
+  <div class="max-w-screen-xl md:px-16 mx-auto grid md:grid-cols-3 h-full">
+    <div class="col-span-2 shadow-lg bg-login-image4 bg-cover bg-bottom rounded-[47px] h-full
+     hidden md:flex flex-col justify-end items-start gap-8 p-5">
       <h1 class="text-white 2xl:text-4xl xl:text-3xl font-bold">
         Monitor your <br> waste <span class="text-black">collections</span>.
       </h1>
@@ -8,15 +9,17 @@
       <img class="h-8 mt-20" src="/img/logo.svg" alt="JunkYard Logo"  />
     </div>
     <div class="relative">
-      <div class="absolute inset-y-0 right-0 flex items-center">
+      <div class="md:absolute inset-y-0 md:right-0 md:flex items-center">
         <form
           @submit.prevent="onSubmit"
-          class="w-[625px] h-[70vh] custom-xl:h-[75vh] rounded-2xl 2xl:text-2xl xl:text-xl 2xl:space-y-10 xl:space-y-7 shadow-2xl p-16 drop-shadow-2xl backdrop-blur-xl bg-gradient-to-br from-[#FFFFFFCC] via-[#ddcececc] to-[#FFFFFF00]"
+          class="md:w-[625px] h-[70vh] custom-xl:h-[75vh] rounded-2xl 2xl:text-2xl xl:text-xl space-y-5 2xl:space-y-10 xl:space-y-7 
+          shadow-2xl pt-10 md:pt-16 p-4 md:p-16 drop-shadow-2xl backdrop-blur-xl bg-gradient-to-br from-[#FFFFFFCC] via-[#ddcececc] to-[#FFFFFF00]"
         >
 
           <div class="flex flex-col space-y-3 relative">
-            <div class="flex space-x-3">
-              <img src="/img/security_lock.svg" alt="" width="24" height="24" />
+            <div class="flex items-center space-x-3">
+              <AtSymbolIcon class="w-6 h-6" />
+              <!-- <img src="/img/security_lock.svg" alt="" width="24" height="24" /> -->
               <label for="">Email address</label>
             </div>
             <input
@@ -28,8 +31,8 @@
             <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.email }}</p>
           </div>
           <div class="flex flex-col space-y-3 relative">
-            <div class="flex space-x-3">
-              <img src="/img/security_lock.svg" alt="" />
+            <div class="flex items-center space-x-3">
+              <LockClosedIcon class="w-6 h-6" />
               <label for="">Password</label>
             </div>
             <input
@@ -47,7 +50,7 @@
             type="submit"
             :disabled="!meta.valid"
             :class="[!meta.valid ? 'cursor-not-allowed bg-gray-500' : 'bg-secondary']"
-            class="text-center  w-[500px] p-4 rounded-md text-white text-[28px] font-bold
+            class="text-center  md:w-[500px] w-full p-4 rounded-md text-white md:text-[28px] font-bold
             hover:opacity-80 transition-all duration-300 ease-in-out"
           >
             <svg
@@ -87,7 +90,7 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import * as yup from 'yup';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid'
-
+import { AtSymbolIcon, LockClosedIcon,UserCircleIcon } from '@heroicons/vue/24/outline'
 const { $toast, $router } = useNuxtApp()
 
 const { signIn } = useAuth()
@@ -113,6 +116,7 @@ const onSubmit = handleSubmit( (values) => {
   signIn(credentials, { callbackUrl: '/', redirect: true }).then( _resp => {
     $toast.success('Successfully logged in!')
     $router.push('/')
+    console.log('here')
   }).catch( err => {
     console.log(err)
     console.log(err.data)

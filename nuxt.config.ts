@@ -18,9 +18,9 @@ export default defineNuxtConfig({
     provider: {
         type: 'local',
         endpoints: {
-          signIn: { path: 'auth//login', method: 'post' },
-          signOut: { path: 'auth//logout', method: 'post' },
-          signUp: { path: 'auth//register', method: 'post' },
+          signIn: { path: 'auth/login', method: 'post' },
+          signOut: { path: 'auth/logout', method: 'post' },
+          signUp: { path: 'auth/register', method: 'post' },
           getSession: { path: 'users/me', method: 'get' },
           // refresh: { path: '/refresh-token', method: 'post' }
         },

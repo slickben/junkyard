@@ -265,6 +265,5 @@ onMounted( async () => {
 // useLazyAsyncData( () => get(), { server: false });
 definePageMeta({
   middleware: ['auth', 'setup']
-  // auth: false
 })
 </script>

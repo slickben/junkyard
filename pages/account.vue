@@ -82,7 +82,8 @@
                   type="text"
                   v-model="company_name"
                   v-bind="company_nameAttrs"
-                  class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
+                  disabled
+                  class="border-b-2 border-b-collectionText cursor-not-allowed rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                 />
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.company_name }}</p>
               </div>
@@ -242,14 +243,14 @@
   const [phone_number, phone_numberAttrs] = defineField('phone_number');
 
   const onSubmit = handleSubmit( (values) => {
-    useFetch(`${useBaseUrl()}/auth/details`, {
+    useFetch(`${useBaseUrl()}/admin/details`, {
       method: 'PATCH',
       headers: {
           Authorization: `${token.value}`,
       },
       body: { 
         name: values.name, 
-        company_name: values.company_name, 
+        // company_name: values.company_name, 
         address: values.company_address,
         city: values.city,
         state: values.state,

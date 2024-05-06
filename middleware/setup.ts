@@ -1,13 +1,25 @@
+import { type User } from '@/composables/useTypes'
+
+
 export default defineNuxtRouteMiddleware((to, from) => {
     const { data, getSession } = useAuth()
-    getSession()
-    // console.log(data.value)
-    // alert('here ben')
-    if (!data.value.data.businessInfo.name) {
+    // getSession()
+
+    const user: User = data.value
+    
+    // alert(user)
+    console.log(user)
+    if(user.data.role === 'collector') {
+        return navigateTo('/collectors')
+    }
+    if (!user.data.businessInfo.name && to.path === '/') {
+        // console.log(data.value)
         return navigateTo('/welcome')
-    }else if(data.value.data.businessInfo.name && !data.value.data.isSubscribed) {
+    }else if(user.data.businessInfo.name && !user.data.isSubscribed) {
+        // console.log(data.value)
         return navigateTo('/welcome/subscribe')
-    }else if(to.path === '/welcome/setup' && data.value.data.businessInfo.name) {
+    }else if(to.path === '/welcome/setup' && user.data.businessInfo.name) {
+        // console.log(data.value)
         return navigateTo('/welcome/subscribe')
     }
     

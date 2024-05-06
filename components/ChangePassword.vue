@@ -3,7 +3,7 @@
     import { toTypedSchema } from '@vee-validate/yup';
     import * as yup from 'yup';
     import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid'
-    const change_password_modal = ref(true)
+    const change_password_modal = ref(false)
     const isLoading = ref(false)
 
     const { token } = useAuth()
@@ -26,7 +26,7 @@
     const onSubmit = handleSubmit( (values) => {
     // await signIn(credentials, undefined, { callbackUrl: '/' })
         isLoading.value = true
-        useFetch(`${useBaseUrl()}/auth/change-password`, {
+        useFetch(`${useBaseUrl()}/admin/change-password`, {
             method: 'PATCH',
             headers: {
                 Authorization: `${token.value}`,

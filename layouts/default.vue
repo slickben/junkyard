@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen w-screen flex font-montserrat">
+    <div class="md:h-screen w-screen md:flex font-montserrat bg-[#F5F5F5] md:bg-transparent">
       <NavigationBar />
       <slot />
     </div>

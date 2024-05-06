@@ -7,8 +7,8 @@
           class="w-[625px] h-[80vh] custom-xl:h-[75vh] rounded-2xl 2xl:text-2xl xl:text-xl 2xl:space-y-10 xl:space-y-7 shadow-2xl p-16 pt-8 2xl:pt-16 drop-shadow-2xl backdrop-blur-xl bg-gradient-to-br from-[#FFFFFFCC] via-[#ddcececc] to-[#FFFFFF00]"
         >
           <div class="flex flex-col space-y-3 relative">
-            <div class="flex space-x-3">
-              <img src="/img/security_lock.svg" alt="" width="24" height="24" />
+            <div class="flex items-center space-x-3">
+              <UserCircleIcon class="h-6 w-6" />
               <label for="">Fullname</label>
             </div>
             <input
@@ -21,8 +21,8 @@
           </div>
 
           <div class="flex flex-col space-y-3 relative">
-            <div class="flex space-x-3">
-              <img src="/img/security_lock.svg" alt="" width="24" height="24" />
+            <div class="flex items-center space-x-3">
+              <AtSymbolIcon class="w-6 h-6" />
               <label for="">Email address</label>
             </div>
             <input
@@ -36,8 +36,8 @@
 
 
           <div class="flex flex-col space-y-3 relative">
-            <div class="flex space-x-3">
-              <img src="/img/security_lock.svg" alt="" />
+            <div class="flex items-center space-x-3">
+              <LockClosedIcon class="w-6 h-6" />
               <label for="">Password</label>
             </div>
             <input
@@ -53,8 +53,8 @@
 
 
           <div class="flex flex-col space-y-3 relative">
-            <div class="flex space-x-3">
-              <img src="/img/security_lock.svg" alt="" />
+            <div class="flex items-center space-x-3">
+              <LockClosedIcon class="w-6 h-6" />
               <label for="">Confirm Password</label>
             </div>
             <input
@@ -120,6 +120,7 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import * as yup from 'yup';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid'
+import { AtSymbolIcon, LockClosedIcon,UserCircleIcon } from '@heroicons/vue/24/outline'
 
 const config = useRuntimeConfig()
 const { $toast, $router } = useNuxtApp()
