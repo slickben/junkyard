@@ -84,7 +84,7 @@
                     <td class="py-[16px] px-[32px]">
                       {{ item.producer_type }}
                     </td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Ikeja</td>
+                    <td class="py-[16px] px-[32px]">{{item.collector_name}}</td>
                 </tr>
             </tbody>
           </table>
@@ -132,10 +132,12 @@ interface Collection {
   created_at: string
   collected_at: string
   collection_type: string
+  collector_name: string
   producer_type: string
   weight: string
   price: string
   location: string
+  waste_type: {id: string, name: string}[]
   waste_details: string
   status: string
 }
