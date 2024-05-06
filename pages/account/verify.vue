@@ -37,10 +37,9 @@
 const is_error = ref(false)
 const error = ref('')
 const { $toast, $router } = useNuxtApp()
-const { token } = useAuth()
+const { data, token } = useAuth()
 
   const {reference} = useRoute().query
-  console.log(reference);
   const Verify = async () => {
     // alert('here')
     await $fetch(`${useBaseUrl()}/transactions/paystack/verify-transaction?reference=${reference}`, {
@@ -72,14 +71,15 @@ const { token } = useAuth()
 
   }
   
-  useLazyAsyncData( () => Verify(), { server: false });
+  // useLazyAsyncData( () => Verify(), { server: false });
 
   onMounted( async () => {
-
+    await Verify()
   })
 
 definePageMeta({
-  layout: 'auth',
-  auth: false
+  // layout: 'auth',
+  middleware: ['auth', 'setup']
+  // auth: false
 })
 </script>
