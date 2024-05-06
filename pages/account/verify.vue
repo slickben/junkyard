@@ -38,11 +38,12 @@ const is_error = ref(false)
 const error = ref('')
 const { $toast, $router } = useNuxtApp()
 
-  const params = useRoute().params
+  const {reference} = useRoute().query
+  console.log(reference);
   const Verify = async () => {
     // alert('here')
-    await $fetch(`${useBaseUrl()}/transactions/paystack/verify-transaction?reference=${params.id}`, {
-      method: 'get',
+    await $fetch(`${useBaseUrl()}/transactions/paystack/verify-transaction?reference=${reference}`, {
+      method: 'GET',
       onResponse({ request, response, options }) {
         // Process the response data
         // alert('here')
@@ -64,9 +65,9 @@ const { $toast, $router } = useNuxtApp()
   
   useLazyAsyncData( () => Verify(), { server: false });
 
-  // onMounted( async () => {
+  onMounted( async () => {
 
-  // })
+  })
 
 definePageMeta({
   layout: 'auth',
