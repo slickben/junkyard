@@ -116,10 +116,10 @@ const onSubmit = handleSubmit( (values) => {
   signIn(credentials, { callbackUrl: '/', redirect: true }).then( _resp => {
     $toast.success('Successfully logged in!')
     $router.push('/')
-    console.log('here')
+    // console.log('here')
   }).catch( err => {
-    console.log(err)
-    console.log(err.data)
+    // console.log(err)
+    // console.log(err.data)
     $toast.error(err.data.message)
   })
 });
