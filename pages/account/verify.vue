@@ -37,6 +37,7 @@
 const is_error = ref(false)
 const error = ref('')
 const { $toast, $router } = useNuxtApp()
+const { token } = useAuth()
 
   const {reference} = useRoute().query
   console.log(reference);
@@ -44,12 +45,18 @@ const { $toast, $router } = useNuxtApp()
     // alert('here')
     await $fetch(`${useBaseUrl()}/transactions/paystack/verify-transaction?reference=${reference}`, {
       method: 'GET',
+      headers: {
+            Authorization: `${token.value}`,
+        },
+
       onResponse({ request, response, options }) {
         // Process the response data
         // alert('here')
         if(response.ok) {
           $toast.success(response._data.message)
-          $router.push('/account')
+          setTimeout(() => {
+            $router.push('/account')
+          }, 2000);
         }
       },
       onResponseError({ request, response, options }) {
@@ -57,7 +64,9 @@ const { $toast, $router } = useNuxtApp()
         is_error.value = true
         error.value = response._data.message
         $toast.error(response._data.message)
-        $router.push('/account')
+        setTimeout(() => {
+            $router.push('/account')
+          }, 2000);
       }
   })
 
