@@ -30,13 +30,16 @@
           <div
             class="rounded-3xl card-shadow flex flex-col gap-7 px-6 2xl:py-7 xl:py-4 2xl:mb-7"
           >
-            <div
-              class="flex flex-col font-semibold 2xl:text-xl xl:text-lg gap-2"
-            >
-              <p class="text-collectionText">Avail Bal:</p>
-              <p>
-                {{ useCurrencyFormat(data.data.balance) }}
-              </p>
+            <div class="flex items-center justify-between">
+              <div
+                class="flex flex-col font-semibold 2xl:text-xl xl:text-lg gap-2"
+              >
+                <p class="text-collectionText">Avail Bal:</p>
+                <p>
+                  {{ useCurrencyFormat(data.data.balance) }}
+                </p>
+              </div>
+              <FundWallet />
             </div>
             <div
               class="flex flex-col font-semibold 2xl:text-xl xl:text-lg mb-20 gap-2"
