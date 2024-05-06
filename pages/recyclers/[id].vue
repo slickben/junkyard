@@ -207,7 +207,7 @@
     const { $toast } = useNuxtApp()
     const fetch = async (id: string) => {
         isLoading.value = true
-        await $fetch(`${useBaseUrl()}/admin/collector/${params.id}`, {
+        await $fetch(`${useBaseUrl()}/admin/today-collection/${params.id}`, {
             headers: {
                 Authorization: `${token.value}`,
             },
