@@ -78,8 +78,7 @@ const { data, token } = useAuth()
   })
 
 definePageMeta({
-  // layout: 'auth',
-  middleware: ['auth', 'setup']
+  layout: 'auth',
   // auth: false
 })
 </script>
