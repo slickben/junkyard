@@ -109,7 +109,7 @@ definePageMeta({
               <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.address }}</p>
             </div>
 
-            <div class="relative">
+            <div class="relative w-full">
               <select
                 v-model="country"
                 v-bind="countryAttrs"
@@ -118,14 +118,14 @@ definePageMeta({
                 xl:text-xl ring-0 focus:ring-0 outline-none border-t-0 border-r-0 border-l-0 px-0 border-[#BDBDBD]
                 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary w-full"
               >
-                <option value="">Country</option>
+                <option selected value="">Country</option>
                 <option v-for="item in countries.default.map( i => i.name)" :key="item" :value="item">{{ item }}</option>
               </select>
               <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.country }}</p>
             </div>
 
             <!-- <select name="" id=""></select> -->
-            <div class="relative">
+            <div class="relative w-full">
               <select
                 v-model="state"
                 v-bind="stateAttrs"
@@ -134,7 +134,7 @@ definePageMeta({
                 xl:text-xl ring-0 focus:ring-0 outline-none border-t-0 border-r-0 border-l-0 px-0 border-[#BDBDBD]
                 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary w-full"
                 >
-                <option value="">City/State</option>
+                <option selected value="">City/State</option>
                 <option v-for="item in states" :key="item.code" :value="item.name">{{ item.name }}</option>
               </select>
               <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.city }}</p>

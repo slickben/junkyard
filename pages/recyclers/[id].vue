@@ -2,7 +2,7 @@
     <div class="bg-fakeWhite h-full flex-grow py-12 px-12 2xl:px-20 relative">
         <h1 class="2xl:text-4xl xl:text-2xl font-bold mb-5">Recycler Units</h1>
         <a href="#" class="text-textGray text-sm font-semibold"
-            >Recycler Units > <span class="text-black">PETsPoint Ikeja</span></a
+            >Recycler Units > <span class="text-black">{{user.data.businessInfo.name}} {{ collector.name }}</span></a
         >
         <div class="relative grid grid-cols-3 gap-16 my-8">
           <!-- first overview -->
@@ -159,6 +159,9 @@
 
 <script setup lang="ts">
     import VueAvatar from "@webzlodimir/vue-avatar";
+import { type User } from '@/composables/useTypes'
+
+
     interface Overview {
         total_citizens: number
         total_price: number
@@ -205,6 +208,7 @@
     const collections = ref<Collection[]>()
     const { token, data } = useAuth()
     const { $toast } = useNuxtApp()
+const user: User = data.value
     const fetch = async (id: string) => {
         isLoading.value = true
         await $fetch(`${useBaseUrl()}/admin/collector/${params.id}`, {

@@ -48,7 +48,9 @@ const { $toast, $router } = useNuxtApp()
         // alert('here')
         if(response.ok) {
           $toast.success(response._data.message)
+          setTimeout(() => {
           $router.push('/login')
+        }, 2000);
         }
       },
       onResponseError({ request, response, options }) {
@@ -56,6 +58,9 @@ const { $toast, $router } = useNuxtApp()
         is_error.value = true
         error.value = response._data.message
         $toast.error(response._data.message)
+        setTimeout(() => {
+          $router.push('/login')
+        }, 2000);
       }
   })
 

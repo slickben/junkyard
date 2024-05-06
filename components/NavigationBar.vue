@@ -122,6 +122,7 @@
 
 <script lang="ts" setup>
     import VueAvatar from "@webzlodimir/vue-avatar";
+    import "@webzlodimir/vue-avatar/dist/style.css";
     import { type User } from '@/composables/useTypes'
     const { data } = useAuth()
 
