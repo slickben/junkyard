@@ -11,7 +11,9 @@
             <img src="/img/totalWeight.png" alt="" width="61" />
             <div class="flex flex-col">
               <p class="text-textGray font-mediumn text-sm">Total Weight()Kg</p>
-              <p class="2xl:text-xl xl:text-sm font-bold">320.89</p>
+              <p class="2xl:text-xl xl:text-sm font-bold">
+                {{ overview.total_weight }}
+              </p>
             </div>
             <p
               class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
@@ -25,7 +27,9 @@
             <img src="/img/totalCitizens.png" alt="" width="61" />
             <div class="flex flex-col">
               <p class="text-textGray font-mediumn text-sm">Total Citizens</p>
-              <p class="2xl:text-xl xl:text-sml font-bold">2045</p>
+              <p class="2xl:text-xl xl:text-sml font-bold">
+                {{ overview.total_citizens }}
+              </p>
             </div>
             <p
               class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
@@ -39,7 +43,9 @@
             <img src="/img/totalWeight.png" alt="" width="61" />
             <div class="flex flex-col">
               <p class="text-textGray font-mediumn text-sm">Citizens Earning</p>
-              <p class="2xl:text-xl xl:text-sm font-bold">N120k</p>
+              <p class="2xl:text-xl xl:text-sm font-bold">
+                {{ useCurrencyFormat(overview.total_price) }}
+              </p>
             </div>
             <p
               class="text-error font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
@@ -53,33 +59,33 @@
             <p class="2xl:text-xl xl:text-sm xl:font-bold">Filter by:</p>
             <div class="flex gap-7">
               <div
-                class="flex bg-collectionBtn text-collectionText 2xl:px-6 xl:px-3 rounded-md 2xl:py-2"
+                class="flex bg-collectionBtn text-collectionText rounded-md"
               >
-                <button class="flex items-center 2xl:gap-2 xl:gap-1 2xl:text-[16px] xl:text-sm">
-                  Waste <img src="/img/down_arrow.svg" alt="" />
-                </button>
+              <select name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
+                <option selected disabled>Waste type</option>
+                <option value="Plastic Bottles">Plastic Bottles</option>
+              </select>
               </div>
               <div
-                class="flex bg-collectionBtn text-collectionText rounded-md px-6 py-2"
+                class="flex bg-collectionBtn text-collectionText rounded-md"
               >
-                <button class="flex items-center 2xl:gap-2 xl:gap-1 2xl:text-[16px] xl:text-sm">
-                  Collection Model
-                  <img src="/img/down_arrow.svg" alt="" class="" />
-                </button>
+              <select name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
+                <option selected disabled>Collection Model</option>
+                <option value="Pick Up">Pick up</option>
+                <option value="Drop Off">Drop off</option>
+              </select>
+
               </div>
               <div
-                class="flex bg-collectionBtn text-collectionText rounded-md px-6 2xl:py-2"
+                class="flex bg-collectionBtn text-collectionText rounded-md"
               >
-                <button class="flex items-center 2xl:gap-2 xl:gap-1 2xl:text-[16px] xl:text-sm">
-                  Producer <img src="/img/down_arrow.svg" alt="" />
-                </button>
-              </div>
-              <div
-                class="flex bg-collectionBtn text-collectionText rounded-md px-6 2xl:py-2"
-              >
-                <button class="flex items-center 2xl:gap-2 xl:gap-1 2xl:text-[16px] xl:text-sm">
-                  Weight <img src="/img/down_arrow.svg" alt="" />
-                </button>
+              <select name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
+                <option selected disabled>Producer Type</option>
+                <option value="HouseHold">HouseHold</option>
+                <option value="Community">Community</option>
+                <option value="Industrial">Industrial</option>
+              </select>
+
               </div>
             </div>
           </div>
@@ -97,92 +103,27 @@
         <table class="w-full font-semibold 2xl:text-lg xl:text-sm table-auto">
           <thead class="text-textGray 2xl:text-lg xl:text-sm font-semibold sticky top-0 bg-white">
               <tr class="text-left border-b">
-                <th class="py-[16px] px-[32px]">WASTE</th>
+                <th class="py-[16px] px-[32px]">Price</th>
                 <th class="py-[16px] px-[32px]">Collection model</th>
                 <th class="py-[16px] px-[32px]">Producer</th>
                 <th class="py-[16px] px-[32px]">Weight(KG)</th>
               </tr>
           </thead>
           <tbody class="">
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Household</td>
-                  <td class="py-[16px] px-[32px]">50.78</td>
+              <tr v-for="item in collections" :key="item.id" class="border-b 2xl:text-[16px] xl:text-sm font-medium">
+                  <td class="py-[16px] px-[32px]">
+                    {{ useCurrencyFormat(item.price) }}
+                  </td>
+                  <td class="py-[16px] px-[32px]">
+                    {{ item.collection_type }}
+                  </td>
+                  <td class="py-[16px] px-[32px]">
+                    {{ item.producer_type }}
+                  </td>
+                  <td class="py-[16px] px-[32px]">
+                    {{ item.weight }}
+                  </td>
               </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Brown Cartons</td>
-                  <td class="py-[16px] px-[32px]">Drop Off</td>
-                  <td class="py-[16px] px-[32px]">Community</td>
-                  <td class="py-[16px] px-[32px]">67.89</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Institutions</td>
-                  <td class="py-[16px] px-[32px]">129.90</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Household</td>
-                  <td class="py-[16px] px-[32px]">320.34</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Can</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Household</td>
-                  <td class="py-[16px] px-[32px]">23.78</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Others</td>
-                  <td class="py-[16px] px-[32px]">Drop Off</td>
-                  <td class="py-[16px] px-[32px]">Institutions</td>
-                  <td class="py-[16px] px-[32px]">34.21</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Household</td>
-                  <td class="py-[16px] px-[32px]">23.56</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Household</td>
-                  <td class="py-[16px] px-[32px]">567.67</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Brown Cartons</td>
-                  <td class="py-[16px] px-[32px]">Drop Off</td>
-                  <td class="py-[16px] px-[32px]">Community</td>
-                  <td class="py-[16px] px-[32px]">34.21</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Institutions</td>
-                  <td class="py-[16px] px-[32px]">23.78</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Household</td>
-                  <td class="py-[16px] px-[32px]">129.90</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Can</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Household</td>
-                  <td class="py-[16px] px-[32px]">567.67</td>
-              </tr>
-              <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                  <td class="py-[16px] px-[32px]">Pick up</td>
-                  <td class="py-[16px] px-[32px]">Household</td>
-                  <td class="py-[16px] px-[32px]">34.21</td>
-              </tr>
-              
           </tbody>
         </table>
         </div>
@@ -190,6 +131,103 @@
 </template>
 
 <script setup lang="ts">
+
+interface Overview {
+  total_citizens: number
+  total_price: number
+  total_weight: number
+}
+
+interface Collection {
+  id: string
+  created_at: string
+  collected_at: string
+  collection_type: string
+  producer_type: string
+  weight: string
+  price: string
+  location: string
+  waste_details: string
+  status: string
+}
+interface CollectionHistory {
+  id: string
+  limit: number
+  page: number
+  waste_type?: string
+  collection_type?: string
+  producer_type?: string
+}
+const isLoading = ref(false)
+const { token, data } = useAuth()
+const { $toast } = useNuxtApp()
+const collections = ref<Collection[]>()
+const overview = ref<Overview>({
+  total_citizens: 0,
+  total_price: 0,
+  total_weight: 0
+})
+
+const getOverview = async (id: string) => {
+  isLoading.value = true
+  await $fetch(`${useBaseUrl()}/admin/overview`, {
+      headers: {
+          Authorization: `${token.value}`,
+      },
+      onResponse({ request, response, options }) {
+          // Process the response data
+          isLoading.value = false
+          if (response.ok) {
+              $toast.success(response._data.message);
+              // payment_details.value = response._data.data
+              // payment_modal.value = true
+              overview.value = response._data
+              // console.log(response._data.data)
+              
+          }
+      },
+      onResponseError({ request, response, options }) {
+          $toast.error(response._data.message);
+          isLoading.value = false
+      },
+  });
+}
+
+// ${params.id}
+const fetchCollection = async () => {
+  isLoading.value = true
+  await $fetch(`${useBaseUrl()}/admin/collections?limit=${40}&page=${1}`, {
+      headers: {
+          Authorization: `${token.value}`,
+      },
+      onResponse({ request, response, options }) {
+          // Process the response data
+          isLoading.value = false
+          if (response.ok) {
+              $toast.success(response._data.message);
+              collections.value = response._data.data
+              // payment_modal.value = true
+              // overview.value = response._data
+              // collectors.value = response._data.data
+              console.log(response._data.data)
+              
+          }
+      },
+      onResponseError({ request, response, options }) {
+          $toast.error(response._data.message);
+          isLoading.value = false
+      },
+  });
+}
+
+onMounted( async () => {
+  await fetchCollection()
+  await getOverview('')
+})
+// useL
+
+// useLazyAsyncData( () => fetchCollection(), { server: false });
+
 definePageMeta({
   // auth: false
 })
