@@ -84,70 +84,16 @@
                     </tr>
                     </thead>
                     <tbody class="">
-                    <tr class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                        <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Household</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Brown Cartons</td>
-                        <td class="py-[16px] px-[32px]">Drop Off</td>
-                        <td class="py-[16px] px-[32px]">Community</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Institutions</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Household</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Can</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Household</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Others</td>
-                        <td class="py-[16px] px-[32px]">Drop Off</td>
-                        <td class="py-[16px] px-[32px]">Institutions</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Household</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Household</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Brown Cartons</td>
-                        <td class="py-[16px] px-[32px]">Drop Off</td>
-                        <td class="py-[16px] px-[32px]">Community</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Institutions</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Household</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Can</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Household</td>
-                    </tr>
-                    <tr class="border-b text-[16px] font-medium">
-                        <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                        <td class="py-[16px] px-[32px]">Pick up</td>
-                        <td class="py-[16px] px-[32px]">Household</td>
+                    <tr v-for="item in collections" :key="item.id" class="border-b 2xl:text-[16px] xl:text-sm font-medium">
+                        <td class="py-[16px] px-[32px]">
+                            {{ item.price }}
+                        </td>
+                        <td class="py-[16px] px-[32px]">
+                            {{ item.collection_type }}
+                        </td>
+                        <td class="py-[16px] px-[32px]">
+                            {{ item.producer_type }}
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -219,6 +165,20 @@
         total_weight: number
     }
 
+    interface Collection {
+        id: string
+        created_at: string
+        collected_at: string
+        collection_type: string
+        producer_type: string
+        weight: string
+        price: string
+        location: string
+        waste_details: string
+        status: string
+    }
+
+
     interface Collector {
         created_at: string
         email: string
@@ -242,6 +202,7 @@
         isVerified: 0,
         name: ''
     })
+    const collections = ref<Collection[]>()
     const { token, data } = useAuth()
     const { $toast } = useNuxtApp()
     const fetch = async (id: string) => {
@@ -307,7 +268,7 @@
                 isLoading.value = false
                 if (response.ok) {
                     $toast.success(response._data.message);
-                    // payment_details.value = response._data.data
+                    collections.value = response._data.data
                     // payment_modal.value = true
                     // overview.value = response._data
                     // collectors.value = response._data.data

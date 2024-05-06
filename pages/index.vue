@@ -67,92 +67,25 @@
           <table class="w-full font-semibold 2xl:text-lg xl:text-sm table-auto">
             <thead class="text-textGray text-lg font-semibold sticky top-0 bg-white">
                 <tr class="text-left border-b">
-                  <th class="py-[16px] px-[32px]">WASTE</th>
+                  <th class="py-[16px] px-[32px]">Weight</th>
                   <th class="py-[16px] px-[32px]">Collection model</th>
                   <th class="py-[16px] px-[32px]">Producer</th>
                   <th class="py-[16px] px-[32px]">Recycler unit</th>
                 </tr>
             </thead>
             <tbody class="">
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
+                <tr v-for="item in collections" :key="item.id" class="border-b text-[16px] font-medium">
+                    <td class="py-[16px] px-[32px]">
+                      {{ item.weight }}
+                    </td>
+                    <td class="py-[16px] px-[32px]">
+                      {{ item.collection_type }}
+                    </td>
+                    <td class="py-[16px] px-[32px]">
+                      {{ item.producer_type }}
+                    </td>
                     <td class="py-[16px] px-[32px]">PETsPOint Ikeja</td>
                 </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Brown Cartons</td>
-                    <td class="py-[16px] px-[32px]">Drop Off</td>
-                    <td class="py-[16px] px-[32px]">Community</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Agbowo</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Institutions</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Challenge</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Can</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Palmgrove</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Others</td>
-                    <td class="py-[16px] px-[32px]">Drop Off</td>
-                    <td class="py-[16px] px-[32px]">Institutions</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Challenge</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Ikeja</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Ikeja</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Brown Cartons</td>
-                    <td class="py-[16px] px-[32px]">Drop Off</td>
-                    <td class="py-[16px] px-[32px]">Community</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Agbowo</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Institutions</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Challenge</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Can</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                    <td class="py-[16px] px-[32px]">PETsPOint Palmgrove</td>
-                </tr>
-                <tr class="border-b text-[16px] font-medium">
-                    <td class="py-[16px] px-[32px]">Plastic Bottles</td>
-                    <td class="py-[16px] px-[32px]">Pick up</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                    <td class="py-[16px] px-[32px]">Household</td>
-                </tr>
-                
             </tbody>
           </table>
         </div>
@@ -195,9 +128,16 @@ interface Overview {
 }
 
 interface Collection {
-  total_citizens: number
-  total_price: number
-  total_weight: number
+  id: string
+  created_at: string
+  collected_at: string
+  collection_type: string
+  producer_type: string
+  weight: string
+  price: string
+  location: string
+  waste_details: string
+  status: string
 }
 
 const overview = ref<Overview>({
@@ -205,6 +145,7 @@ const overview = ref<Overview>({
   total_price: 0,
   total_weight: 0
 })
+const collections = ref<Collection[]>([])
 
 const getOverview = async (id: string) => {
   isLoading.value = true
@@ -243,7 +184,7 @@ const getTodaysCollection = async () => {
           isLoading.value = false
           if (response.ok) {
               $toast.success(response._data.message);
-              // payment_details.value = response._data.data
+              collections.value = response._data.data
               // payment_modal.value = true
               // overview.value = response._data
               console.log(response._data.data)
