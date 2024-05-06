@@ -175,7 +175,7 @@ const getOverview = async (id: string) => {
 const getTodaysCollection = async () => {
   isLoading.value = true
   // console.log(data.value.data.id)s
-  await $fetch(`${useBaseUrl()}/admin/today-collection/${data.value.data.id}?limit=${10}&page=${1}`, {
+  await $fetch(`${useBaseUrl()}/admin/today-collection?limit=${10}&page=${1}`, {
       headers: {
           Authorization: `${token.value}`,
       },
