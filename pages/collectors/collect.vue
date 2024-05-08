@@ -215,19 +215,21 @@ const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, co
         paymentType: yup.string().required(),
         accountDetails: yup.object({
             account_name: yup.string().when("paymentType", {
-                is: true, // alternatively: (val) => val == true
-                then: yup.string().required(),
-                otherwise: yup.string(),
+                is: 'transfer', // alternatively: (val) => val == true
+                then: schema => schema.required(),
+                otherwise: schema => schema.optional(),
+                // then: yup.string().required(),
+                // otherwise: yup.string(),
             }),
             account_number: yup.string().when("paymentType", {
-                is: true, // alternatively: (val) => val == true
-                then: yup.string().required(),
-                otherwise: yup.string(),
+                is: 'transfer', // alternatively: (val) => val == true
+                then: schema => schema.required(),
+                otherwise: schema => schema.optional(),
             }),
             bank_code: yup.string().when("paymentType", {
-                is: true, // alternatively: (val) => val == true
-                then: yup.string().required(),
-                otherwise: yup.string(),
+                is: 'transfer', // alternatively: (val) => val == true
+                then: schema => schema.required(),
+                otherwise: schema => schema.optional(),
             }),
         }),
         // accountDetails: yup.string().when("paymentType", {
@@ -281,9 +283,9 @@ watch(fields.value, (newValue, oldValue) => {
     setFieldValue('totalWeight', totalWeight)
 })
 
-// watch(paymentType, (newValue, oldValue) => {
-    
-// })
+watch(paymentType, (newValue, oldValue) => {
+ console.log('here')  
+})
 
 
 const onSubmit = handleSubmit( (values) => {
@@ -295,6 +297,7 @@ const onSubmit = handleSubmit( (values) => {
     },
     body: {
         totalWeight: values.totalWeight,
+        totalAmount: values.totalAmount,
         user: values.user,
         paymentType: values.paymentType.toLowerCase(),
         wastes: values.wastes,
@@ -345,4 +348,4 @@ definePageMeta({
 
 <style>
 
-</style>
+</style>(: { required: () => yup.ISchema<any, any, any, any>; })(: { optional: () => yup.ISchema<any, any, any, any>; })
