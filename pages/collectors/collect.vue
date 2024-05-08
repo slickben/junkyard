@@ -178,7 +178,7 @@
 import { useForm, useFieldArray, Field } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import * as yup from 'yup';
-import { ChevronUpIcon, PlusIcon, MinusIcon } from '@heroicons/vue/20/solid'
+import { PlusIcon, MinusIcon } from '@heroicons/vue/20/solid'
 import { type User } from '@/composables/useTypes'
 
 interface WasteType {
@@ -333,10 +333,10 @@ const verifyBank =  () => {
                 $router.back()
             }
         },
-    onResponseError({ request, response, options }) {
-        // console.log(response)
-        $toast.error(response._data.message)
-    }
+        onResponseError({ request, response, options }) {
+            // console.log(response)
+            $toast.error(response._data.message)
+        }
     })
 }
 
@@ -348,4 +348,4 @@ definePageMeta({
 
 <style>
 
-</style>(: { required: () => yup.ISchema<any, any, any, any>; })(: { optional: () => yup.ISchema<any, any, any, any>; })
+</style>
