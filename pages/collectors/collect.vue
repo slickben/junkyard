@@ -99,9 +99,8 @@
                           type="text" 
                           placeholder="0"
                           class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
-                                w-full px-3 py-2 focus:border-secondary focus:ring-0 cursor-not-allowed" 
+                                w-full px-3 py-2 focus:border-secondary focus:ring-0" 
                           required
-                          readonly
                       >
                       <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalAmount }}</p>
                   </div>
@@ -169,6 +168,8 @@
               </button>
           </div>
       </form>
+
+
   </div>
 </template>
 
@@ -193,7 +194,7 @@ const { $toast, $router } = useNuxtApp()
 const { data, token } = useAuth()
 const user: User = data.value
 
-const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue  } = useForm({
+const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, controlledValues  } = useForm({
     validationSchema: toTypedSchema(
     yup.object({
         totalWeight: yup.number().required(),
@@ -211,11 +212,35 @@ const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue  } 
                 }
             )
         ),
-        paymentType: yup.string().required()
-        // wastes: yup.ArraySchema({
-        //     wasteType: yup.string,
-        //     weight: yup.number
-        // })
+        paymentType: yup.string().required(),
+        accountDetails: yup.object({
+            account_name: yup.string().when("paymentType", {
+                is: true, // alternatively: (val) => val == true
+                then: yup.string().required(),
+                otherwise: yup.string(),
+            }),
+            account_number: yup.string().when("paymentType", {
+                is: true, // alternatively: (val) => val == true
+                then: yup.string().required(),
+                otherwise: yup.string(),
+            }),
+            bank_code: yup.string().when("paymentType", {
+                is: true, // alternatively: (val) => val == true
+                then: yup.string().required(),
+                otherwise: yup.string(),
+            }),
+        }),
+        // accountDetails: yup.string().when("paymentType", {
+        //     is: true, // alternatively: (val) => val == true
+        //     then: yup.object().shape(
+        //         {
+        //             account_name: yup.string().required(),
+        //             account_number: yup.string().required(),
+        //             bank_code: yup.string().required()
+        //         }
+        //     ),
+        //     otherwise: yup.string(),
+        // }),
     }),
     ),
     initialValues: {
@@ -256,6 +281,11 @@ watch(fields.value, (newValue, oldValue) => {
     setFieldValue('totalWeight', totalWeight)
 })
 
+// watch(paymentType, (newValue, oldValue) => {
+    
+// })
+
+
 const onSubmit = handleSubmit( (values) => {
     console.log(values)
     useFetch(`${useBaseUrl()}/collections`, {
@@ -282,6 +312,30 @@ const onSubmit = handleSubmit( (values) => {
     }
     })
 })
+
+const verifyBank =  () => {
+    useFetch(`${useBaseUrl()}/transactions/account-details`, {
+        method: 'post',
+        headers: {
+            Authorization: `${token.value}`,
+        },
+        body: {
+            acc_no: controlledValues.value.accountDetails?.account_number,
+            bank_code: controlledValues.value.accountDetails?.bank_code,
+        },
+        onResponse({ request, response, options }) {
+            // Process the response data
+            if(response.ok) {
+            $toast.success(response._data.message)
+                $router.back()
+            }
+        },
+    onResponseError({ request, response, options }) {
+        // console.log(response)
+        $toast.error(response._data.message)
+    }
+    })
+}
 
 
 definePageMeta({
