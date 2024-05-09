@@ -88,6 +88,17 @@
                   >
                   <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p>
               </div>
+              <div class="flex flex-col relative">
+                  <label for="" class="font-medium">Buy Price </label>
+                  <input 
+                      type="text" 
+                      v-model="buyPrice"
+                      class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
+                                w-full px-3 py-2 focus:border-secondary focus:ring-0"
+                      placeholder="0"
+                  >
+                  <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p> -->
+              </div>
               <div class="flex flex-col gap-6">
                   <div class="flex flex-col relative">
                       <label for="" class="font-medium">
@@ -99,8 +110,9 @@
                           type="text" 
                           placeholder="0"
                           class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
-                                w-full px-3 py-2 focus:border-secondary focus:ring-0" 
+                                w-full px-3 py-2 focus:border-secondary focus:ring-0 cursor-not-allowed" 
                           required
+                          readonly
                       >
                       <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalAmount }}</p>
                   </div>
@@ -318,6 +330,7 @@ const { data, token } = useAuth()
 const addBankModal = ref(false)
 const user: User = data.value
 const isLoading = ref(false)
+const buyPrice = ref(0)
 const banks = ref<Bank[]>([])
 
 const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, controlledValues  } = useForm({
@@ -411,10 +424,18 @@ watch(fields.value, (newValue, oldValue) => {
     }
 
     // Calculate the total price
-    const totalPrice = totalWeight * user.data.pricePerKg;
+    const totalPrice = buyPrice.value < 1 ? totalWeight * user.data.pricePerKg : totalWeight * buyPrice.value;
 
     setFieldValue('totalAmount', totalPrice)
     setFieldValue('totalWeight', totalWeight)
+})
+
+watch(buyPrice, (newValue, oldValue) => {
+
+    // Calculate the total price
+    const totalPrice = totalWeight.value * buyPrice.value;
+
+    setFieldValue('totalAmount', totalPrice)
 })
 
 watch(paymentType, (newValue, oldValue) => {
@@ -514,8 +535,45 @@ const getBanks = async () => {
   });
 }
 
+const getAddress = async (lat: number, long: number) =>  {
+    await $fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyB2O2LnwRIFd2OM1qXvIX8s25d7orAisdE`, {
+      onResponse({ request, response, options }) {
+          // Process the response data
+        //   isLoading.value = false
+          if (response.ok) {
+              $toast.success(response._data.message);
+              setFieldValue('user.address', response._data.results[0].formatted_address)
+            //   banks.value = response._data.data
+              // payment_modal.value = true
+              // overview.value = response._data
+            //   console.log(response._data)
+            // data.results[0].formatted_address
+              
+          }
+      },
+      onResponseError({ request, response, options }) {
+          $toast.error(response._data.message);
+        //   isLoading.value = false
+      },
+  });
+    
+} 
+
+   
+
 onMounted( async () => {
   await getBanks()
+
+  navigator.geolocation.getCurrentPosition(
+      position => {
+        //  console.log(position.coords.latitude);
+        //  console.log(position.coords.longitude);
+         getAddress(position.coords.latitude, position.coords.longitude)
+      },
+      error => {
+         console.log(error.message);
+      },
+   )
 })
 
 definePageMeta({
