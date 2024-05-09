@@ -6,8 +6,8 @@
       </NuxtLink>
 
       <form @submit.prevent="onSubmit" class="mt-5 md:mt-12">
-          <div class="card-shadow px-4 md:px-12 py-5 md:py-9 rounded-3xl flex flex-col gap-5">
-            <div class="w-full rounded-2xl md:bg-white ">
+          <div class="card-shadow px-4 md:px-12 py-5 md:py-9 rounded-3xl grid grid-cols-2 gap-5">
+            <div class="w-full rounded-2xl md:bg-white col-span-2">
                 <HeadDisclosure v-for="(field, idx) in fields" :key="field.key" as="div" class="mt-2 relative" v-slot="{ open }">
                     <HeadDisclosureButton
                         :class="open ? 'rounded-b-none border-b-0 ' : ''"
@@ -74,110 +74,95 @@
                 </button>
                 
             </div>
-              <div class="flex flex-col relative">
-                  <label for="" class="font-medium">Total Weight (kg) </label>
-                  <input 
-                      type="text" 
-                      v-model="totalWeight"
-                      v-bind="totalWeightAttrs"
-                      class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
-                                w-full px-3 py-2 focus:border-secondary focus:ring-0 cursor-not-allowed"
-                        readonly
-                      required 
-                      placeholder="0"
-                  >
-                  <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p>
-              </div>
-              <div class="flex flex-col relative">
-                  <label for="" class="font-medium">Buy Price </label>
-                  <input 
-                      type="text" 
-                      v-model="buyPrice"
-                      class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
+            <div class="flex flex-col relative col-span-2">
+                <label for="">Customer Name</label>
+                <input 
+                    type="text" 
+                    v-model="name"
+                    v-bind="nameAttrs" 
+                    placeholder="name"
+                    class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
+                >
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['user.name'] }}</p>
+            </div>
+            <div class="flex flex-col relative col-span-2">
+                <label for="">Customer Address</label>
+                <input 
+                    type="text" 
+                    v-model="address"
+                    v-bind="addressAttrs" 
+                    placeholder="address"
+                    class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
+                >
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['user.name'] }}</p>
+            </div>
+            <div class="flex flex-col relative">
+                <label for="" class="font-medium">Total Weight (kg) </label>
+                <input 
+                    type="text" 
+                    v-model="totalWeight"
+                    v-bind="totalWeightAttrs"
+                    class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
+                            w-full px-3 py-2 focus:border-secondary focus:ring-0 cursor-not-allowed"
+                    readonly
+                    required 
+                    placeholder="0"
+                >
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p>
+            </div>
+            <div class="flex flex-col relative">
+                <label for="" class="font-medium">Buy Price </label>
+                <input 
+                    type="text" 
+                    v-model="buyPrice"
+                    class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
                                 w-full px-3 py-2 focus:border-secondary focus:ring-0"
-                      placeholder="0"
-                  >
-                  <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p> -->
-              </div>
-              <div class="flex flex-col gap-6">
-                  <div class="flex flex-col relative">
-                      <label for="" class="font-medium">
-                        Amount (NGN)
-                      </label>
-                      <input 
-                          v-model="totalAmount"
-                          v-bind="totalAmountAttrs" 
-                          type="text" 
-                          placeholder="0"
-                          class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
-                                w-full px-3 py-2 focus:border-secondary focus:ring-0 cursor-not-allowed" 
-                          required
-                          readonly
-                      >
-                      <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalAmount }}</p>
-                  </div>
-                  <!-- <button 
-                      type="submit" 
-                      class="border-secondary text-secondary text-lg font-semibold rounded-lg border-[3px] px-3 py-1
-                       hover:bg-secondary hover:text-white transition-all transform ease-in-out duration-300">
-                       Generate ID
-                  </button> -->
-              </div>
-              <div class="flex flex-col gap-5">
-                  <div class="flex flex-col relative">
-                      <label for="">Customer Name</label>
-                      <input 
-                          type="text" 
-                          v-model="name"
-                          v-bind="nameAttrs" 
-                          placeholder="name"
-                          class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
-                      >
-                      <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['user.name'] }}</p>
-                  </div>
-                  <div class="flex flex-col relative">
-                      <label for="">Customer Address</label>
-                      <input 
-                          type="text" 
-                          v-model="address"
-                          v-bind="addressAttrs" 
-                          placeholder="address"
-                          class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
-                      >
-                      <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['user.name'] }}</p>
-                  </div>
-                  <!-- <button 
-                      type="submit" 
-                      class="border-secondary text-secondary text-lg font-semibold rounded-lg border-[3px] 
-                      px-3 py-1 hover:bg-secondary hover:text-white transition-all transform ease-in-out duration-300">
-                      Generate Access Key
-                  </button> -->
-              </div>
-              <div class="flex flex-col relative space-y-1">
-                    <label for="" class="font-medium text-black">Payment Type</label>
-                    <select 
-                        v-model="paymentType"
-                        as="select"
-                        v-bind="paymentTypeAttrs"
-                        type="number" 
-                        class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
-                                w-full px-3 py-2 focus:border-secondary focus:ring-0 "
-                        required 
-                        placeholder="0"
-                    >
-                    <option value="">Select Type</option>
-                    <option v-for="item in ['Cash', 'Transfer']" :key="item" :value="item">
-                        {{ item }}
-                    </option>
-                    </select>
-              </div>
-              <button 
-                  type="submit" 
-                  class="border border-secondary text-white bg-secondary text-lg 
-                  font-semibold px-3 py-1 mb-7 rounded-lg hover:bg-white hover:text-secondary hover:border-[3px]
-                   hover:border-secondary transition-all transform ease-in-out duration-300">
-                   Buy
-              </button>
+                    placeholder="0"
+                >
+                <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p> -->
+            </div>
+            <div class="flex flex-col relative">
+                <label for="" class="font-medium">
+                Amount (NGN)
+                </label>
+                <input 
+                    v-model="totalAmount"
+                    v-bind="totalAmountAttrs" 
+                    type="text" 
+                    placeholder="0"
+                    class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
+                        w-full px-3 py-2 focus:border-secondary focus:ring-0 cursor-not-allowed" 
+                    required
+                    readonly
+                >
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalAmount }}</p>
+            </div>
+            <!-- </div> -->
+            <div class="flex flex-col relative space-y-1">
+                <label for="" class="font-medium text-black">Payment Type</label>
+                <select 
+                    v-model="paymentType"
+                    as="select"
+                    v-bind="paymentTypeAttrs"
+                    type="number" 
+                    class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
+                            w-full px-3 py-2 focus:border-secondary focus:ring-0 "
+                    required 
+                    placeholder="0"
+                >
+                <option value="">Select Type</option>
+                <option v-for="item in ['Cash', 'Transfer']" :key="item" :value="item">
+                    {{ item }}
+                </option>
+                </select>
+            </div>
+            <button 
+                type="submit" 
+                class="border border-secondary text-white bg-secondary text-lg 
+                font-semibold px-3 py-1 mb-7 rounded-lg hover:bg-white hover:text-secondary hover:border-[3px]
+                hover:border-secondary transition-all transform ease-in-out duration-300">
+                Buy
+            </button>
           </div>
       </form>
   </div>
