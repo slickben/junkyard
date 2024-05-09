@@ -147,7 +147,7 @@ const [comfirm_password, comfirmPasswordAttrs] = defineField('password');
 const onSubmit = handleSubmit( (values) => {
   useFetch(`${useBaseUrl()}/auth/register`, {
     method: 'post',
-    body: {name: values.name, email: values.email, password: values.password, callbackURL: `${config.public.baseUrl}verify/`},
+    body: {name: values.name, email: values.email, password: values.password, callbackURL: `${config.public.baseUrl}verify`},
     onResponse({ request, response, options }) {
       // Process the response data
       if(response.ok) {
