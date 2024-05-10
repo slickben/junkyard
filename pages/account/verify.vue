@@ -37,7 +37,7 @@
 const is_error = ref(false)
 const error = ref('')
 const { $toast, $router } = useNuxtApp()
-const { data, token } = useAuth()
+const { data, token, getSession } = useAuth()
 
   const {reference} = useRoute().query
   const Verify = async () => {
@@ -54,6 +54,7 @@ const { data, token } = useAuth()
         if(response.ok) {
           $toast.success(response._data.message)
           setTimeout(() => {
+            getSession()
             $router.push('/account')
           }, 2000);
         }

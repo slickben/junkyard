@@ -26,7 +26,7 @@
                             v-model="email"
                             v-bind="emailAttrs" 
                             type="text" 
-                            placeholder="Eamil"
+                            placeholder="Email"
                             class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]" 
                             required
                         >
