@@ -39,7 +39,7 @@ const error = ref('')
 const { $toast, $router } = useNuxtApp()
 const { data, token, getSession } = useAuth()
 
-  const {reference} = useRoute().query
+  const { reference } = useRoute().query
   const Verify = async () => {
     // alert('here')
     await $fetch(`${useBaseUrl()}/transactions/paystack/verify-transaction?reference=${reference}`, {

@@ -3,7 +3,11 @@
     {{ data }}
   </pre> -->
     <div class="bg-fakeWhite h-full flex-grow p-12 2xl:px-20 pt-10 relative">
-        <h1 class="2xl:text-3xl xl:text-2xl font-bold mb-5">Overview</h1>
+        <div class="mb-5 flex items-center justify-between">
+          <h1 class="2xl:text-3xl xl:text-2xl font-bold">Overview</h1>
+          <button type="button" @click.prevent="signOut({ callbackUrl: '/login' })" class="text-error text-lg font-semibold">Logout</button>
+        </div>
+        
         <div class="relative grid grid-cols-3 gap-16">
           <!-- first overview -->
           <div
@@ -118,7 +122,7 @@
 </template>
 
 <script setup lang="ts">
-const { data, token } = useAuth()
+const { data, token, signOut } = useAuth()
 const { $toast, $router, $config } = useNuxtApp();
 const isLoading = ref(false)
 interface Overview {

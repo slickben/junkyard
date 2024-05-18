@@ -6,7 +6,7 @@
             alt=""
             class="rounded-full mb-4 w-24"
         /> -->
-        <img v-if="user.data.avatar" :src="user.data.avatar" alt="" class="" />
+        <img v-if="user.data.avatar" :src="user.data.avatar" alt="" class="w-[100px] h-[100px] rounded-full object-cover" />
         <vue-avatar v-else :username="`${ user.data.role === 'collector' ? user.data.name : user.data.businessInfo.name}`" :size="100" />
         <h2 class="text-xl font-bold">
             {{ user.data.role === 'collector' ? user.data.name : user.data.businessInfo.name }}
@@ -83,14 +83,14 @@
             <p>My Account</p>
         </NuxtLink>
 
-        <NuxtLink 
-            to="/support"
+        <!-- <NuxtLink 
+            to="#"
             class="flex gap-4 font-semibold hover:bg-secondary hover:bg-opacity-20 hover:border-r-secondary
             hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-12 text-dahboardText hover:text-secondary"
         >
             <svgo-helpSupport_icon class="text-xl" />
             <p>Help & Support</p>
-        </NuxtLink>
+        </NuxtLink> -->
     </div>
     <NuxtLink
         v-if="user.data.role === 'collector'"

@@ -3,7 +3,10 @@
     {{ data }}
   </pre> -->
     <div class="bg-[#F5F5F5] md:bg-fakeWhite h-full flex-grow p-5 md:p-12 2xl:px-20 pt-0 md:pt-10 relative">
-        <h1 class="2xl:text-3xl xl:text-2xl font-bold mb-5">Overview</h1>
+        <div class="mb-5 flex items-center justify-between">
+          <h1 class="2xl:text-3xl xl:text-2xl font-bold">Overview</h1>
+          <button type="button" @click.prevent="signOut({ callbackUrl: '/login' })" class="text-error text-lg font-semibold">Logout</button>
+        </div>
         <div class="relative grid md:grid-cols-3 gap-16">
           <!-- first overview -->
           <div
@@ -147,7 +150,7 @@
 
 import VueAvatar from "@webzlodimir/vue-avatar";
 import type { User } from '@/composables/useTypes';
-const { data, token } = useAuth()
+const { data, token, signOut } = useAuth()
 const { $toast, $router, $config } = useNuxtApp();
 const user: User = data.value
 const isLoading = ref(false)

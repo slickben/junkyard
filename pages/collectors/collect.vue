@@ -544,21 +544,24 @@ const getAddress = async (lat: number, long: number) =>  {
     
 } 
 
-   
-
 onMounted( async () => {
   await getBanks()
 
-  navigator.geolocation.getCurrentPosition(
-      position => {
-        //  console.log(position.coords.latitude);
-        //  console.log(position.coords.longitude);
-         getAddress(position.coords.latitude, position.coords.longitude)
-      },
-      error => {
-         console.log(error.message);
-      },
-   )
+//   navigator.geolocation.getCurrentPosition(
+//       position => {
+//         console.log(position.coords.accuracy)
+//          getAddress(position.coords.latitude, position.coords.longitude)
+//       },
+//       error => {
+//          console.log(error.message);
+//       },
+//    )
+   navigator.geolocation.getCurrentPosition(function(position) {
+        console.log(position.coords.latitude, position.coords.longitude)
+        getAddress(position.coords.latitude, position.coords.longitude)
+    },
+    function error(msg) {alert('Please enable your GPS position feature.');},
+    {maximumAge:10000, timeout:5000, enableHighAccuracy: true});
 })
 
 definePageMeta({

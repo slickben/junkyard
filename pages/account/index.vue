@@ -16,8 +16,12 @@
             class="rounded-3xl card-shadow flex gap-4 px-6 py-4 items-center"
           >
             <div class="relative">
-              <img v-if="data.data.avatar" :src="data.data.avatar" alt="" class="" />
-              <vue-avatar v-else :username="`${data.data.businessInfo.name}`" :size="100" />
+              <img v-if="data.data.avatar" :src="data.data.avatar" alt="" class="w-[100px] h-[100px] rounded-full mx-auto object-cover" />
+              <vue-avatar class="mx-auto" v-else :username="`${data.data.businessInfo.name}`" :size="100" />
+              <button class="block bg-secondary text-white text-xs px-4 py-2 rounded-md font-semibold mt-3">
+                {{data.data.avatar ? 'Change Avator' : 'Upload Avatar'}}
+                <input @change="chageAvatar" class="absolute inset-0 opacity-0" type="file" name="" id="">
+              </button>
             </div>
             <div class="flex flex-col">
               <p class="font-semibold mr-20">
@@ -202,7 +206,7 @@
 
   const { $toast, $router } = useNuxtApp()
   const { data, token, signOut, getSession } = useAuth()
-  const change_password_modal = ref(true)
+  const avatar = ref('')
 
   const plan = ref<Plan>({
       id: '',
@@ -330,6 +334,41 @@
         },
     });
   }
+
+  const chageAvatar = async (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    const formData = new FormData()
+    if(target.files?.length > 0) {
+      formData.append('avatar', target.files[0])
+    }
+    console.log(formData)
+    await $fetch(`${useBaseUrl()}/users/avatar`, {
+        headers: {
+            Authorization: `${token.value}`,
+        },
+        method: 'PUT',
+        body: formData,
+        async onResponse({ request, response, options }) { 
+            // Process the response data
+            // isLoading.value = false
+            if (response.ok) {
+                $toast.success(response._data.message);
+                await getSession()
+                
+            }
+        },
+        onResponseError({ request, response, options }) {
+            $toast.error(response._data.message);
+            // isLoading.value = false
+        },
+    });
+  }
+
+  // watch(avatar, newX => {
+      
+  //     chageAvatar(newX)
+  
+  // })
 
   const getAll = async () => {
     await fetch('')

@@ -1,8 +1,8 @@
 <template>
     <div class="bg-fakeWhite h-full flex-grow py-12 px-12 2xl:px-20 relative">
-        <h1 class="2xl:text-4xl xl:text-2xl font-bold mb-5">Recycler Units</h1>
-        <a href="#" class="text-textGray text-sm font-semibold"
-            >Recycler Units > <span class="text-black">{{user.data.businessInfo.name}} {{ collector.name }}</span></a
+        <h1  class="2xl:text-4xl xl:text-2xl font-bold mb-5">Recycler Units</h1>
+        <button @click="$router.back()" class="text-textGray text-sm font-semibold"
+            >Recycler Units > <span class="text-black">{{user.data.businessInfo.name}} {{ collector.name }}</span></button
         >
         <div class="relative grid grid-cols-3 gap-16 my-8">
           <!-- first overview -->
@@ -116,15 +116,15 @@
                 class="2xl:text-lg xl:text-sm xl:font-bold font-semibold flex flex-col gap-2 items-center mt-3 fln"
                 >
                 
-                    <button id="open-popup">
-                    <a href="" class="hover:text-secondary ease-out duration-300"
-                        id="open-popup"><p>Delete Account</p></a
-                        >
+                    <button @click.prevent="deleteModal = !deleteModal" type="button">
+                        <span class="hover:text-secondary ease-out duration-300">
+                            Delete Account
+                        </span>
                     </button>
                     <NuxtLink to="/recyclers/create" class="hover:text-secondary ease-out duration-300">
                         <p>Add New Unit</p>
                     </NuxtLink>
-                    <NuxtLink href="/" class="hover:text-secondary ease-out duration-300" >
+                    <NuxtLink :href="`/collection-history?unit=${collector.id}`" class="hover:text-secondary ease-out duration-300" >
                         <p>View Collection History</p>
                     </NuxtLink >
                 </div>
@@ -155,11 +155,85 @@
           </svg>
         </div>
     </div>
+
+    <HeadTransitionRoot appear :show="deleteModal" as="template">
+        <HeadDialog as="div" @close="deleteModal = !deleteModal" class="relative z-10">
+        <HeadTransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
+        >
+            <div class="fixed inset-0 bg-black/50" />
+        </HeadTransitionChild>
+
+        <div class="fixed inset-0 overflow-y-auto">
+            <div
+            class="flex min-h-full items-center justify-center p-4 text-center"
+            >
+            <HeadTransitionChild
+                as="template"
+                enter="duration-300 ease-out"
+                enter-from="opacity-0 scale-95"
+                enter-to="opacity-100 scale-100"
+                leave="duration-200 ease-in"
+                leave-from="opacity-100 scale-100"
+                leave-to="opacity-0 scale-95"
+            >
+                <HeadDialogPanel
+                class="w-full max-w-lg space-y-7 transform overflow-hidden rounded-2xl bg-white p-10 py-16 text-left align-middle shadow-xl transition-all"
+                >
+
+                    <!-- <HeadDialogTitle
+                        as="h3"
+                        class="text-xl font-medium leading-6 text-gray-900 text-center"
+                    >
+                        <b>{{ 'Change Password' }}</b>
+                    </HeadDialogTitle> -->
+                    <div>
+                        <p class="text-xl font-normal text-center">
+                            Deleting this account will only delete the profile of the staff and not the collections they have made.
+                            <br> <br> Do you want to proceed with deleting this account?
+                        </p>
+
+                        <div class="flex items-center gap-4 mt-8">
+                            <button
+                                    type="button"
+                                    @click.prevent="deleteAccount(collector.id)"
+                                    class="text-center flex-1 p-4 rounded-md text-white font-bold bg-secondary
+                                    hover:opacity-80 transition-all duration-300 ease-in-out py-4 relative"
+                                >
+                                    <span :class="{ invisible: isLoading }">
+                                    {{ 'Yes' }}
+                                    </span>
+                                </button>
+                            <button
+                                type="button"
+                                class="inline-flex justify-center rounded-md border border-secondary bg-white 
+                                px-4 py-4 text-sm font-medium text-black hover:bg-white focus:outline-none 
+                                 flex-1"
+                                @click="deleteModal = !deleteModal"
+                                >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                    
+                    
+                </HeadDialogPanel>
+            </HeadTransitionChild>
+            </div>
+        </div>
+        </HeadDialog>
+    </HeadTransitionRoot>
 </template>
 
 <script setup lang="ts">
     import VueAvatar from "@webzlodimir/vue-avatar";
-import { type User } from '@/composables/useTypes'
+    import { type User } from '@/composables/useTypes'
 
 
     interface Overview {
@@ -198,6 +272,7 @@ import { type User } from '@/composables/useTypes'
 
     const params = useRoute().params
     const isLoading = ref(false)
+    const deleteModal = ref(false)
     const collector = ref<Collector>({
         created_at: '',
         email: '',
@@ -207,8 +282,8 @@ import { type User } from '@/composables/useTypes'
     })
     const collections = ref<Collection[]>()
     const { token, data } = useAuth()
-    const { $toast } = useNuxtApp()
-const user: User = data.value
+    const { $toast, $router } = useNuxtApp()
+    const user: User = data.value
     const fetch = async (id: string) => {
         isLoading.value = true
         await $fetch(`${useBaseUrl()}/admin/collector/${params.id}`, {
@@ -225,6 +300,29 @@ const user: User = data.value
                     // overview.value = response._data
                     collector.value = response._data.data
                     // console.log(response._data.data)
+                    
+                }
+            },
+            onResponseError({ request, response, options }) {
+                $toast.error(response._data.message);
+                isLoading.value = false
+            },
+        });
+    }
+
+    const deleteAccount = async (id: string) => {
+        isLoading.value = true
+        await $fetch(`${useBaseUrl()}/admin/collector/${params.id}`, {
+            headers: {
+                Authorization: `${token.value}`,
+            },
+            method: 'delete',
+            onResponse({ request, response, options }) {
+                // Process the response data
+                isLoading.value = false
+                if (response.ok) {
+                    $toast.success(response._data.message);
+                    $router.back()
                     
                 }
             },
