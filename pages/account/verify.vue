@@ -65,7 +65,7 @@ const { data, token, getSession } = useAuth()
         error.value = response._data.message
         $toast.error(response._data.message)
         setTimeout(() => {
-            $router.push('/account')
+            // $router.push('/account')
           }, 2000);
       }
   })

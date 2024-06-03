@@ -54,10 +54,10 @@
                     </div>
                     <div class="text-center space-y-2 py-2">
                     <p><b>What's included</b></p>
-                    <p class="text-sm">5 User Acess</p>
+                    <p class="text-sm">5 User Access</p>
                     <p class="text-sm">Analytics Report</p>
                     <p class="text-sm">Take Pick up Request</p>
-                    <p class="text-sm">Take Drop off Boking</p>
+                    <p class="text-sm">Take Drop off Booking</p>
                     </div>
                     <div class="py-2 mt-6 flex items-center justify-center relative">
                     <NuxtLink :to="`/renew/${ selectedPlans[0].id }?duration=${duration}`"
@@ -82,11 +82,11 @@
                     </div>
                     <div class="text-center space-y-2 py-2">
                         <p><b>What's included</b></p>
-                        <p class="text-sm">5 User Acess</p>
+                        <p class="text-sm">5 User Access</p>
                         <p class="text-sm">Analytics Report</p>
                         <p class="text-sm">Take Pick up Request</p>
-                        <p class="text-sm">Take Drop off Boking</p>
-                        <p class="text-sm">Admin Panel Acess</p>
+                        <p class="text-sm">Take Drop off Booking </p>
+                        <p class="text-sm">Admin Panel Access</p>
                     </div>
                     <div class="py-2 flex items-center justify-center relative">
                         <NuxtLink :to="`/renew/${selectedPlans[2].id}?duration=${duration}`"
@@ -111,11 +111,11 @@
                     </div>
                     <div class="text-center space-y-2 py-2">
                         <p><b>What's included</b></p>
-                        <p class="text-sm">20 User Acess</p>
+                        <p class="text-sm">20 User Access</p>
                         <p class="text-sm">Analytics Report</p>
                         <p class="text-sm">Take Pick up Request</p>
-                        <p class="text-sm">Take Drop off Boking</p>
-                        <p class="text-sm">Admin Panel Acess</p>
+                        <p class="text-sm">Take Drop off Booking</p>
+                        <p class="text-sm">Admin Panel Access</p>
                     </div>
                     <div class="py-2 flex items-center justify-center relative">
                         <NuxtLink :to="`/renew/${ selectedPlans[1].id }?duration=${duration}`"

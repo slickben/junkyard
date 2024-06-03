@@ -41,7 +41,7 @@
                 </div>
                 <div class="flex flex-col gap-5">
                     <div class="flex flex-col relative">
-                        <label for="">Acess Key</label>
+                        <label for="">Access key</label>
                         <input 
                             type="text" 
                             v-model="password"

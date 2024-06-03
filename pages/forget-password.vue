@@ -4,21 +4,9 @@
       <div class="absolute inset-y-0 left-0 flex items-center">
         <form
           @submit.prevent="onSubmit"
-          class="w-[625px] h-[80vh] custom-xl:h-[75vh] rounded-2xl 2xl:text-2xl xl:text-xl 2xl:space-y-10 xl:space-y-7 shadow-2xl p-16 pt-8 2xl:pt-16 drop-shadow-2xl backdrop-blur-xl bg-gradient-to-br from-[#FFFFFFCC] via-[#ddcececc] to-[#FFFFFF00]"
+          class="w-[625px] h-[50vh] custom-xl:h-[50vh] rounded-2xl 2xl:text-2xl xl:text-xl 2xl:space-y-10 xl:space-y-7 shadow-2xl p-16 pt-8 2xl:pt-16 drop-shadow-2xl backdrop-blur-xl bg-gradient-to-br from-[#FFFFFFCC] via-[#ddcececc] to-[#FFFFFF00]"
         >
-          <div class="flex flex-col space-y-3 relative">
-            <div class="flex items-center space-x-3">
-              <UserCircleIcon class="h-6 w-6 text-secondary" />
-              <label for="">Fullname</label>
-            </div>
-            <input
-              type="text"
-              v-model="name"
-              v-bind="nameAttrs"
-              class="border-[3px] border-secondary rounded-md p-3 focus:outline-none"
-            />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.name }}</p>
-          </div>
+          <h2 class="text-center font-semibold">Forget Password</h2>
 
           <div class="flex flex-col space-y-3 relative">
             <div class="flex items-center space-x-3">
@@ -32,40 +20,6 @@
               class="border-[3px] border-secondary rounded-md p-3 focus:outline-none"
             />
             <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.email }}</p>
-          </div>
-
-
-          <div class="flex flex-col space-y-3 relative">
-            <div class="flex items-center space-x-3">
-              <LockClosedIcon class="w-6 h-6 text-secondary" />
-              <label for="">Password</label>
-            </div>
-            <input
-              :type="toggleType ? 'password' : 'text'"
-              v-model="password"
-              v-bind="passwordAttrs"
-              class="border-[3px] border-secondary rounded-md p-3 focus:outline-none"
-            />
-            <EyeIcon v-if="toggleType" @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
-            <EyeSlashIcon v-else @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.password }}</p>
-          </div>
-
-
-          <div class="flex flex-col space-y-3 relative">
-            <div class="flex items-center space-x-3">
-              <LockClosedIcon class="w-6 h-6 text-secondary" />
-              <label for="">Confirm Password</label>
-            </div>
-            <input
-              :type="toggleType ? 'password' : 'text'"
-              v-model="comfirm_password"
-              v-bind="comfirmPasswordAttrs"
-              class="border-[3px] border-secondary rounded-md p-3 focus:outline-none"
-            />
-            <EyeIcon v-if="toggleType" @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
-            <EyeSlashIcon v-else @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.password }}</p>
           </div>
           <!-- <div class="text-secondary text-right">Forgot password?</div> -->
 
@@ -98,10 +52,10 @@
               />
             </svg>
             <span :class="{ invisible: isSubmitting }">
-              {{ 'CREATE AN ACCOUNT' }}
+              {{ 'SEND' }}
             </span>
           </button>
-          <p class="text-center">Already a collector? <NuxtLink to="/login"><b>Login</b></NuxtLink></p>
+          <!-- <p class="text-center">Already a collector? <NuxtLink to="/login"><b>Login</b></NuxtLink></p> -->
         </form>
       </div>
     </div>
@@ -119,35 +73,26 @@
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import * as yup from 'yup';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid'
-import { EnvelopeIcon, LockClosedIcon,UserCircleIcon } from '@heroicons/vue/24/outline'
+import { AtSymbolIcon, EnvelopeIcon } from '@heroicons/vue/24/outline'
 
 const config = useRuntimeConfig()
 const { $toast, $router } = useNuxtApp()
 
-const { signUp } = useAuth()
 const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     yup.object({
       email: yup.string().email().required(),
-      password: yup.string().min(8).required(),
-      comfirm_password: yup.string()
-        .oneOf([yup.ref('password'), ''], 'Passwords must match'),
-      name: yup.string().required(),
     }),
   ),
 });
 
-const toggleType = ref(true)
+
 const [email, emailAttrs] = defineField('email');
-const [name, nameAttrs] = defineField('name');
-const [password, passwordAttrs] = defineField('password');
-const [comfirm_password, comfirmPasswordAttrs] = defineField('password');
 
 const onSubmit = handleSubmit( (values) => {
-  useFetch(`${useBaseUrl()}/auth/register`, {
+  useFetch(`${useBaseUrl()}/users/reset-password`, {
     method: 'post',
-    body: {name: values.name, email: values.email, password: values.password, callbackURL: `${config.public.baseUrl}verify`},
+    body: {email: values.email, callbackURL: `${config.public.baseUrl}reset-password`},
     onResponse({ request, response, options }) {
       // Process the response data
       if(response.ok) {

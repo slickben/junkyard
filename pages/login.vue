@@ -18,7 +18,7 @@
 
           <div class="flex flex-col space-y-3 relative">
             <div class="flex items-center space-x-3">
-              <AtSymbolIcon class="w-6 h-6" />
+              <EnvelopeIcon class="w-6 h-6 text-secondary" />
               <!-- <img src="/img/security_lock.svg" alt="" width="24" height="24" /> -->
               <label for="">Email address</label>
             </div>
@@ -32,7 +32,7 @@
           </div>
           <div class="flex flex-col space-y-3 relative">
             <div class="flex items-center space-x-3">
-              <LockClosedIcon class="w-6 h-6" />
+              <LockClosedIcon class="w-6 h-6 text-secondary" />
               <label for="">Password</label>
             </div>
             <input
@@ -45,7 +45,7 @@
             <EyeSlashIcon v-else @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
             <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.password }}</p>
           </div>
-          <div class="text-secondary text-right">Forgot password?</div>
+          <NuxtLink to="/forget-password" class="text-secondary text-right block">Forgot password?</NuxtLink>
           <button
             type="submit"
             :disabled="!meta.valid"
@@ -90,7 +90,7 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import * as yup from 'yup';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid'
-import { AtSymbolIcon, LockClosedIcon,UserCircleIcon } from '@heroicons/vue/24/outline'
+import { EnvelopeIcon, LockClosedIcon,UserCircleIcon } from '@heroicons/vue/24/outline'
 const { $toast, $router } = useNuxtApp()
 
 const { signIn } = useAuth()
