@@ -4,7 +4,7 @@
   </pre> -->
     <div class="bg-fakeWhite h-full flex-grow p-12 2xl:px-20 pt-10 relative">
         <div class="mb-5 flex items-center justify-between">
-          <h1 class="2xl:text-3xl xl:text-2xl font-bold">Overview</h1>
+          <h1 class="2xl:text-4xl xl:text-2xl font-bold">Overview</h1>
           <button type="button" @click.prevent="signOut({ callbackUrl: '/login' })" class="text-error text-lg font-semibold">Logout</button>
         </div>
         

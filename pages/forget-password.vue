@@ -6,7 +6,7 @@
           @submit.prevent="onSubmit"
           class="w-[625px] h-[50vh] custom-xl:h-[50vh] rounded-2xl 2xl:text-2xl xl:text-xl 2xl:space-y-10 xl:space-y-7 shadow-2xl p-16 pt-8 2xl:pt-16 drop-shadow-2xl backdrop-blur-xl bg-gradient-to-br from-[#FFFFFFCC] via-[#ddcececc] to-[#FFFFFF00]"
         >
-          <h2 class="text-center font-semibold">Forget Password</h2>
+          <h2 class="text-center font-semibold">Forgot Password</h2>
 
           <div class="flex flex-col space-y-3 relative">
             <div class="flex items-center space-x-3">
@@ -81,7 +81,7 @@ const { $toast, $router } = useNuxtApp()
 const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     yup.object({
-      email: yup.string().email().required(),
+      email: yup.string().email().required().label('Email'),
     }),
   ),
 });

@@ -2,7 +2,7 @@
   <div class="px-12 2xl:px-20 py-12 w-full">
       <div class="flex justify-between">
         <div>
-          <p class="text-4xl font-bold">My Account</p>
+          <p class="2xl:text-4xl text-2xl font-bold">My Account</p>
         </div>
         <div class="flex items-center font-bold gap-12 text-lg">
           <ChangePassword />

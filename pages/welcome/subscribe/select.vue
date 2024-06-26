@@ -21,7 +21,7 @@
                     {{ selectedPlans }}
                 </pre> -->
 
-                <div
+                <!-- <div
                     v-if="selectedPlans.length > 0"
                     class="border-2 border-secondary card-shadow px-10 py-3 rounded-3xl">
                     <div
@@ -75,21 +75,21 @@
                         </NuxtLink>
                         <p v-if="selectedPlans.length < 1" class="absolute inset-0"></p>
                     </div>
-                </div>
+                </div> -->
                 <div
-                    v-if="selectedPlans.length > 2"
+                v-for="item in selectedPlans.sort((a, b) => parseInt(a.price) - parseInt(b.price))" :key="item.id"
                     class="border-2 border-secondary card-shadow px-10 py-3 rounded-3xl">
                     <div
                     class="border-b-2 border-b-secondary text-center py-2 space-y-3" >
-                        <h2 class="text-2xl font-semibold">N{{ selectedPlans[1].price }}</h2>
+                        <h2 class="text-2xl font-semibold">N{{ item.price }}</h2>
                         <p class="font-medium">
-                            {{ selectedPlans[1].name }}
+                            {{ item.name }}
                         </p>
                         <p class="text-sm">7 Days trial</p>
                     </div>
                     <div class="text-center space-y-2 py-2">
                         <p><b>What's included</b></p>
-                        <p class="text-sm">20 User Acess</p>
+                        <p class="text-sm">{{ item.name === 'Premium Plan' ? 'Unlimited' : item.name === 'Standard Plan' ? '2' : '1'}} User Acess</p>
                         <p class="text-sm">Analytics Report</p>
                         <p class="text-sm">Take Pick up Request</p>
                         <p class="text-sm">Take Drop off Boking</p>
@@ -118,7 +118,7 @@
 
     const store = useStore()
 
-    const duration = ref<string>('monthly')
+    const duration = ref<string>('Monthly')
     const selectedPlans = ref<Plan[]>([])
 
     const { token } = useAuth()
@@ -158,9 +158,9 @@
                     plans: groupedPlans[description]
                 }));
                 const sortedGroupedArray: GroupPlans[] = groupedArray.sort((a, b) => {
-                    if (a.description === "monthly") {
+                    if (a.description === "Monthly") {
                         return -1; // "monthly" comes before "annually"
-                    } else if (b.description === "monthly") {
+                    } else if (b.description === "Monthly") {
                         return 1; // "annually" comes after "monthly"
                     } else {
                         return 0; // No change in order for other descriptions

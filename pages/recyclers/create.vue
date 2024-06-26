@@ -81,9 +81,9 @@ const { data, token } = useAuth()
 const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     yup.object({
-      name: yup.string().required(),
-      email: yup.string().email().required(),
-      password: yup.string().min(8).required(),
+      name: yup.string().required().label('Name'),
+      email: yup.string().email().required().label('Email'),
+      password: yup.string().min(8).required().label('Password'),
     }),
   ),
 });

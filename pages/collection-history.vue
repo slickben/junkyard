@@ -2,7 +2,7 @@
     <div
         class="bg-fakeWhite h-full flex-grow flex flex-col py-12 px-12 2xl:px-20 overflow-hidden"
       >
-        <h1 class="2xl:text-3xl xl:text-2xl font-bold mb-5">Overview</h1>
+        <h1 class="2xl:text-4xl xl:text-2xl font-bold mb-5">Collection History</h1>
         <div class="relative grid grid-cols-3 gap-16">
           <!-- first overview -->
           <div

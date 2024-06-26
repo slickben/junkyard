@@ -100,8 +100,10 @@ const { $toast, $router } = useNuxtApp()
 const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     yup.object({
-      password: yup.string().min(8).required(),
+      password: yup.string().min(8).required().label('Password'),
       comfirm_password: yup.string()
+  .oneOf([yup.ref("password"), ''], "Passwords must match")
+  .required("Required"),
     }),
   ),
 });

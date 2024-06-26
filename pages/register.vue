@@ -129,8 +129,8 @@ const { signUp } = useAuth()
 const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     yup.object({
-      email: yup.string().email().required(),
-      password: yup.string().min(8).required(),
+      email: yup.string().email().required().label('Email'),
+      password: yup.string().min(8).required().label('Password'),
       comfirm_password: yup.string()
         .oneOf([yup.ref('password'), ''], 'Passwords must match'),
       name: yup.string().required(),
@@ -142,7 +142,7 @@ const toggleType = ref(true)
 const [email, emailAttrs] = defineField('email');
 const [name, nameAttrs] = defineField('name');
 const [password, passwordAttrs] = defineField('password');
-const [comfirm_password, comfirmPasswordAttrs] = defineField('password');
+const [comfirm_password, comfirmPasswordAttrs] = defineField('comfirm_password');
 
 const onSubmit = handleSubmit( (values) => {
   useFetch(`${useBaseUrl()}/auth/register`, {

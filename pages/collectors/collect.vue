@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-fakeWhite h-full py-2 md:py-12 px-5 md:px-12 2xl:px-20 md:w-[741px]">
+  <div class="bg-fakeWhite h-full py-2 md:py-12 px-5 md:px-12 2xl:px-20 w-full overflow-auto ">
+    <div class="md:w-[741px]">
       <h1 class="2xl:text-4xl xl:text-2xl font-bold md:mb-5">Collect Item</h1>
       <NuxtLink to="/collectors" class="text-textGray text-sm font-semibold">Dashboard > 
           <span class="text-black">Collect</span>
@@ -58,6 +59,18 @@
                             >
                             <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.name }}</p> -->
                         </div>
+                        <div class="flex flex-col relative space-y-1">
+                            <label for="" class="font-medium text-black">Buy Price</label>
+                            <input 
+                                type="number"
+                                v-model="field.value.price"
+                                class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded 
+                                w-full px-3 py-1 focus:border-secondary focus:ring-0"
+                                required 
+                                placeholder="0"
+                            >
+                            <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.name }}</p> -->
+                        </div>
                     </HeadDisclosurePanel>
                     <button class="absolute -right-6 top-3 bg-red-500 text-white rounded">
                         <MinusIcon
@@ -66,7 +79,7 @@
                         </MinusIcon>
                     </button>
                 </HeadDisclosure>
-                <button @click="push({ wasteType: '', weight: 0})" class="bg-secondary w-fit px-2 flex items-center rounded py-1 ml-auto mt-2 text-white">
+                <button @click="push({ wasteType: '', weight: 0, price: 0})" class="bg-secondary w-fit px-2 flex items-center rounded py-1 ml-auto mt-2 text-white">
                     Add Item
                     <PlusIcon
                             class="h-5 w-5"
@@ -74,7 +87,7 @@
                 </button>
                 
             </div>
-            <div class="flex flex-col relative col-span-2">
+            <div class="flex flex-col relative col-span-1">
                 <label for="">Customer Name</label>
                 <input 
                     type="text" 
@@ -85,7 +98,7 @@
                 >
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['user.name'] }}</p>
             </div>
-            <div class="flex flex-col relative col-span-2">
+            <div class="flex flex-col relative col-span-1">
                 <label for="">Customer Address</label>
                 <input 
                     type="text" 
@@ -95,6 +108,40 @@
                     class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                 >
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['user.name'] }}</p>
+            </div>
+            <div class="flex flex-col relative col-span-1">
+                <label for="">Customer Phone Number</label>
+                <input 
+                    type="text" 
+                    v-model="phoneNumber"
+                    v-bind="phoneNumberAttrs" 
+                    placeholder="address"
+                    class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
+                >
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">
+                    {{ errors['user.phoneNumber'] }}
+                </p>
+            </div>
+            <div class="flex flex-col relative space-y-1">
+                <label for="" class="font-medium text-black">Gender</label>
+                <select 
+                    v-model="gender"
+                    as="select"
+                    v-bind="genderAttrs"
+                    type="number" 
+                    class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
+                            w-full px-3 py-2 focus:border-secondary focus:ring-0 "
+                    required 
+                    placeholder="0"
+                >
+                <option value="">Select Gender</option>
+                <option v-for="item in ['Male', 'Female']" :key="item" :value="item">
+                    {{ item }}
+                </option>
+                </select>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">
+                    {{ errors['user.gender'] }}
+                </p>
             </div>
             <div class="flex flex-col relative">
                 <label for="" class="font-medium">Total Weight (kg) </label>
@@ -110,17 +157,7 @@
                 >
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p>
             </div>
-            <div class="flex flex-col relative">
-                <label for="" class="font-medium">Buy Price </label>
-                <input 
-                    type="text" 
-                    v-model="buyPrice"
-                    class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
-                                w-full px-3 py-2 focus:border-secondary focus:ring-0"
-                    placeholder="0"
-                >
-                <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p> -->
-            </div>
+            
             <div class="flex flex-col relative">
                 <label for="" class="font-medium">
                 Amount (NGN)
@@ -139,6 +176,42 @@
             </div>
             <!-- </div> -->
             <div class="flex flex-col relative space-y-1">
+                <label for="" class="font-medium text-black">Collection Type</label>
+                <select 
+                    v-model="collection_type"
+                    as="select"
+                    v-bind="collection_typeAttrs"
+                    type="number" 
+                    class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
+                            w-full px-3 py-2 focus:border-secondary focus:ring-0 "
+                    required 
+                    placeholder="0"
+                >
+                <option value="">Select Type</option>
+                <option v-for="item in ['Pick up', 'Drop off']" :key="item" :value="item">
+                    {{ item }}
+                </option>
+                </select>
+            </div>
+            <div class="flex flex-col relative space-y-1">
+                <label for="" class="font-medium text-black">Producer</label>
+                <select 
+                    v-model="producer_type"
+                    as="select"
+                    v-bind="producer_typeAttrs"
+                    type="number" 
+                    class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg 
+                            w-full px-3 py-2 focus:border-secondary focus:ring-0 "
+                    required 
+                    placeholder="0"
+                >
+                <option value="">Select Type</option>
+                <option v-for="item in ['Household', 'Corporate Clients', 'Public Places', 'Clean Up']" :key="item" :value="item">
+                    {{ item }}
+                </option>
+                </select>
+            </div>
+            <div class="flex flex-col col-span-2 relative space-y-1">
                 <label for="" class="font-medium text-black">Payment Type</label>
                 <select 
                     v-model="paymentType"
@@ -165,6 +238,7 @@
             </button>
           </div>
       </form>
+    </div>
   </div>
 
     <HeadTransitionRoot appear :show="addBankModal" as="template">
@@ -307,7 +381,8 @@ interface  Bank {
 }
 interface Waste {
    wasteType: string
-   weight: number
+   weight: number,
+   price: number
 }
 
 const { $toast, $router } = useNuxtApp()
@@ -315,28 +390,33 @@ const { data, token } = useAuth()
 const addBankModal = ref(false)
 const user: User = data.value
 const isLoading = ref(false)
-const buyPrice = ref(0)
+// const buyPrice = ref(0)
 const banks = ref<Bank[]>([])
 
 const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, controlledValues  } = useForm({
     validationSchema: toTypedSchema(
     yup.object({
-        totalWeight: yup.number().required(),
-        totalAmount: yup.number().required(),
+        totalWeight: yup.number().required().label('Total Weight'),
+        totalAmount: yup.number().required().label('Total Amount'),
         user: yup.object({
-            name: yup.string().required(),
-            address: yup.string().required()
+            name: yup.string().required().label('Name'),
+            address: yup.string().required().label('Address'),
+            phoneNumber: yup.string().required().label('Phone Number'),
+            gender: yup.string().required().label('Gender')
         }),
         // wastes: yup.array().of(user)
         wastes: yup.array().of(
             yup.object().shape(
                 {
                     wasteType: yup.string(),
-                    weight: yup.number()
+                    weight: yup.number(),
+                    price: yup.number()
                 }
             )
         ),
-        paymentType: yup.string().required(),
+        paymentType: yup.string().required().label('Payment Type'),
+        collection_type: yup.string().required().label('Collection Type'),
+        producer_type: yup.string().required().label('Producer Type'),
         accountDetails: yup.object({
             account_name: yup.string().when("paymentType", {
                 is: 'Transfer', // alternatively: (val) => val == true
@@ -371,7 +451,7 @@ const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, co
     ),
     initialValues: {
         wastes: [
-            { wasteType: '', weight: 0}
+            { wasteType: '', weight: 0, price: 0}
         ],
     },
 });
@@ -385,6 +465,10 @@ const [totalWeight, totalWeightAttrs] = defineField('totalWeight');
 const [totalAmount, totalAmountAttrs] = defineField('totalAmount');
 const [paymentType, paymentTypeAttrs] = defineField('paymentType');
 const [name, nameAttrs] = defineField('user.name');
+const [phoneNumber, phoneNumberAttrs] = defineField('user.phoneNumber');
+const [gender, genderAttrs] = defineField('user.gender');
+const [collection_type, collection_typeAttrs] = defineField('collection_type');
+const [producer_type, producer_typeAttrs] = defineField('producer_type');
 const [address, addressAttrs] = defineField('user.address');
 const [account_name, account_nameAttrs] = defineField('accountDetails.account_name');
 const [account_number, account_numberAttrs] = defineField('accountDetails.account_number');
@@ -404,24 +488,27 @@ const getWasteTypeNameById = (id: string) => {
 
 watch(fields.value, (newValue, oldValue) => {
     let totalWeight = 0;
+    let itemPrice = 0
     for (const item of newValue) {
-        totalWeight += item.value.weight;
+        totalWeight += Number(item.value.weight);
+        itemPrice += Number(item.value.price);
     }
 
     // Calculate the total price
-    const totalPrice = buyPrice.value < 1 ? totalWeight * user.data.pricePerKg : totalWeight * buyPrice.value;
+    // const totalPrice = buyPrice.value < 1 ? totalWeight * user.data.pricePerKg : totalWeight * buyPrice.value;
+    const totalPrice = totalWeight * itemPrice 
 
     setFieldValue('totalAmount', totalPrice)
     setFieldValue('totalWeight', totalWeight)
 })
 
-watch(buyPrice, (newValue, oldValue) => {
+// watch(buyPrice, (newValue, oldValue) => {
 
-    // Calculate the total price
-    const totalPrice = totalWeight.value * buyPrice.value;
+//     // Calculate the total price
+//     const totalPrice = totalWeight.value * buyPrice.value;
 
-    setFieldValue('totalAmount', totalPrice)
-})
+//     setFieldValue('totalAmount', totalPrice)
+// })
 
 watch(paymentType, (newValue, oldValue) => {
  if(newValue === 'Transfer') {
@@ -442,6 +529,8 @@ const onSubmit = handleSubmit( (values) => {
         totalAmount: values.totalAmount,
         user: values.user,
         paymentType: values.paymentType.toLowerCase(),
+        collection_type: values.collection_type,
+        producer_type: values.producer_type,
         wastes: values.wastes,
         accountDetails: values.accountDetails
     },
