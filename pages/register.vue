@@ -172,6 +172,22 @@ const onSubmit = handleSubmit( (values) => {
   // })
 });
 
+watch(name, (newValue, oldValue) => {
+  name.value = newValue.replace(/[0-9]/g, '');
+
+  const words = newValue.trim().split(/\s+/);
+      
+  // Check if there are more than two words
+  if (words.length > 2) {
+    // Keep only the first two words
+    name.value = words.slice(0, 2).join(' ');
+  } else {
+    // Allow the new value if it's two words or less
+    name.value = newValue;
+  }
+})
+
+
 definePageMeta({
   layout: 'auth',
   auth: false

@@ -12,6 +12,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
     if(user.data.role === 'collector') {
         return navigateTo('/collectors')
     }
+    if(user.data.role === 'super') {
+        return navigateTo('/super-admin')
+    }
     if (!user.data.businessInfo.name && to.path === '/') {
         // console.log(data.value)
         return navigateTo('/welcome')

@@ -11,9 +11,9 @@
       </div>
       <div class="flex mt-20 gap-20">
         <!-- Right -->
-        <div class="flex flex-col gap-12">
+        <div class="grid grid-cols-1 grid-rows-3 gap-12">
           <div
-            class="rounded-3xl card-shadow flex gap-4 px-6 py-4 items-center"
+            class="rounded-3xl card-shadow flex gap-4 px-6 py-4 items-center row-span-1"
           >
             <div class="relative">
               <img v-if="data.data.avatar" :src="data.data.avatar" alt="" class="w-[100px] h-[100px] rounded-full mx-auto object-cover" />
@@ -32,7 +32,7 @@
           </div>
 
           <div
-            class="rounded-3xl card-shadow flex flex-col gap-7 px-6 2xl:py-7 xl:py-4 2xl:mb-7"
+            class="rounded-3xl card-shadow flex flex-col gap-7 px-6 2xl:py-7 xl:py-4  row-span-2"
           >
             <div class="flex items-center justify-between">
               <div
@@ -52,13 +52,13 @@
               <p>{{ collectors.length }} Units</p>
             </div>
           </div>
-          <div
+          <!-- <div
             class="flex card-shadow rounded-2xl px-6 py-7 items-center text-center justify-center"
           >
             <button type="button" class="text-center font-medium text-lg">
               View transaction history
             </button>
-          </div>
+          </div> -->
         </div>
 
         <!-- Left -->
