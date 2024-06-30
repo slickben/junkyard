@@ -52,6 +52,7 @@
                             <input 
                                 type="number"
                                 v-model="field.value.weight"
+                                step=".01"
                                 class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded 
                                 w-full px-3 py-1 focus:border-secondary focus:ring-0"
                                 required 
@@ -64,6 +65,7 @@
                             <input 
                                 type="number"
                                 v-model="field.value.price"
+                                step=".01"
                                 class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded 
                                 w-full px-3 py-1 focus:border-secondary focus:ring-0"
                                 required 
@@ -491,14 +493,14 @@ watch(fields.value, (newValue, oldValue) => {
     let itemPrice = 0
     for (const item of newValue) {
         totalWeight += Number(item.value.weight);
-        itemPrice += Number(item.value.price);
+        itemPrice += Number(item.value.price) * Number(item.value.weight);
     }
 
     // Calculate the total price
     // const totalPrice = buyPrice.value < 1 ? totalWeight * user.data.pricePerKg : totalWeight * buyPrice.value;
     const totalPrice = totalWeight * itemPrice 
 
-    setFieldValue('totalAmount', totalPrice)
+    setFieldValue('totalAmount', itemPrice)
     setFieldValue('totalWeight', totalWeight)
 })
 

@@ -9,9 +9,13 @@ export default defineNuxtRouteMiddleware((to, from) => {
     
     // alert(user)
     console.log(user)
+    
+    if(user.data.role === 'collector' && !user.data.isSubscribed) {
+        return navigateTo('/welcome/subscribe')
+    }
     if(user.data.role === 'collector') {
         return navigateTo('/collectors')
-    }
+    } 
     if(user.data.role === 'super') {
         return navigateTo('/super-admin')
     }
