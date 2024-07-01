@@ -79,7 +79,7 @@
                   class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary
                     focus:outline-none"
                 />
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.name }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p>
               </div>
               <div class="flex flex-col relative">
                 <label for="" class="text-collectionText xl:text-sm"
@@ -92,7 +92,7 @@
                   disabled
                   class="border-b-2 border-b-collectionText cursor-not-allowed rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                 />
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.company_name }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.company_name }}</p>
               </div>
               <div class="flex flex-col col-span-2 relative">
                 <label for="" class="text-collectionText xl:text-sm"
@@ -104,7 +104,7 @@
                   v-bind="company_addressAttrs"
                   class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                 />
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.company_address }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.company_address }}</p>
               </div>
               <div class="flex flex-col relative">
                 <label for="" class="text-collectionText xl:text-sm"
@@ -116,7 +116,7 @@
                   v-bind="cityAttrs"
                   class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                 />
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.city }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.city }}</p>
               </div>
               <div class="flex flex-col relative">
                 <label for="" class="text-collectionText xl:text-sm"
@@ -130,7 +130,7 @@
                     class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                   />
                 </div>
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.state }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.state }}</p>
               </div>
               <div class="flex flex-col relative">
                 <label for="" class="text-collectionText xl:text-sm"
@@ -144,7 +144,7 @@
                     class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                   />
                 </div>
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.country }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.country }}</p>
               </div>
               <div class="flex flex-col relative">
                 <label for="" class="text-collectionText xl:text-sm"
@@ -157,7 +157,7 @@
                   placeholder="+234"
                   class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                 />
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.phone_number }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.phone_number }}</p>
               </div>
               <div class="flex flex-col col-span-2">
                 <label for="" class="text-collectionText xl:text-sm"
@@ -218,14 +218,14 @@
   const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
     validationSchema: toTypedSchema(
       yup.object({
-        email: yup.string().email().required(),
-        name: yup.string().required(),
-        company_name: yup.string().required(),
-        company_address: yup.string().required(),
-        city: yup.string().required(),
-        state: yup.string().required(),
-        country: yup.string().required(),
-        phone_number: yup.string().required(),
+        email: yup.string().email().required().label('Email'),
+        name: yup.string().required().label('Name'),
+        company_name: yup.string().required().label('Company name'),
+        company_address: yup.string().required().label('Company address'),
+        city: yup.string().required().label('City'),
+        state: yup.string().required().label('State'),
+        country: yup.string().required().label('Country'),
+        phone_number: yup.string().required().label('Phone number'),
       }),
     ),
     initialValues: {

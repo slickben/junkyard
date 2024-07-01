@@ -17,7 +17,7 @@
               v-bind="nameAttrs"
               class="border-[3px] border-secondary rounded-md p-3 focus:outline-none"
             />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.name }}</p>
+            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p>
           </div>
 
           <div class="flex flex-col space-y-3 relative">
@@ -31,7 +31,7 @@
               v-bind="emailAttrs"
               class="border-[3px] border-secondary rounded-md p-3 focus:outline-none"
             />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.email }}</p>
+            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.email }}</p>
           </div>
 
 
@@ -48,7 +48,7 @@
             />
             <EyeIcon v-if="toggleType" @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
             <EyeSlashIcon v-else @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.password }}</p>
+            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.password }}</p>
           </div>
 
 
@@ -65,7 +65,7 @@
             />
             <EyeIcon v-if="toggleType" @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
             <EyeSlashIcon v-else @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.password }}</p>
+            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.password }}</p>
           </div>
           <!-- <div class="text-secondary text-right">Forgot password?</div> -->
 
@@ -173,9 +173,9 @@ const onSubmit = handleSubmit( (values) => {
 });
 
 watch(name, (newValue, oldValue) => {
-  name.value = newValue.replace(/[0-9]/g, '');
+  const cleared = newValue?.replaceAll(/[^a-zA-Z\s]/g, '');
 
-  const words = newValue.trim().split(/\s+/);
+  const words = cleared?.trim().split(/\s+/);
       
   // Check if there are more than two words
   if (words.length > 2) {
@@ -183,7 +183,7 @@ watch(name, (newValue, oldValue) => {
     name.value = words.slice(0, 2).join(' ');
   } else {
     // Allow the new value if it's two words or less
-    name.value = newValue;
+    name.value = cleared;
   }
 })
 

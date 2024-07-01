@@ -19,7 +19,7 @@
               v-bind="emailAttrs"
               class="border-[3px] border-secondary rounded-md p-3 focus:outline-none"
             />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.email }}</p>
+            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.email }}</p>
           </div>
           <!-- <div class="text-secondary text-right">Forgot password?</div> -->
 

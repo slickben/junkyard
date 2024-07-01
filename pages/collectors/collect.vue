@@ -58,7 +58,7 @@
                                 required 
                                 placeholder="0"
                             >
-                            <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.name }}</p> -->
+                            <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
                         </div>
                         <div class="flex flex-col relative space-y-1">
                             <label for="" class="font-medium text-black">Buy Price</label>
@@ -71,7 +71,7 @@
                                 required 
                                 placeholder="0"
                             >
-                            <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.name }}</p> -->
+                            <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
                         </div>
                     </HeadDisclosurePanel>
                     <button class="absolute -right-6 top-3 bg-red-500 text-white rounded">
@@ -98,7 +98,7 @@
                     placeholder="name"
                     class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                 >
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['user.name'] }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors['user.name'] }}</p>
             </div>
             <div class="flex flex-col relative col-span-1">
                 <label for="">Customer Address</label>
@@ -109,7 +109,7 @@
                     placeholder="address"
                     class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                 >
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['user.name'] }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors['user.name'] }}</p>
             </div>
             <div class="flex flex-col relative col-span-1">
                 <label for="">Customer Phone Number</label>
@@ -120,7 +120,7 @@
                     placeholder="address"
                     class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                 >
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">
                     {{ errors['user.phoneNumber'] }}
                 </p>
             </div>
@@ -141,7 +141,7 @@
                     {{ item }}
                 </option>
                 </select>
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">
                     {{ errors['user.gender'] }}
                 </p>
             </div>
@@ -157,7 +157,7 @@
                     required 
                     placeholder="0"
                 >
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalWeight }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.totalWeight }}</p>
             </div>
             
             <div class="flex flex-col relative">
@@ -174,7 +174,7 @@
                     required
                     readonly
                 >
-                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.totalAmount }}</p>
+                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.totalAmount }}</p>
             </div>
             <!-- </div> -->
             <div class="flex flex-col relative space-y-1">
@@ -310,7 +310,7 @@
                                         placeholder="name"
                                         class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                                     >
-                                    <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['accountDetails.account_number'] }}</p>
+                                    <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors['accountDetails.account_number'] }}</p>
                                 </div>
                                 <div v-if="account_name" class="flex flex-col relative">
                                     <label for="">Account Name</label>
@@ -322,7 +322,7 @@
                                         class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                                         readonly
                                     >
-                                    <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors['accountDetails.account_name'] }}</p>
+                                    <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors['accountDetails.account_name'] }}</p>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between gap-x-10 pt-6">
@@ -398,21 +398,21 @@ const banks = ref<Bank[]>([])
 const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, controlledValues  } = useForm({
     validationSchema: toTypedSchema(
     yup.object({
-        totalWeight: yup.number().required().label('Total Weight'),
-        totalAmount: yup.number().required().label('Total Amount'),
+        totalWeight: yup.number().required().label('Total weight'),
+        totalAmount: yup.number().required().label('Total wmount'),
         user: yup.object({
             name: yup.string().required().label('Name'),
             address: yup.string().required().label('Address'),
-            phoneNumber: yup.string().required().label('Phone Number'),
+            phoneNumber: yup.string().required().label('Phone number'),
             gender: yup.string().required().label('Gender')
         }),
         // wastes: yup.array().of(user)
         wastes: yup.array().of(
             yup.object().shape(
                 {
-                    wasteType: yup.string(),
-                    weight: yup.number(),
-                    price: yup.number()
+                    wasteType: yup.string().label('Waste type'),
+                    weight: yup.number().label('Weight'),
+                    price: yup.number().label('Price')
                 }
             )
         ),

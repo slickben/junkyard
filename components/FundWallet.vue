@@ -10,7 +10,7 @@
     const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
         validationSchema: toTypedSchema(
             yup.object({
-                amount: yup.string().required(),
+                amount: yup.string().required().label('Amount'),
             }),
         ),
     });
@@ -104,7 +104,7 @@
                                      focus:ring-secondary focus:border-secondary"
                                     :options="{ currency: 'NGN' }"
                                 /> -->
-                                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.amount }}</p>
+                                <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.amount }}</p>
                             </div>
                         </div>
                         <div class="flex items-center justify-between gap-x-10 pt-6">

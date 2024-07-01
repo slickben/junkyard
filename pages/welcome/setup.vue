@@ -16,10 +16,10 @@ const { token, getSession } = useAuth()
 const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     yup.object({
-      company_name: yup.string().required(),
-      address: yup.string().required(),
-      city: yup.string().required(),
-      country: yup.string().required(),
+      company_name: yup.string().required().label('Company name'),
+      address: yup.string().required().label('Address'),
+      city: yup.string().required().label('City'),
+      country: yup.string().required().label('Country'),
     }),
   ),
 });
@@ -92,7 +92,7 @@ definePageMeta({
                 xl:text-xl ring-0 focus:ring-0 outline-none border-t-0 border-r-0 border-l-0 px-0 border-[#BDBDBD]
                 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary w-full"
               />
-              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.company_name }}</p>
+              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.company_name }}</p>
             </div>
             <!-- Adjusted width here -->
             <div class="relative col-span-2">
@@ -106,7 +106,7 @@ definePageMeta({
                 xl:text-xl w-full ring-0 focus:ring-0 outline-none border-t-0 border-r-0 border-l-0 px-0 border-[#BDBDBD]
                 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary"
               />
-              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.address }}</p>
+              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.address }}</p>
             </div>
 
             <div class="relative w-full">
@@ -121,7 +121,7 @@ definePageMeta({
                 <option selected value="">Country</option>
                 <option v-for="item in countries.default.map( i => i.name)" :key="item" :value="item">{{ item }}</option>
               </select>
-              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.country }}</p>
+              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.country }}</p>
             </div>
 
             <!-- <select name="" id=""></select> -->
@@ -137,7 +137,7 @@ definePageMeta({
                 <option selected value="">City/State</option>
                 <option v-for="item in states" :key="item.code" :value="item.name">{{ item.name }}</option>
               </select>
-              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.city }}</p>
+              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.city }}</p>
             </div>
             <!-- Adjusted width here -->
           </div>

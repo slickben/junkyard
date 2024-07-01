@@ -17,7 +17,7 @@
                         required 
                         placeholder="Name"
                     >
-                    <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.name }}</p>
+                    <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p>
                 </div>
                 <div class="flex flex-col gap-6">
                     <div class="flex flex-col relative">
@@ -30,7 +30,7 @@
                             class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]" 
                             required
                         >
-                        <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.email }}</p>
+                        <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.email }}</p>
                     </div>
                     <!-- <button 
                         type="submit" 
@@ -49,7 +49,7 @@
                             placeholder="Password"
                             class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                         >
-                        <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 capitalize">{{ errors.password }}</p>
+                        <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.password }}</p>
                     </div>
                     <!-- <button 
                         type="submit" 
