@@ -103,6 +103,7 @@
         <table class="w-full font-semibold 2xl:text-lg xl:text-sm table-auto">
           <thead class="text-textGray 2xl:text-lg xl:text-sm font-semibold sticky top-0 bg-white">
               <tr class="text-left border-b">
+                <th class="py-[16px] px-[32px]">Items</th>
                 <th class="py-[16px] px-[32px]">Price</th>
                 <th class="py-[16px] px-[32px]">Collection model</th>
                 <th class="py-[16px] px-[32px]">Producer</th>
@@ -111,6 +112,9 @@
           </thead>
           <tbody class="">
               <tr v-for="item in collections" :key="item.id" class="border-b 2xl:text-[16px] xl:text-sm font-medium">
+                  <td class="py-[16px] px-[32px]">
+                    {{ wasteTypeNames(item.waste_type) }}
+                  </td>
                   <td class="py-[16px] px-[32px]">
                     {{ useCurrencyFormat(item.price) }}
                   </td>
@@ -138,6 +142,11 @@ interface Overview {
   total_weight: number
 }
 
+interface WasteType {
+  id: string
+  name: string
+}
+
 interface Collection {
   id: string
   created_at: string
@@ -148,6 +157,7 @@ interface Collection {
   price: string
   location: string
   waste_details: string
+  waste_type: WasteType[]
   status: string
 }
 interface CollectionHistory {
@@ -219,6 +229,8 @@ const fetchCollection = async () => {
       },
   });
 }
+
+const wasteTypeNames = (dataItem: any) => dataItem.map((item: any) => item.name).join(', ');
 
 onMounted( async () => {
   await fetchCollection()

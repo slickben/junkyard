@@ -16,6 +16,12 @@
     });
     const [amount, amountAttrs] = defineField('amount');
 
+    watch(amount, (newValue, oldValue) => {
+        if (newValue < 0) {
+            amount.value = '';
+        }
+    })
+
     const onSubmit = handleSubmit( (values) => {
     // await signIn(credentials, undefined, { callbackUrl: '/' })
         isLoading.value = true

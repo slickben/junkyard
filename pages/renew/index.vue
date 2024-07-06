@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-grow p-12 2xl:px-20 pt-10">
+    <div class="flex-grow p-12 2xl:px-20 pt-10 relative">
         <div class="max-w-[979px] w-full">
             <!-- {{ myPlan }} -->
             <div class="">
@@ -129,13 +129,37 @@
                 </div>
             </div>
         </div>
+
+        <div v-if="isLoading"  class=" absolute inset-0 flex items-center justify-center bg-white">
+          <svg   
+            class="w-32 h-32 animate-spin"
+            
+            fill="none"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              class="opacity-75 text-secondary"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            />
+            <path
+              class="opacity-100 text-secondary"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 
     import  { type Plan, type GroupPlans} from '@/composables/useTypes'
-
+    const isLoading = ref(false)
     import { useStore } from '@/store/index'
 
     const store = useStore()
@@ -147,7 +171,6 @@
     const { token, data } = useAuth()
 
     const plans = ref<GroupPlans[]>([])
-
     const myPlan = ref<Plan>({
         id: '',
         name: '',
@@ -157,7 +180,7 @@
 
     const { $toast, $router } = useNuxtApp()
     const getPlans = async () => {
-        // alert('here')
+        isLoading.value = true
         await $fetch(`${useBaseUrl()}/plans`, {
             
         method: 'get',
@@ -166,7 +189,7 @@
         },
         onResponse({ request, response, options }) {
             // Process the response data
-            // alert('here')
+            isLoading.value = false
             if(response.ok) {
                 $toast.success(response._data.message)
                 const res: Plan[] = response._data.data
@@ -212,6 +235,7 @@
             }
         },
         onResponseError({ request, response, options }) {
+            isLoading.value = false
             $toast.error(response._data.message)
         }
     })

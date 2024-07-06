@@ -65,7 +65,7 @@
             />
             <EyeIcon v-if="toggleType" @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
             <EyeSlashIcon v-else @click="toggleType = !toggleType" class="w-6 h-6 absolute right-4 bottom-5 text-gray-700" />
-            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.password }}</p>
+            <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.comfirm_password }}</p>
           </div>
           <!-- <div class="text-secondary text-right">Forgot password?</div> -->
 

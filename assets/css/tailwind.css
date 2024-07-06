@@ -81,4 +81,12 @@
     @apply bg-secondary bg-opacity-20 border-r-secondary border-r-8 text-secondary
 }
 
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  }
+}
+
 
