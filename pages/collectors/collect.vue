@@ -6,29 +6,35 @@
           <span class="text-black">Collect</span>
       </NuxtLink>
       <!-- {{ user.data.adminWasteType }} -->
-      {{ errors }}
+      <!-- {{ errors }} -->
       <form @submit.prevent="onSubmit" class="mt-5 md:mt-12">
           <div class="card-shadow px-4 md:px-12 py-5 md:py-9 rounded-3xl grid grid-cols-2 gap-5">
             <div class="w-full rounded-2xl md:bg-white col-span-2">
                 <HeadDisclosure v-for="(field, idx) in fields" :key="field.key" as="div" class="mt-2 relative" v-slot="{ open }">
-                    
+                    <span class="text-red-500" v-if="errors[`wastes[${idx}].wasteType`] || errors[`wastes[${idx}].weight`] || errors[`wastes[${idx}].price`]">{{ 'All inputs must be filled' }} </span>
                     <HeadDisclosureButton
                         :class="open ? 'rounded-b-none border-b-0 ' : ''"
                         class="flex w-full justify-between items-center rounded-lg px-4 py-2 text-left text-sm font-semibold
-                        focus:outline-none focus-visible:ring focus-visible:ring-secondary/75 border-2 border-secondary"
+                        focus:outline-none focus-visible:ring focus-visible:ring-secondary/75 border-2 border-secondary relative"
                     >
-                    <span>
-                        {{ getWasteTypeNameById(field.value.wasteType) }}
-                    </span>
-                    <div class="w-fit h-fit p-[1px] rounded-full border-2 border-black">
-                        <PlusIcon
-                            v-if="!open"
-                            class="h-5 w-5 text-black"
-                        />
+                    <button class="absolute -right-6 top-2 bg-red-500 text-white rounded">
                         <MinusIcon
+                            @click="remove(idx)"
+                            class="h-5 w-5 ">
+                        </MinusIcon>
+                    </button>
+                    <span>
+                         {{ getWasteTypeNameById(field.value.wasteType) }}
+                    </span>
+                    <div class="w-fit h-fit p-[1px] rounded-full">
+                        <ChevronDownIcon
+                            class="h-5 w-5 text-black"
+                            :class="[open ? 'rotate-180' : '']"
+                        />
+                        <!-- <MinusIcon
                             v-else
                             class="h-5 w-5 text-black"
-                        />
+                        /> -->
                     </div>
                     </HeadDisclosureButton>
                     <HeadDisclosurePanel class="px-4 pb-2 pt-4 text-sm text-gray-500 border-2 border-secondary rounded-b-lg space-y-2">
@@ -49,7 +55,7 @@
                             </option>
                             </select>
                             <p class="text-sm text-red-500 ">
-                                {{ errors[`wastes[${idx}].wasteType`]}}
+                                {{ errors[`wastes[${idx}].wasteType`] }}
                             </p>
                         </div>
                         <div class="flex flex-col relative space-y-1">
@@ -69,7 +75,7 @@
                             <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
                         </div>
                         <div class="flex flex-col relative space-y-1">
-                            <label for="" class="font-medium text-black">Buy Price</label>
+                            <label for="" class="font-medium text-black">Buy Price (kg)</label>
                             <input 
                                 type="number"
                                 v-model="field.value.price"
@@ -86,14 +92,9 @@
                             <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
                         </div>
                     </HeadDisclosurePanel>
-                    <button class="absolute -right-6 top-3 bg-red-500 text-white rounded">
-                        <MinusIcon
-                            @click="remove(idx)"
-                            class="h-5 w-5 ">
-                        </MinusIcon>
-                    </button>
+                    
                 </HeadDisclosure>
-                <button @click="push({ wasteType: '', weight: 0, price: 0})" class="bg-secondary w-fit px-2 flex items-center rounded py-1 ml-auto mt-2 text-white">
+                <button @click="push({ wasteType: '', weight: '', price: '' })" class="bg-secondary w-fit px-2 flex items-center rounded py-1 ml-auto mt-2 text-white">
                     Add Item
                     <PlusIcon
                             class="h-5 w-5"
@@ -129,7 +130,7 @@
                     type="text" 
                     v-model="phoneNumber"
                     v-bind="phoneNumberAttrs" 
-                    placeholder="address"
+                    placeholder="Phone number"
                     class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                 >
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">
@@ -385,7 +386,7 @@
 import { useForm, useFieldArray, Field } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import * as yup from 'yup';
-import { PlusIcon, MinusIcon } from '@heroicons/vue/20/solid'
+import { PlusIcon, MinusIcon, ChevronDownIcon } from '@heroicons/vue/20/solid'
 import { type User } from '@/composables/useTypes'
 
 interface  Bank {
@@ -395,8 +396,8 @@ interface  Bank {
 }
 interface Waste {
    wasteType: string 
-   weight: number,
-   price: number
+   weight: number | null,
+   price: number | null
 }
 
 const { $toast, $router } = useNuxtApp()
@@ -411,11 +412,11 @@ const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, co
     validationSchema: toTypedSchema(
     yup.object({
         totalWeight: yup.number().required().label('Total weight'),
-        totalAmount: yup.number().required().label('Total wmount'),
+        totalAmount: yup.number().required().label('Total Amount').min(100, 'Price must be at least 100'),
         user: yup.object({
             name: yup.string().required().label('Name'),
             address: yup.string().required().label('Address'),
-            phoneNumber: yup.string().required().label('Phone number'),
+            phoneNumber: yup.string().required().label('Phone number').min(12, 'Number must be 11 digit'),
             gender: yup.string().required().label('Gender')
         }),
         // wastes: yup.array().of(user)
@@ -423,8 +424,8 @@ const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, co
             yup.object().shape(
                 {
                     wasteType: yup.string().label('Waste type').required(),
-                    weight: yup.number().label('Weight').required(),
-                    price: yup.number().label('Price').required()
+                    weight: yup.number().label('Weight').required('Weight is required').typeError('Weight must be a number').positive('Weight must be a positive number').min(1, 'Weight must be at least 1'),
+                    price: yup.number().label('Price').required().typeError('Price must be a number').positive('Weight must be a positive number').min(1, 'Price must be at least 1')
                 }
             )
         ),
@@ -465,7 +466,7 @@ const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, co
     ),
     initialValues: {
         wastes: [
-            { wasteType: '', weight: 0, price: 0}
+            { wasteType: '', weight: '', price: ''}
         ],
     },
 });
@@ -515,6 +516,28 @@ watch(fields.value, (newValue, oldValue) => {
     setFieldValue('totalAmount', itemPrice)
     setFieldValue('totalWeight', totalWeight)
 })
+
+watch(phoneNumber, (newValue, oldValue) => {
+  const x = newValue?.replace(/\D/g, '').match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
+  phoneNumber.value = !x[2] ? x[1] : '' + x[1] + ' ' + x[2] + (x[3] ? '' + x[3] : '');
+
+})
+
+watch(name, (newValue, oldValue) => {
+  const cleared = newValue?.replaceAll(/[^a-zA-Z\s]/g, '');
+
+  const words = cleared?.trim().split(/\s+/);
+      
+  // Check if there are more than two words
+  if (words.length > 2) {
+    // Keep only the first two words
+    name.value = words.slice(0, 2).join(' ');
+  } else {
+    // Allow the new value if it's two words or less
+    name.value = cleared;
+  }
+})
+
 
 // watch(buyPrice, (newValue, oldValue) => {
 

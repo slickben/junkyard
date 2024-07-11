@@ -20,11 +20,11 @@
                 {{ overview.total_weight }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
           <div
             class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
@@ -36,11 +36,11 @@
                 {{ overview.total_citizens }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
           <div
             class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
@@ -52,19 +52,19 @@
                 {{ useCurrencyFormat(overview.total_price) }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-error font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_down_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
         </div>
         <div class="flex justify-between 2xl:text-xl xl:text-lg m-7">
           <p class="font-semibold">Today's Collection</p>
-          <div class="flex gap-2">
+          <button @click.prevent="saveLogs" class="flex gap-2">
             <p class="font-medium pr-7">Export CSV</p>
             <img src="/img/Export_csv_icon.svg" alt="" />
-          </div>
+          </button>
         </div>
 
         <div class="card-shadow rounded-xl 2xl:max-h-[620px]  xl:max-h-[460px] overflow-y-auto hide-scroll">
@@ -122,6 +122,7 @@
 </template>
 
 <script setup lang="ts">
+import { arrayToCsv, downloadBlob } from '@/composables/helper';
 const { data, token, signOut } = useAuth()
 const { $toast, $router, $config } = useNuxtApp();
 const isLoading = ref(false)
@@ -177,6 +178,15 @@ const getOverview = async (id: string) => {
       },
   });
 }
+
+const saveLogs = () => {
+  const myLogs = arrayToCsv(collections.value)
+
+  downloadBlob(myLogs, './collections.csv', 'text/csv;charset=utf-8;')
+
+  // console.log('Logs has been saved')
+}
+
 
 const getTodaysCollection = async () => {
   isLoading.value = true

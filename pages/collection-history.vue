@@ -15,11 +15,11 @@
                 {{ overview.total_weight }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
           <div
             class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
@@ -31,11 +31,11 @@
                 {{ overview.total_citizens }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
           <div
             class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
@@ -47,11 +47,11 @@
                 {{ useCurrencyFormat(overview.total_price) }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-error font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_down_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
         </div>
         <div class="flex justify-between mt-12 mb-4">
@@ -92,7 +92,7 @@
           <div
             class="flex items-center bg-white card-shadow rounded-xl 2xl:px-6 xl:px-2 2xl:py-3  text-black transition-all ease-in duration-300 transform hover:bg-collectionBtn"
           >
-            <button class="font-medium pr-7 2xl:text-xl xl:text-sm">Export CSV</button>
+            <button @click.prevent="saveLogs" class="font-medium pr-7 2xl:text-xl xl:text-sm">Export CSV</button>
             <img src="/img/Export_csv_icon.svg" alt="" class="cursor-pointer" />
           </div>
         </div>
@@ -135,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-
+import { arrayToCsv, downloadBlob } from '@/composables/helper';
 interface Overview {
   total_citizens: number
   total_price: number
@@ -201,6 +201,14 @@ const getOverview = async (id: string) => {
           isLoading.value = false
       },
   });
+}
+
+const saveLogs = () => {
+  const myLogs = arrayToCsv(collections.value)
+
+  downloadBlob(myLogs, './collections.csv', 'text/csv;charset=utf-8;')
+
+  // console.log('Logs has been saved')
 }
 
 // ${params.id}

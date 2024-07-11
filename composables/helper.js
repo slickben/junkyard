@@ -27,3 +27,24 @@ export const abbreviateNumber = (number) => {
   // format number and add suffix
   return scaled.toFixed(0) + suffix;
 };
+
+
+export const arrayToCsv = (data) => {
+  const array = [Object.keys(data[0])].concat(data)
+
+  return array.map(it => {
+    return Object.values(it).toString()
+  }).join('\n')
+}
+export const downloadBlob = (content, filename, contentType) => {
+  // Create a blob
+  const blob = new Blob([content], { type: contentType })
+  const url = URL.createObjectURL(blob)
+
+  // Create a link to download it
+  const pom = document.createElement('a')
+
+  pom.href = url
+  pom.setAttribute('download', filename)
+  pom.click()
+}

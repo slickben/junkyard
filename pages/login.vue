@@ -114,7 +114,7 @@ const onSubmit = handleSubmit( (values) => {
   const credentials = values
   // await signIn(credentials, undefined, { callbackUrl: '/' })
   signIn(credentials, { callbackUrl: '/', redirect: true }).then( _resp => {
-    $toast.success('Successfully logged in!')
+    // $toast.success('Successfully logged in!')
     $router.push('/')
     // console.log('here')
   }).catch( err => {

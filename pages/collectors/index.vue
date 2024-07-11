@@ -19,11 +19,11 @@
                 {{ overview.total_weight }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
           <div
             class="rounded-[32px] card-shadow backdrop-blur-xl hidden md:flex items-center gap-4 w-full p-6 relative"
@@ -35,11 +35,11 @@
                 {{ overview.total_citizens }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
           <div
             class="rounded md:rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
@@ -51,19 +51,19 @@
                 {{ useCurrencyFormat(overview.total_price) }}
               </p>
             </div>
-            <p
+            <!-- <p
               class="text-error font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
             >
               1.78% <img src="/img/Percentage_down_icon.svg" alt="" class="" />
-            </p>
+            </p> -->
           </div>
         </div>
         <div class="flex justify-between 2xl:text-xl xl:text-lg m-7 mx-0 md:mx-7">
           <p class="font-semibold">Collection</p>
-          <div class="hidden md:flex gap-2">
+          <!-- <div class="hidden md:flex gap-2">
             <p class="font-medium pr-7">Export CSV</p>
             <img src="/img/Export_csv_icon.svg" alt="" />
-          </div>
+          </div> -->
         </div>
 
         <div class="card-shadow rounded-xl 2xl:max-h-[620px]  xl:max-h-[460px] overflow-y-auto hide-scroll hidden md:block">
