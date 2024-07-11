@@ -18,7 +18,7 @@ const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
     yup.object({
       company_name: yup.string().required().label('Company name'),
       address: yup.string().required().label('Address'),
-      city: yup.string().required().label('City'),
+      state: yup.string().required().label('State'),
       country: yup.string().required().label('Country'),
     }),
   ),
@@ -27,7 +27,7 @@ const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
 
 const [name, nameAttrs] = defineField('company_name');
 const [address, addressAttrs] = defineField('address');
-const [state, stateAttrs] = defineField('city');
+const [state, stateAttrs] = defineField('state');
 const [country, countryAttrs] = defineField('country');
 
 const onSubmit = handleSubmit( (values) => {

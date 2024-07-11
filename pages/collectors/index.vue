@@ -191,7 +191,7 @@ const getOverview = async (id: string) => {
           // Process the response data
           isLoading.value = false
           if (response.ok) {
-              $toast.success(response._data.message);
+              // $toast.success(response._data.message);
               // payment_details.value = response._data.data
               // payment_modal.value = true
               overview.value = response._data
@@ -217,7 +217,7 @@ const getTodaysCollection = async () => {
           // Process the response data
           isLoading.value = false
           if (response.ok) {
-              $toast.success(response._data.message);
+              // $toast.success(response._data.message);
               collections.value = response._data.data
               // payment_modal.value = true
               // overview.value = response._data

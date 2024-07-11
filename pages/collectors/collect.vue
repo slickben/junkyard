@@ -5,11 +5,13 @@
       <NuxtLink to="/collectors" class="text-textGray text-sm font-semibold">Dashboard > 
           <span class="text-black">Collect</span>
       </NuxtLink>
-
+      <!-- {{ user.data.adminWasteType }} -->
+      {{ errors }}
       <form @submit.prevent="onSubmit" class="mt-5 md:mt-12">
           <div class="card-shadow px-4 md:px-12 py-5 md:py-9 rounded-3xl grid grid-cols-2 gap-5">
             <div class="w-full rounded-2xl md:bg-white col-span-2">
                 <HeadDisclosure v-for="(field, idx) in fields" :key="field.key" as="div" class="mt-2 relative" v-slot="{ open }">
+                    
                     <HeadDisclosureButton
                         :class="open ? 'rounded-b-none border-b-0 ' : ''"
                         class="flex w-full justify-between items-center rounded-lg px-4 py-2 text-left text-sm font-semibold
@@ -46,6 +48,9 @@
                                 {{ item.name }}
                             </option>
                             </select>
+                            <p class="text-sm text-red-500 ">
+                                {{ errors[`wastes[${idx}].wasteType`]}}
+                            </p>
                         </div>
                         <div class="flex flex-col relative space-y-1">
                             <label for="" class="font-medium text-black">Weight (kg)</label>
@@ -58,6 +63,9 @@
                                 required 
                                 placeholder="0"
                             >
+                            <p class="text-sm text-red-500 ">
+                                {{ errors[`wastes[${idx}].weight`]}}
+                            </p>
                             <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
                         </div>
                         <div class="flex flex-col relative space-y-1">
@@ -71,6 +79,10 @@
                                 required 
                                 placeholder="0"
                             >
+                            <p class="text-sm text-red-500 ">
+                                {{ errors[`wastes[${idx}].price`]}}
+                            </p>
+                            
                             <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
                         </div>
                     </HeadDisclosurePanel>
@@ -382,7 +394,7 @@ interface  Bank {
     currency: string
 }
 interface Waste {
-   wasteType: string
+   wasteType: string 
    weight: number,
    price: number
 }
@@ -410,9 +422,9 @@ const { errors, defineField, meta, handleSubmit, isSubmitting, setFieldValue, co
         wastes: yup.array().of(
             yup.object().shape(
                 {
-                    wasteType: yup.string().label('Waste type'),
-                    weight: yup.number().label('Weight'),
-                    price: yup.number().label('Price')
+                    wasteType: yup.string().label('Waste type').required(),
+                    weight: yup.number().label('Weight').required(),
+                    price: yup.number().label('Price').required()
                 }
             )
         ),
@@ -596,7 +608,7 @@ const getBanks = async () => {
           // Process the response data
         //   isLoading.value = false
           if (response.ok) {
-              $toast.success(response._data.message);
+            //   $toast.success(response._data.message);
               banks.value = response._data.data
               // payment_modal.value = true
               // overview.value = response._data
@@ -617,7 +629,7 @@ const getAddress = async (lat: number, long: number) =>  {
           // Process the response data
         //   isLoading.value = false
           if (response.ok) {
-              $toast.success(response._data.message);
+            //   $toast.success(response._data.message);
               setFieldValue('user.address', response._data.results[0].formatted_address)
             //   banks.value = response._data.data
               // payment_modal.value = true
@@ -654,6 +666,7 @@ onMounted( async () => {
     function error(msg) {alert('Please enable your GPS position feature.');},
     {maximumAge:10000, timeout:5000, enableHighAccuracy: true});
 })
+
 
 definePageMeta({
 //   auth: false
