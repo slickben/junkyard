@@ -118,7 +118,7 @@
                         <p class="text-sm">Admin Panel Access</p>
                     </div>
                     <div class="py-2 flex items-center justify-center relative">
-                        <NuxtLink :to="`/renew/${ selectedPlans[1].id }?duration=${duration}`"
+                        <NuxtLink :to="`/renew/${ item.id }?duration=${duration}`"
                             class="bg-secondary text-white px-10 py-3 rounded-xl text-center font-semibold hover:bg-opacity-70 ease-out 
                             transition-opacity duration-300 transform" >
                             Select Plan
