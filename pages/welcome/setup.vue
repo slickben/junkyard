@@ -129,7 +129,7 @@ definePageMeta({
               <select
                 v-model="state"
                 v-bind="stateAttrs"
-                :class="[errors.city ? 'border-red-500' : 'border-[#BDBDBD]']"
+                :class="[errors.state ? 'border-red-500' : 'border-[#BDBDBD]']"
                 class="border-b-[4px] focus:outline-none py-2 2xl:text-3xl 
                 xl:text-xl ring-0 focus:ring-0 outline-none border-t-0 border-r-0 border-l-0 px-0 border-[#BDBDBD]
                 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary w-full"
@@ -137,7 +137,7 @@ definePageMeta({
                 <option selected value="">City/State</option>
                 <option v-for="item in states" :key="item.code" :value="item.name">{{ item.name }}</option>
               </select>
-              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.city }}</p>
+              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.state }}</p>
             </div>
             <!-- Adjusted width here -->
           </div>

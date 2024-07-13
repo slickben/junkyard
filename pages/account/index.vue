@@ -225,7 +225,7 @@
         city: yup.string().required().label('City'),
         state: yup.string().required().label('State'),
         country: yup.string().required().label('Country'),
-        phone_number: yup.string().required().label('Phone number'),
+        phone_number: yup.string().label('Phone number'),
       }),
     ),
     initialValues: {
