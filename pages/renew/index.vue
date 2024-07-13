@@ -17,13 +17,13 @@
                 </div>
                 <div class="justify-between flex w-full py-3">
                     <p>
-                        <b>{{ myPlan.name }}</b>
+                        <b>{{ myPlan?.name }}</b>
                     </p>
                     <div class="text-right">
                         <p>
-                            <b>{{ useCurrencyFormat(myPlan.price) }}</b>
+                            <b>{{ myPlan?.price ? useCurrencyFormat(myPlan?.price) : ''}}</b>
                         </p>
-                        <p>Renewal {{ useCurrencyFormat(myPlan.price) }}/{{myPlan.description}}</p>
+                        <p>Renewal {{ myPlan?.price ? useCurrencyFormat(myPlan?.price) : '' }}/{{ myPlan?.description ? myPlan?.description : ''}}</p>
                     </div>
                 </div>
             </div>
