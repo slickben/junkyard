@@ -22,6 +22,10 @@ const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
       country: yup.string().required().label('Country'),
     }),
   ),
+  initialValues: {
+    state: '',
+    country: '',
+  }
 });
 
 
@@ -113,12 +117,12 @@ definePageMeta({
               <select
                 v-model="country"
                 v-bind="countryAttrs"
-                :class="[errors.country ? 'border-red-500' : 'border-[#BDBDBD]']"
+                :class="[errors.country ? 'border-red-500' : 'border-[#BDBDBD]', country ? '' :  'text-[#828282]']"
                 class="border-b-[4px] focus:outline-none py-2 2xl:text-3xl 
                 xl:text-xl ring-0 focus:ring-0 outline-none border-t-0 border-r-0 border-l-0 px-0 border-[#BDBDBD]
                 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary w-full"
               >
-                <option selected value="">Country</option>
+                <option disabled selected value="">Country</option>
                 <option v-for="item in countries.default.map( i => i.name)" :key="item" :value="item">{{ item }}</option>
               </select>
               <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.country }}</p>
@@ -129,12 +133,12 @@ definePageMeta({
               <select
                 v-model="state"
                 v-bind="stateAttrs"
-                :class="[errors.state ? 'border-red-500' : 'border-[#BDBDBD]']"
+                :class="[errors.state ? 'border-red-500' : 'border-[#BDBDBD]', country ? '' :  'text-[#828282]']"
                 class="border-b-[4px] focus:outline-none py-2 2xl:text-3xl 
                 xl:text-xl ring-0 focus:ring-0 outline-none border-t-0 border-r-0 border-l-0 px-0 border-[#BDBDBD]
                 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary w-full"
                 >
-                <option selected value="">City/State</option>
+                <option selected disabled value="">City/State</option>
                 <option v-for="item in states" :key="item.code" :value="item.name">{{ item.name }}</option>
               </select>
               <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.state }}</p>

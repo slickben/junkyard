@@ -12,7 +12,9 @@
             {{ user.data.role === 'collector' ? user.data.name : user.data.businessInfo.name }}
         </h2>
         <p v-if="user.data.role !== 'collector'" class="font-semibold">Avail Bal: {{ useCurrencyFormat(user.data.balance) }}</p>
-        <p class="font-normal">Basic User</p>
+        <p class="font-normal">
+            {{plan.name}}
+        </p>
     </div>
     <div v-if="user.data.role === 'collector'" class="hidden md:flex flex-col 2xl:gap-3 mt-4 flex-grow">
         
@@ -123,10 +125,57 @@
 <script lang="ts" setup>
     import VueAvatar from "@webzlodimir/vue-avatar";
     import "@webzlodimir/vue-avatar/dist/style.css";
+    
     import { type User } from '@/composables/useTypes'
-    const { data } = useAuth()
+    import { type Plan } from '@/composables/useTypes'
+    const { $toast, $router } = useNuxtApp()
+    // const { data } = useAuth()
+    const { data, token, signOut, getSession } = useAuth()
+
+    const plan = ref<Plan>({
+        id: '',
+        name: '',
+        description: '',
+        price: ''
+    })
 
     const user: User = data.value
+
+    const getPlans = async () => {
+        // alert('here')
+        await $fetch(`${useBaseUrl()}/plans`, {
+            
+        method: 'get',
+        headers: {
+            Authorization: `${token.value}`
+        },
+        onResponse({ request, response, options }) {
+            // Process the response data
+            // alert('here')
+            if(response.ok) {
+                $toast.success(response._data.message)
+                const res: Plan[] = response._data.data
+
+                const sL: Plan = res.find( i => i.id == data.value.data.planId)
+                // console.log(s, newX)
+                if(sL) {
+                    plan.value = sL
+                }else {
+                    plan.value = {}
+                }
+            }
+        },
+        onResponseError({ request, response, options }) {
+            $toast.error(response._data.message)
+        }
+    })
+
+    }
+    const getAll = async () => {
+        await getPlans()
+    }
+
+    useLazyAsyncData( () => getAll(), { server: false });
 </script>
 
 <style>

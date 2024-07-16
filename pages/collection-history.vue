@@ -103,7 +103,7 @@
         <table class="w-full font-semibold 2xl:text-lg xl:text-sm table-auto">
           <thead class="text-textGray 2xl:text-lg xl:text-sm font-semibold sticky top-0 bg-white">
               <tr class="text-left border-b">
-                <th class="py-[16px] px-[32px]">Items</th>
+                <th class="py-[16px] px-[32px]">Waste</th>
                 <th class="py-[16px] px-[32px]">Price</th>
                 <th class="py-[16px] px-[32px]">Collection model</th>
                 <th class="py-[16px] px-[32px]">Producer</th>
