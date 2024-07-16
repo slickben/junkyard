@@ -50,7 +50,7 @@
                                 placeholder="0"
                             >
                             <option value="">Select Type</option>
-                            <option v-for="item in user.data.adminWasteType" :key="item.id" :value="item.id">
+                            <option v-for="item in user.data.adminWasteType.filter( item => item.name !== 'Others')" :key="item.id" :value="item.id">
                                 {{ item.name }}
                             </option>
                             </select>
