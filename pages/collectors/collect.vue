@@ -320,7 +320,7 @@
                                         type="text" 
                                         v-model="account_number"
                                         v-bind="account_numberAttrs" 
-                                        placeholder="name"
+                                        placeholder=""
                                         class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
                                     >
                                     <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors['accountDetails.account_number'] }}</p>
@@ -523,8 +523,14 @@ watch(phoneNumber, (newValue, oldValue) => {
 
 })
 
+watch(account_number, (newValue, oldValue) => {
+  const x = newValue?.replace(/\D/g, '').slice(0, 10);
+  account_number.value = `${x}`;
+
+})
+
 watch(name, (newValue, oldValue) => {
-  const cleared = newValue?.replaceAll(/[^a-zA-Z\s]/g, '');
+  const cleared = newValue?.replaceAll(/[^a-zA-Z\s-]/g, '');
 
   const words = cleared?.trim().split(/\s+/);
       

@@ -17,7 +17,6 @@
         </p>
     </div>
     <div v-if="user.data.role === 'collector'" class="hidden md:flex flex-col 2xl:gap-3 mt-4 flex-grow">
-        
         <NuxtLink 
             to="/collectors"
             class="flex gap-4 font-semibold hover:bg-secondary hover:bg-opacity-20 hover:border-r-secondary
@@ -26,7 +25,6 @@
             <svgo-dashboard_icon class="text-xl" />
             <p>Dashboard</p>
         </NuxtLink>
-        
     </div>
     <div v-else class="hidden md:flex flex-col 2xl:gap-3 mt-4 flex-grow">
         

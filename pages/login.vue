@@ -119,7 +119,10 @@ const onSubmit = handleSubmit( (values) => {
     // console.log('here')
   }).catch( err => {
     // console.log(err)
-    // console.log(err.data)
+    // console.log(err.data.message === 'User not verified. Check your email for the verification link')
+    if(err.data.message === 'User not verified. Check your email for the verification link') {
+      $router.push(`/signup-success/${err.data.message}?email=${email.value}`)
+    }
     $toast.error(err.data.message)
   })
 });

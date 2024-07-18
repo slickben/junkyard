@@ -278,6 +278,27 @@
     })
   })
 
+watch(phone_number, (newValue, oldValue) => {
+  const x = newValue?.replace(/\D/g, '').match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
+  phone_number.value = !x[2] ? x[1] : '' + x[1] + ' ' + x[2] + (x[3] ? '' + x[3] : '');
+
+})
+
+watch(name, (newValue, oldValue) => {
+  const cleared = newValue?.replaceAll(/[^a-zA-Z\s-]/g, '');
+
+  const words = cleared?.trim().split(/\s+/);
+      
+  // Check if there are more than two words
+  if (words.length > 2) {
+    // Keep only the first two words
+    name.value = words.slice(0, 2).join(' ');
+  } else {
+    // Allow the new value if it's two words or less
+    name.value = cleared;
+  }
+})
+
   const getPlans = async () => {
         // alert('here')
         await $fetch(`${useBaseUrl()}/plans`, {
