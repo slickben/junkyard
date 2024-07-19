@@ -39,12 +39,12 @@
 </template>
 
 <script lang="ts" setup>
-    import VueAvatar from "@webzlodimir/vue-avatar";
-    import "@webzlodimir/vue-avatar/dist/style.css";
-    import { type User } from '@/composables/useTypes'
-    const { data } = useAuth()
+    // import VueAvatar from "@webzlodimir/vue-avatar";
+    // import "@webzlodimir/vue-avatar/dist/style.css";
+    // import { type User } from '@/composables/useTypes'
+    // const { data } = useAuth()
 
-    const user: User = data.value
+    // const user: User = data.value
 </script>
 
 <style>

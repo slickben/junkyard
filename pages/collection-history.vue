@@ -61,29 +61,31 @@
               <div
                 class="flex bg-collectionBtn text-collectionText rounded-md"
               >
-              <select name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
-                <option selected disabled>Waste type</option>
-                <option value="Plastic Bottles">Plastic Bottles</option>
+              <select v-model="wasteType" name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
+                <option selected value="">Waste type</option>
+                <option v-for="item in user.data.waste_type.filter( item => item.name !== 'Others')" :key="item.id" :value="item.name">
+                    {{ item.name }}
+                </option>
               </select>
               </div>
               <div
                 class="flex bg-collectionBtn text-collectionText rounded-md"
               >
-              <select name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
-                <option selected disabled>Collection Model</option>
-                <option value="Pick Up">Pick up</option>
-                <option value="Drop Off">Drop off</option>
+              <select name="" v-model="collectionType" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
+                <option selected value="">Collection Model</option>
+                <option value="Pick up">Pick up</option>
+                <option value="Drop off">Drop off</option>
               </select>
 
               </div>
               <div
                 class="flex bg-collectionBtn text-collectionText rounded-md"
               >
-              <select name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
-                <option selected disabled>Producer Type</option>
-                <option value="HouseHold">HouseHold</option>
-                <option value="Community">Community</option>
-                <option value="Industrial">Industrial</option>
+              <select v-model="producerType" name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
+                <option selected value="">Producer Type</option>
+                <option v-for="item in ['Household', 'Corporate Clients', 'Public Places', 'Clean Up']" :key="item" :value="item">
+                    {{ item }}
+                </option>
               </select>
 
               </div>
@@ -111,7 +113,7 @@
               </tr>
           </thead>
           <tbody class="">
-              <tr v-for="item in collections" :key="item.id" class="border-b 2xl:text-[16px] xl:text-sm font-medium">
+              <tr v-for="item in filteredDatas" :key="item.id" class="border-b 2xl:text-[16px] xl:text-sm font-medium">
                   <td class="py-[16px] px-[32px]">
                     {{ wasteTypeNames(item.waste_type) }}
                   </td>
@@ -136,11 +138,16 @@
 
 <script setup lang="ts">
 import { arrayToCsv, downloadBlob } from '@/composables/helper';
+import { type User } from '@/composables/useTypes'
 interface Overview {
   total_citizens: number
   total_price: number
   total_weight: number
 }
+
+const collectionType = ref("");
+const producerType = ref("");
+const wasteType = ref("");
 
 interface WasteType {
   id: string
@@ -171,7 +178,8 @@ interface CollectionHistory {
 const isLoading = ref(false)
 const { token, data } = useAuth()
 const { $toast } = useNuxtApp()
-const collections = ref<Collection[]>()
+const collections = ref<Collection[]>([])
+const user: User = data.value
 const overview = ref<Overview>({
   total_citizens: 0,
   total_price: 0,
@@ -202,6 +210,16 @@ const getOverview = async (id: string) => {
       },
   });
 }
+
+const filteredDatas = computed(() => {
+    return collections.value.filter(item => {
+      return (
+        (collectionType.value === "" || item.collection_type === collectionType.value) &&
+        (producerType.value === "" || item.producer_type === producerType.value) &&
+        (wasteType.value === "" || item.waste_type.some(w => w.name === wasteType.value))
+      );
+    });
+  });
 
 const saveLogs = () => {
   const myLogs = arrayToCsv(collections.value)

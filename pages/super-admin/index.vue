@@ -75,6 +75,7 @@
                   <th class="py-[16px] px-[32px]">Collection model</th>
                   <th class="py-[16px] px-[32px]">Producer</th>
                   <th class="py-[16px] px-[32px]">Recycler unit</th>
+                  <th class="py-[16px] px-[32px]">Unit Admin</th>
                 </tr>
             </thead>
             <tbody class="">
@@ -92,14 +93,35 @@
                       {{ item.producer_type }}
                     </td>
                     <td class="py-[16px] px-[32px]">
-                      {{ user.data.name }}
+                      {{ item.collector_name }}
+                    </td>
+                    <td class="py-[16px] px-[32px]">
+                      {{ item.admin_name }}
                     </td>
                 </tr>
                 
             </tbody>
           </table>
+          <div class=" py-10">
+            <paginate
+              v-model="page"
+              :page-count="count"
+              :page-range="3"
+              :margin-pages="2"
+              :click-handler="clickCallback"
+              :prev-text="'Prev'"
+              :next-text="'Next'"
+              :container-class="'flex justify-center mt-4 space-x-2'"
+              :page-class="'px-3 py-1 border border-gray-300 rounded hover:bg-gray-200'"
+              :prev-class="'px-3 cursor-pointer py-1 border border-gray-300 rounded hover:bg-gray-200'"
+              :next-class="'px-3 cursor-pointer py-1 border border-gray-300 rounded hover:bg-gray-200'"
+              :active-class="'bg-secondary text-white'"
+              :page-link-class="'cursor-pointer'"
+            >
+            </paginate>
+          </div>
         </div>
-        <div class="rounded-xl 2xl:max-h-[620px]  xl:max-h-[460px] overflow-y-auto hide-scroll  md:hidden space-y-2">
+        <div class="rounded-xl 2xl:max-h-[620px]  xl:max-h-[460px] overflow-y-auto hide-scroll  md:hidden space-y-2 cursor-pointer">
           <div v-for="item in collections" :key="item.id" class="flex items-center bg-white px-3 py-2 space-x-1">
             <vue-avatar class="flex-none" :username="item.location" :size="40" />
             <div class="text-base font-semibold text-black flex-grow">
@@ -155,10 +177,16 @@
 import VueAvatar from "@webzlodimir/vue-avatar";
 import type { User } from '@/composables/useTypes';
 import { arrayToCsv, downloadBlob } from '@/composables/helper';
+import Paginate from "vuejs-paginate-next";
+
+
 const { data, token, signOut } = useAuth()
 const { $toast, $router, $config } = useNuxtApp();
 const user: User = data.value
 const isLoading = ref(false)
+const page = ref(1)
+const limit = ref(6)
+const count = ref(0)
 interface Overview {
   total_collections: number
   total_price: number
@@ -182,6 +210,12 @@ interface Collection {
   waste_details: string
   waste_type: WasteType[]
   status: string
+  collector_name: string
+  admin_name: string
+}
+
+const clickCallback = (pageNum: any) => {
+    console.log(pageNum);
 }
 
 const overview = ref<Overview>({
@@ -226,10 +260,10 @@ const saveLogs = () => {
   // console.log('Logs has been saved')
 }
 
-const getTodaysCollection = async () => {
+const getTodaysCollection = async (limit: number, page: number) => {
   isLoading.value = true
   // console.log(data.value.data.id)s
-  await $fetch(`${useBaseUrl()}/super/collections?limit=${10}&page=${1}`, {
+  await $fetch(`${useBaseUrl()}/super/collections?limit=${limit}&page=${page}`, {
       headers: {
           Authorization: `${token.value}`,
       },
@@ -239,10 +273,7 @@ const getTodaysCollection = async () => {
           if (response.ok) {
               $toast.success(response._data.message);
               collections.value = response._data.data
-              // payment_modal.value = true
-              // overview.value = response._data
-              // console.log(response._data.data)
-              
+              count.value = response._data.total / limit
           }
       },
       onResponseError({ request, response, options }) {
@@ -254,9 +285,15 @@ const getTodaysCollection = async () => {
 
 const wasteTypeNames = (dataItem: any) => dataItem.map((item: any) => item.name).join(', ');
 
+watchEffect( async () => {
+  const pageV = page.value
+  const limitV = limit.value
+  await getTodaysCollection(limitV, pageV)
+})
+
 
 onMounted( async () => {
-  await getTodaysCollection()
+  // await getTodaysCollection()
   await getOverview('')
 })
 definePageMeta({

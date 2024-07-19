@@ -12,7 +12,7 @@
                 class="flex bg-collectionBtn text-collectionText rounded-md"
               >
               <select v-model="filter" name="" id="" class="bg-transparent border-none outline-none focus:outline-none focus:ring-0 pl-4 pr-8 rounded-md py-2">
-                <option selected disabled>Status</option>
+                <option selected value="">Status</option>
                 <option value="pending">Pending</option>
                 <option value="success">Success</option>
                 <option value="failed">Failed</option>

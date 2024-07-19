@@ -38,6 +38,7 @@ interface data {
     planId: string
     role: string
     adminWasteType: AdminWasteType[]
+    waste_type: AdminWasteType[]
     pricePerKg: number
 
 }
