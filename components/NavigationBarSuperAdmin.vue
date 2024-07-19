@@ -7,7 +7,14 @@
 
     <div class="hidden md:flex flex-col 2xl:gap-3 mt-4 flex-grow">
         
-       
+        <NuxtLink 
+            to="/super-admin"
+            class="flex gap-4 font-semibold hover:bg-secondary hover:bg-opacity-20 hover:border-r-secondary
+            hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-6 text-dahboardText hover:text-secondary"
+        >
+            <svgo-dashboard_icon class="text-xl" />
+            <p>Dashboard</p>
+        </NuxtLink>
 
         <NuxtLink 
             to="/super-admin/transactions"
