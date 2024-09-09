@@ -75,7 +75,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div class="font-montserrat flex items-center h-screen max-w-screen-xl px-16 mx-auto relative">
+    <div class="font-montserrat flex items-center h-screen max-w-screen-xl px-2 md:px-16 mx-auto relative ">
       <div class="container h-full max-h-[600px]">
         <form @submit="onSubmit" class="h-full flex flex-col justify-between">
           <h1 class="2xl:text-4xl xl:text-2xl font-semibold">
@@ -84,8 +84,8 @@ definePageMeta({
             </pre> -->
             Welcome to <span class="text-secondary font-bold">JUNKYARD</span>
           </h1>
-          <div class="grid grid-cols-2 gap-12 2xl:gap-12 max-w-[45rem] w-full mb-4 xl:mb-2">
-            <div class="relative col-span-2">
+          <div class="grid xl:grid-cols-2 gap-12 2xl:gap-12 max-w-[45rem] w-full mb-4 xl:mb-2">
+            <div class="relative md:col-span-2">
               <input
                 type="text"
                 v-model="name"
@@ -99,7 +99,7 @@ definePageMeta({
               <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.company_name }}</p>
             </div>
             <!-- Adjusted width here -->
-            <div class="relative col-span-2">
+            <div class="relative md:col-span-2">
               <input
                 type="text"
                 v-model="address"
@@ -153,7 +153,7 @@ definePageMeta({
             </div> -->
             <button
               type="submit"
-              class="text-secondary 2xl:text-2xl xl:text-xl font-bold hover:text-textGray ease-linear duration-200 mx-48"
+              class="text-secondary 2xl:text-2xl xl:text-xl font-bold hover:text-textGray ease-linear duration-200 md:mx-48"
             >
               Continue
             </button>

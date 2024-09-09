@@ -1,77 +1,64 @@
 <template>
-    <div class="bg-fakeWhite h-full flex-grow py-12 px-12 2xl:px-20 relative">
-        <h1  class="2xl:text-4xl xl:text-2xl font-bold mb-5">Recycler Units</h1>
-        <button @click="$router.back()" class="text-textGray text-sm font-semibold"
-            >Recycler Units > <span class="text-black">{{user.data.businessInfo.name}} {{ collector.name }}</span></button
-        >
-        <div class="relative grid grid-cols-3 gap-16 my-8">
-          <!-- first overview -->
-          <div
-            class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalWeight.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Total Weight()Kg</p>
-              <p class="2xl:text-xl xl:text-sm font-bold">
-                {{ overview.total_weight }}
-              </p>
-            </div>
-            <p
-              class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p>
-          </div>
-          <div
-            class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalCitizens.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Total Citizens</p>
-              <p class="2xl:text-xl xl:text-sml font-bold">
-                {{ overview.total_citizens }}
-              </p>
-            </div>
-            <p
-              class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p>
-          </div>
-          <div
-            class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalWeight.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Citizens Earning</p>
-              <p class="2xl:text-xl xl:text-sm font-bold">
-                {{ useCurrencyFormat(overview.total_price) }}
-              </p>
-            </div>
-            <p
-              class="text-error font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_down_icon.svg" alt="" class="" />
-            </p>
-          </div>
-        </div>
+    <div class="bg-fakeWhite h-full flex-grow py-4 md:py-12 md: px-5 md:px-12 2xl:px-20 relative ">
+        <h1  class="2xl:text-4xl xl:text-2xl font-bold mb-5 hidden md:block">Recycler Units</h1>
+        <div class="flex items-center justify-between mb-5 md:mb-0">
+            <button @click="$router.back()" class="text-textGray  text-xs md:text-sm font-semibold"
+            >Recycler Units > <span class="text-black">{{ collector.name }}
 
-        <div class="grid grid-cols-3 gap-y-4 gap-x-12 2xl:gap-x-20">
-            <div class="flex justify-between 2xl:text-xl col-span-2">
-                <p class="font-semibold">Today's Collection</p>
-                <div
-                    class="flex gap-2 hover:bg-collectionText hover:shadow-2xl rounded-lg transition-all ease-in duration-300 transform px-6  2xl:mr-12"
+            </span>
+            </button>
+            <Menu 
+                v-slot="{ open }"
+                as="div"
+                class="relative inline-block text-left md:hidden">
+                <MenuButton class="flex items-center gap-2">
+                    
+                   <EllipsisHorizontalIcon class="w-6 h-6" />
+                </MenuButton>
+                <transition
+                    enter-active-class="transition duration-100 ease-out"
+                    enter-from-class="transform scale-95 opacity-0"
+                    enter-to-class="transform scale-100 opacity-100"
+                    leave-active-class="transition duration-75 ease-in"
+                    leave-from-class="transform scale-100 opacity-100"
+                    leave-to-class="transform scale-95 opacity-0"
                 >
-                    <button type="button" class="font-medium  text-center">
-                    Export CSV
-                    </button>
-                    <img src="/img/Export_csv_icon.svg" alt="" class="" />
-                </div>
+                    <MenuItems class="absolute z-50 w-60 right-0 bg-white p-5 space-y-3 flex flex-col text-left">
+                        <MenuButton class="hover:text-secondary ease-out duration-300 text-xs md:text-base text-left" @click.prevent="deleteModal = !deleteModal">
+                            <p>Delete Account</p>
+                        </MenuButton>
+                        <MenuButton>
+                            <NuxtLink to="/recyclers/create" class="hover:text-secondary ease-out duration-300 text-xs md:text-base text-left">
+                                <p>Add New Unit</p>
+                            </NuxtLink>
+                        </MenuButton>
+                        <MenuButton>
+                            <NuxtLink :href="`/collection-history?unit=${collector.id}`" class="hover:text-secondary ease-out duration-300 text-xs md:text-base text-left" >
+                                <p>View Collection History</p>
+                            </NuxtLink >
+                        </MenuButton>
+                    </MenuItems>
+                </transition>
+            </Menu>
+        </div>
+        <OverViewCard :overview="overview"  />
+
+        <div class="grid md:grid-cols-3 gap-y-4 gap-x-12 2xl:gap-x-20">
+            
+
+            <div class="flex justify-between md:col-span-2 text-sm 2xl:text-xl xl:text-lg m-7 mx-0 md:mx-7">
+                <p class="font-semibold">Today's Collection</p>
+                <button @click.prevent="saveLogs" class="flex  items-center gap-2">
+                    <p class="font-medium md:pr-7">Export CSV</p>
+                    <img class=" h-4" src="/img/Export_csv_icon.svg" alt="" />
+                </button>
             </div>
+
             <!-- <div>h</div> -->
-            <div class="col-span-2">
+            <div class="md:col-span-2">
                 <div
-                class="card-shadow rounded-xl 2xl:h-[550px] xl:h-[400px] overflow-y-auto hide-scroll"
+                class="card-shadow rounded-xl 2xl:h-[550px] xl:h-[400px]
+                 overflow-y-auto hide-scroll hidden md:block"
                 >
                 <table class="w-full font-semibold text-lg table-auto">
                     <thead
@@ -98,8 +85,46 @@
                     </tbody>
                 </table>
                 </div>
+
+                <div class="rounded-xl 2xl:max-h-[620px]  xl:max-h-[460px] overflow-y-auto hide-scroll  md:hidden space-y-2">
+                <div v-for="item in collections" :key="item.id" class="flex items-center bg-white px-3 py-2 space-x-1">
+                    <vue-avatar class="flex-none" :username="item.collector_name" :size="40" />
+                    <div class="text-base font-semibold text-black flex-grow">
+                    <h2>{{ wasteTypeNames(item.waste_type) }}</h2>
+                    <p class="text-xs font-normal text-[#515151]">
+                        {{ useCurrencyFormat(item.price) }}
+                    </p>
+                    </div>
+                    <div class="text-base font-semibold text-black flex-none">
+                    <h2>{{ item.weight }}kg</h2>
+                    <p class="text-xs font-normal text-[#515151]">
+                        {{ item.collection_type }}
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+                <div class="py-3 md:py-10">
+                <paginate
+                    v-model="page"
+                    :page-count="count"
+                    :page-range="3"
+                    :margin-pages="2"
+                    :click-handler="clickCallback"
+                    :prev-text="'Prev'"
+                    :next-text="'Next'"
+                    :container-class="'flex justify-center mt-4 space-x-2'"
+                    :page-class="'px-3 py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+                    :prev-class="'px-3 cursor-pointer py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+                    :next-class="'px-3 cursor-pointer py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+                    :active-class="'bg-secondary text-white'"
+                    :page-link-class="'cursor-pointer'"
+                >
+                </paginate>
+                </div>
             </div>
-            <div class="flex flex-col justify-center items-center">
+
+            <div class="hidden md:flex flex-col justify-center items-center">
                 <div class="card-shadow rounded-2xl w-full flex-grow">
                     <div class="flex flex-col items-center gap-8">
                         <h4 class="2xl:text-lg xl:text-sm  font-semibold mt-4">Unit Profile</h4>
@@ -234,7 +259,11 @@
 <script setup lang="ts">
     import VueAvatar from "@webzlodimir/vue-avatar";
     import { type User } from '@/composables/useTypes'
-
+    import { arrayToCsv, downloadBlob } from '@/composables/helper';
+    import Paginate from "vuejs-paginate-next";
+    import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
+    import {  ChevronDownIcon, EllipsisHorizontalIcon } from "@heroicons/vue/24/outline";
+    
 
     interface Overview {
         total_citizens: number
@@ -247,10 +276,12 @@
         created_at: string
         collected_at: string
         collection_type: string
+        collector_name: string
         producer_type: string
         weight: string
         price: string
         location: string
+        waste_type: {id: string, name: string}[]
         waste_details: string
         status: string
     }
@@ -310,6 +341,14 @@
         });
     }
 
+    const page = ref(1)
+    const limit = ref(20)
+    const count = ref(0)
+
+    const clickCallback = (pageNum: any) => {
+        console.log(pageNum);
+    }
+
     const deleteAccount = async (id: string) => {
         isLoading.value = true
         await $fetch(`${useBaseUrl()}/admin/collector/${params.id}`, {
@@ -332,6 +371,17 @@
             },
         });
     }
+
+    const saveLogs = () => {
+        const myLogs = arrayToCsv(collections.value)
+
+        downloadBlob(myLogs, './collections.csv', 'text/csv;charset=utf-8;')
+
+        // console.log('Logs has been saved')
+    }
+
+    const wasteTypeNames = (dataItem: any) => dataItem.map((item: any) => item.name).join(', ');
+
 
     const fetchOverview = async () => {
         isLoading.value = true
@@ -359,9 +409,9 @@
         });
     }
 
-    const fetchCollection = async () => {
+    const fetchCollection = async (limit: number, page: number) => {
         isLoading.value = true
-        await $fetch(`${useBaseUrl()}/admin/today-collection/${params.id}?limit=${10}&page=${1}`, {
+        await $fetch(`${useBaseUrl()}/admin/today-collection/${params.id}?limit=${limit}&page=${page}`, {
             headers: {
                 Authorization: `${token.value}`,
             },
@@ -385,10 +435,16 @@
         });
     }
 
+    watchEffect( async () => {
+        const pageV = page.value
+        const limitV = limit.value
+        await fetchCollection(limitV, pageV)
+    })
+
     const getAll = async () => {
         await fetch('')
         await fetchOverview()
-        await fetchCollection()
+        // await fetchCollection()
     }
 
     useLazyAsyncData( () => getAll(), { server: false });

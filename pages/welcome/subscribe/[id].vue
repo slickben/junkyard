@@ -1,9 +1,9 @@
 <template>
-    <div class="flex-grow p-12 2xl:px-20 pt-10">
+    <div class="flex-grow p-5 md:p-12 2xl:px-20 pt-10 ">
         <div class="max-w-[979px] mx-auto w-full">
             <div class="">
             <h1 class="font-bold text-2xl">Subscription</h1>
-            <p class="text-sm text-textGray py-4 capitalize">
+            <p @click="$router.back()" class="text-sm cursor-pointer text-textGray py-4 capitalize">
                 Subscription > {{ query.duration }} >  {{ plan.name }} >
                 <span class="text-black font-semibold text-sm"
                 >Review & Checkout</span
@@ -15,9 +15,9 @@
                 {{plan}}
             </pre> -->
 
-            <div class="flex gap-9">
+            <div class="md:flex gap-9">
     <!-- Right -->
-                <div class="w-[50%] mt-12 flex flex-col gap-6">
+                <div class="md:w-[50%] mt-12 flex flex-col gap-6">
                     <div class="card-shadow rounded-2xl flex flex-col px-7 py-4">
                     <div
                         class="flex justify-between  border-b border-b-[#F2F2F2] w-full py-3"
@@ -43,7 +43,7 @@
                     </div>
         
         
-                    <div class="card-shadow rounded-2xl flex flex-col px-7 py-4">
+                    <div class="card-shadow rounded-2xl hidden md:flex flex-col px-7 py-4">
                     <div
                         class="border-b border-b-[#F2F2F2] w-full py-3"
                     >

@@ -1,5 +1,6 @@
 <template>
   <div class="max-w-screen-xl md:px-16 mx-auto grid md:grid-cols-3 h-full">
+    <img class="h-5 md:hidden mt-6" src="/img/logo_2.png" alt="JunkYard Logo"  />
     <div class="col-span-2 shadow-lg bg-login-image4 bg-cover bg-bottom rounded-[47px] h-full
      hidden md:flex flex-col justify-end items-start gap-8 p-5">
       <h1 class="text-white 2xl:text-4xl xl:text-3xl font-bold">
@@ -13,7 +14,8 @@
         <form
           @submit.prevent="onSubmit"
           class="md:w-[625px] h-[70vh] custom-xl:h-[75vh] rounded-2xl 2xl:text-2xl xl:text-xl space-y-5 2xl:space-y-10 xl:space-y-7 
-          shadow-2xl pt-10 md:pt-16 p-4 md:p-16 drop-shadow-2xl backdrop-blur-xl bg-gradient-to-br from-[#FFFFFFCC] via-[#ddcececc] to-[#FFFFFF00]"
+          md:shadow-2xl md:pt-16 md:p-16 md:drop-shadow-2xl backdrop-blur-xl md:bg-gradient-to-br from-[#FFFFFFCC] via-[#ddcececc]
+           to-[#FFFFFF00]"
         >
 
           <div class="flex flex-col space-y-3 relative">

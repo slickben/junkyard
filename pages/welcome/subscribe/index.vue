@@ -1,12 +1,12 @@
 <template>
-  <div class="flex-grow p-12 2xl:px-20 pt-10">
+  <div class="flex-grow p-5 md:p-12 2xl:px-20 pt-10 ">
     <div class="max-w-[979px] mx-auto w-full">
       <div class="pb-10">
         <h1 class="font-bold text-2xl">Subscription Plan</h1>
         <p>Make payment for your preferred plan</p>
       </div>
 
-      <div class="w-[50%] mt-12 flex flex-col gap-6">
+      <div class="md:w-[50%] md:mt-12 flex flex-col gap-6">
         <div class="card-shadow rounded-2xl flex flex-col px-7 py-4">
           <div
             class="flex justify-between border-b border-b-[#F2F2F2] w-full py-3"
@@ -34,14 +34,14 @@
         </div>
         <button
             @click.prevent="pay"
-            class="uppercase text-white bg-secondary rounded-[10px] text-[28px] h-20 w-[300px] 
-            flex justify-center items-center font-semibold my-12"
+            class="uppercase text-white bg-secondary rounded-[10px] md:text-[28px] h-12 w-full md:h-20 md:w-[300px] 
+            flex justify-center items-center font-semibold my-5 md:my-12"
         >
             proceed
         </button>
 
     </div>
-    <div class="text-2xl font-medium max-w-[988px]">
+    <div class="text-base md:text-2xl font-medium max-w-[988px]">
       <p class="font-bold mb-8">Note:</p>
       <p>
         Junkyard Free Plan will give you access to create only 1 recycler

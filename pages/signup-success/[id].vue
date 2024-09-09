@@ -37,7 +37,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div class="font-montserrat flex items-center justify-center h-screen">
+    <div class="font-montserrat flex items-center justify-center h-screen ">
         <div class="space-y-5">
           <p class="text-3xl font-medium">
             {{ params.id }}

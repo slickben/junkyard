@@ -2,11 +2,15 @@
   <!-- <pre>
     {{ data }}
   </pre> -->
-    <div class="bg-[#F5F5F5] md:bg-fakeWhite h-full flex-grow p-5 md:p-12 2xl:px-20 pt-0 md:pt-10 relative">
+    <div class="bg-[#F5F5F5] md:bg-fakeWhite h-full flex-grow p-5 md:p-12 2xl:px-20 pt-0 md:pt-10 relative ">
         <div class="mb-5 flex items-center justify-between">
           <h1 class="2xl:text-4xl xl:text-2xl font-bold">Overview</h1>
           <button type="button" @click.prevent="signOut({ callbackUrl: '/login' })" class="text-error text-lg font-semibold">Logout</button>
         </div>
+
+        <!-- <OverViewCard :overview="overview"  /> -->
+
+        
         <div class="relative grid md:grid-cols-3 gap-16">
           <!-- first overview -->
           <div
@@ -16,7 +20,7 @@
             <div class="flex flex-col">
               <p class="text-textGray font-mediumn text-sm">Total Weight()Kg</p>
               <p class="2xl:text-xl xl:text-sm font-bold">
-                {{ overview.total_weight }}
+                {{ Math.round(overview.total_weight) }}
               </p>
             </div>
             <!-- <p
@@ -58,6 +62,8 @@
             </p> -->
           </div>
         </div>
+
+
         <div class="flex justify-between 2xl:text-xl xl:text-lg m-7 mx-0 md:mx-7">
           <p class="font-semibold">Collection</p>
           <button @click.prevent="saveLogs" class="hidden md:flex gap-2">
@@ -103,9 +109,10 @@
             </tbody>
           </table>
           <div class=" py-10">
+            <!-- {{ Math.round(count) }} -->
             <paginate
               v-model="page"
-              :page-count="count"
+              :page-count="Math.round(count)"
               :page-range="3"
               :margin-pages="2"
               :click-handler="clickCallback"
@@ -160,7 +167,7 @@
         </div>
     </div>
 
-    <div class=" fixed bottom-5 -right-7 z-50 md:hidden">
+    <!-- <div class=" fixed bottom-5 -right-7 z-50 md:hidden">
         <NuxtLink
             to="/collectors/collect"
             class=" bg-secondary text-white font-semibold text-center
@@ -168,7 +175,7 @@
         >
             Collect Item
         </NuxtLink>
-    </div>
+    </div> -->
 </template>
 
 <script setup lang="ts">
@@ -185,7 +192,7 @@ const { $toast, $router, $config } = useNuxtApp();
 const user: User = data.value
 const isLoading = ref(false)
 const page = ref(1)
-const limit = ref(6)
+const limit = ref(15)
 const count = ref(0)
 interface Overview {
   total_collections: number

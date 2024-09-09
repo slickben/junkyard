@@ -1,9 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  important: true,
   content: [
     'content/**/*.md'
   ],
   theme: {
+    fontFamily: {
+      sans: ['"Montserrat"', "sans-serif"],
+    },
     extend: {
       backgroundImage: {
         "login-image":
@@ -44,10 +48,14 @@ export default {
         textGray: "#BDBDBD",
         textGray2: "#979797",
       },
+      boxShadow: {
+        'card-shadow': '0px 3px 15px 0px rgba(30, 34, 29, 0.2)', // converted #1E221D33 to rgba
+      },
     },
   },
   plugins: [
-    require('@tailwindcss/forms')
+    require('@tailwindcss/forms'),
+    require('tailwind-scrollbar-hide')
   ],
 }
 

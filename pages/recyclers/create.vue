@@ -1,19 +1,19 @@
 <template>
-    <div class="bg-fakeWhite h-full  py-12 px-12 2xl:px-20 w-[741px]">
+    <div class="bg-fakeWhite h-full py-5 md:py-12 p-5 md:px-12 2xl:px-20 md:w-[741px] ">
         <h1 class="2xl:text-4xl xl:text-2xl font-bold mb-5">Recycler Units</h1>
-        <a href="#" class="text-textGray text-sm font-semibold">Staff Portal > 
+        <a @click="$router.back()" class="text-textGray text-sm font-semibold">Staff Portal > 
             <span class="text-black">Add New Unit</span>
         </a>
 
-        <form @submit.prevent="onSubmit" class="mt-12">
-            <div class="card-shadow px-12 py-9 rounded-3xl flex flex-col gap-9">
+        <form @submit.prevent="onSubmit" class="md:mt-12">
+            <div class="md:shadow-card-shadow md:px-12 py-9 rounded-3xl flex flex-col gap-6 md:gap-9">
                 <div class="flex flex-col relative">
                     <label for="" class="font-medium">Recycler Unit Name</label>
                     <input 
                         type="text" 
                         v-model="name"
                         v-bind="nameAttrs"
-                        class="border-[3px] border-secondary focus:outline-none text-sm placeholder:text-black rounded-lg px-3 py-1"
+                        class="border-[3px] border-secondary focus:outline-none text-sm placeholder:text-black rounded-lg px-3 py-2"
                         required 
                         placeholder="Name"
                     >
@@ -61,7 +61,7 @@
                 <button 
                     type="submit" 
                     class="border border-secondary text-white bg-secondary text-lg 
-                    font-semibold px-3 py-1 mb-7 rounded-lg hover:bg-white hover:text-secondary hover:border-[3px]
+                    font-semibold px-3 py-3 mb-7 rounded-lg hover:bg-white hover:text-secondary hover:border-[3px]
                      hover:border-secondary transition-all transform ease-in-out duration-300">
                      Add New Unit
                 </button>

@@ -2,68 +2,16 @@
   <!-- <pre>
     {{ data }}
   </pre> -->
-    <div class="bg-[#F5F5F5] md:bg-fakeWhite h-full flex-grow p-5 md:p-12 2xl:px-20 pt-0 md:pt-10 relative">
+    <div class="bg-[#F5F5F5] md:bg-fakeWhite h-full flex-grow p-5 md:p-12 2xl:px-20 pt-0 md:pt-10 relative ">
         <div class="mb-5 flex items-center justify-between">
           <h1 class="2xl:text-3xl xl:text-2xl font-bold">Overview</h1>
-          <button type="button" @click.prevent="signOut({ callbackUrl: '/login' })" class="text-error text-lg font-semibold">Logout</button>
+          <button type="button" @click.prevent="signOut({ callbackUrl: '/login' })" class="text-error text-lg font-semibold hidden md:block">Logout</button>
         </div>
-        <div class="relative grid md:grid-cols-3 gap-16">
-          <!-- first overview -->
-          <div
-            class="md:rounded-[32px] card-shadow backdrop-blur-xl hidden md:flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalWeight.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Total Weight()Kg</p>
-              <p class="2xl:text-xl xl:text-sm font-bold">
-                {{ overview.total_weight }}
-              </p>
-            </div>
-            <!-- <p
-              class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p> -->
-          </div>
-          <div
-            class="rounded-[32px] card-shadow backdrop-blur-xl hidden md:flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalCitizens.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Total Citizens</p>
-              <p class="2xl:text-xl xl:text-sml font-bold">
-                {{ overview.total_citizens }}
-              </p>
-            </div>
-            <!-- <p
-              class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p> -->
-          </div>
-          <div
-            class="rounded md:rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalWeight.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Citizens Earning</p>
-              <p class="2xl:text-xl xl:text-sm font-bold">
-                {{ useCurrencyFormat(overview.total_price) }}
-              </p>
-            </div>
-            <!-- <p
-              class="text-error font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_down_icon.svg" alt="" class="" />
-            </p> -->
-          </div>
-        </div>
-        <div class="flex justify-between 2xl:text-xl xl:text-lg m-7 mx-0 md:mx-7">
-          <p class="font-semibold">Collection</p>
-          <!-- <div class="hidden md:flex gap-2">
-            <p class="font-medium pr-7">Export CSV</p>
-            <img src="/img/Export_csv_icon.svg" alt="" />
-          </div> -->
+
+        <OverViewCard :overview="overview"  />
+
+        <div class="flex justify-between 2xl:text-xl xl:text-lg my-4 md:my-7 mx-0 md:mx-7">
+          <p class="font-semibold">Collections</p>
         </div>
 
         <div class="card-shadow rounded-xl 2xl:max-h-[620px]  xl:max-h-[460px] overflow-y-auto hide-scroll hidden md:block">
@@ -100,6 +48,7 @@
             </tbody>
           </table>
         </div>
+
         <div class="rounded-xl 2xl:max-h-[620px]  xl:max-h-[460px] overflow-y-auto hide-scroll  md:hidden space-y-2">
           <div v-for="item in collections" :key="item.id" class="flex items-center bg-white px-3 py-2 space-x-1">
             <vue-avatar class="flex-none" :username="item.location" :size="40" />
@@ -114,6 +63,26 @@
             </div>
           </div>
         </div>
+
+        <div class="py-3 md:py-10">
+          <paginate
+            v-model="page"
+            :page-count="count"
+            :page-range="3"
+            :margin-pages="2"
+            :click-handler="clickCallback"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :container-class="'flex justify-center mt-4 space-x-2'"
+            :page-class="'px-3 py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+            :prev-class="'px-3 cursor-pointer py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+            :next-class="'px-3 cursor-pointer py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+            :active-class="'bg-secondary text-white'"
+            :page-link-class="'cursor-pointer'"
+          >
+          </paginate>
+        </div>
+
         <div v-if="isLoading"  class=" absolute inset-0 flex items-center justify-center bg-white">
           <svg   
             class="w-32 h-32 animate-spin"
@@ -139,11 +108,11 @@
         </div>
     </div>
 
-    <div class=" fixed bottom-5 -right-7 z-50 md:hidden">
+    <div class=" fixed bottom-5 right-4 z-50 md:hidden">
         <NuxtLink
             to="/collectors/collect"
             class=" bg-secondary text-white font-semibold text-center
-            hover:bg-opacity-40 rounded-xl transition-all ease-out duration-300 delay-75 py-3 mx-12 mt-10 block px-4"
+            hover:bg-opacity-40 rounded-xl transition-all ease-out duration-300 delay-75 py-3 md:mx-12 md:mt-10 block px-4"
         >
             Collect Item
         </NuxtLink>
@@ -152,7 +121,7 @@
 
 <script setup lang="ts">
 /* __placeholder__ */
-
+import Paginate from "vuejs-paginate-next";
 import VueAvatar from "@webzlodimir/vue-avatar";
 import type { User } from '@/composables/useTypes';
 const { data, token, signOut } = useAuth()
@@ -190,6 +159,10 @@ const overview = ref<Overview>({
   total_weight: 0
 })
 
+const page = ref(1)
+const limit = ref(20)
+const count = ref(0)
+
 const collections = ref<Collection[]>()
 
 const getOverview = async (id: string) => {
@@ -217,10 +190,14 @@ const getOverview = async (id: string) => {
   });
 }
 
-const getTodaysCollection = async () => {
+const clickCallback = (pageNum: any) => {
+    console.log(pageNum);
+}
+
+const getTodaysCollection = async (limit: number, page: number) => {
   isLoading.value = true
   // console.log(data.value.data.id)s
-  await $fetch(`${useBaseUrl()}/collectors/collection?limit=${10}&page=${1}`, {
+  await $fetch(`${useBaseUrl()}/collectors/collection?limit=${limit}&page=${page}`, {
       headers: {
           Authorization: `${token.value}`,
       },
@@ -230,6 +207,7 @@ const getTodaysCollection = async () => {
           if (response.ok) {
               // $toast.success(response._data.message);
               collections.value = response._data.data
+              count.value = response._data.total / limit
               // payment_modal.value = true
               // overview.value = response._data
               // console.log(response._data.data)
@@ -245,9 +223,15 @@ const getTodaysCollection = async () => {
 
 const wasteTypeNames = (dataItem: any) => dataItem.map((item: any) => item.name).join(', ');
 
+watchEffect( async () => {
+  const pageV = page.value
+  const limitV = limit.value
+  await getTodaysCollection(limitV, pageV)
+})
+
 
 onMounted( async () => {
-  await getTodaysCollection()
+  // await getTodaysCollection()
   await getOverview('')
 })
 // useLazyAsyncData( () => get(), { server: false });

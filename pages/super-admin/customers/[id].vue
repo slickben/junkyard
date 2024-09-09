@@ -1,15 +1,21 @@
+
 <template>
     <div class="flex-grow max-h-screen h-full overflow-y-auto relative " >
-        <div class="sticky top-0 md:bg-white mb-[50px] px-5 md:px-12 2xl:px-20 flex-none pt-4 md:pt-10 ">
+        <div class="sticky top-0 md:bg-white  flex-none pt-4 md:pt-10 px-5 md:px-12 2xl:px-20">
           <h1 class="2xl:text-4xl xl:text-2xl font-bold">Recycler Units</h1>
         </div>
+
+        <div class="px-1 md:px-8 2xl:px-16 py-8">
+            <OverViewCard :overview="overview"  />
+        </div>
+
         <div class="grid 2xl:grid-cols-4 md:grid-cols-3 pb gap-10 px-5 md:px-12 2xl:px-20">
           <!-- first overview -->
-          <NuxtLink :to="`recyclers/${item.id}`" v-for="item in collectors" :key="item.id"
+          <NuxtLink :to="`/super-admin/customers/collector/${item.id}`" v-for="item in collectors" :key="item.id"
            class="rounded-2xl border-[3px] border-secondary shadow-xl flex items-center md:flex-col p-4">
             <div class="md:py-8 flex justify-center">
-              <vue-avatar class="md:hidden" :username="`${item.name}`" :size="40" />
-              <vue-avatar  class="hidden md:inline-block" :username="`${item.name}`" :size="100" />
+              <vue-avatar class="md:hidden text-center" :username="`${item.name}`" :size="40" />
+              <vue-avatar  class="hidden md:inline-block text-center" :username="`${item.name}`" :size="100" />
             </div>
             <div
               class="px-5 md:pb-5 flex flex-col font-semibold text-xs 2xl:text-base xl:text-sm"
@@ -21,7 +27,7 @@
             </div>
           </NuxtLink>
 
-          <div
+          <!-- <div
             class="absolute top-[80%] 2xl:top-[77%] xl:top-[80%] 2xl:left-[78%] xl:left-[74%] flex items-center justify-self-end"
           >
             <NuxtLink to="recyclers/create"
@@ -35,7 +41,7 @@
                 NEW UNIT
               </button>
             </NuxtLink>
-          </div>
+          </div> -->
         </div>
 
 
@@ -81,12 +87,45 @@ const isLoading = ref(false)
 const collectors = ref<Collector[]>([])
 const { token, data } = useAuth()
 const { $toast } = useNuxtApp()
+const params = useRoute().params
+const page = ref(1)
+const limit = ref(15)
+const count = ref(0)
 
+const overview = ref<Overview>({
+  total_citizens: 0,
+  total_price: 0,
+  total_weight: 0
+})
 
-
-const fetch = async (id: string) => {
+const getOverview = async (id: string) => {
   isLoading.value = true
-  await $fetch(`${useBaseUrl()}/admin/collectors?limit=${10}&page=${1}`, {
+  await $fetch(`${useBaseUrl()}/super/admin/overview/${params.id}`, {
+      headers: {
+          Authorization: `${token.value}`,
+      },
+      onResponse({ request, response, options }) {
+          // Process the response data
+          isLoading.value = false
+          if (response.ok) {
+              $toast.success(response._data.message);
+              // payment_details.value = response._data.data
+              // payment_modal.value = true
+              overview.value = response._data
+              
+          }
+      },
+      onResponseError({ request, response, options }) {
+          $toast.error(response._data.message);
+          isLoading.value = false
+      },
+  });
+}
+
+
+const fetch = async (limit: number, page: number) => {
+  isLoading.value = true
+  await $fetch(`${useBaseUrl()}/super/admin/${params.id}?limit=${limit}&page=${page}`, {
       headers: {
           Authorization: `${token.value}`,
       },
@@ -110,10 +149,21 @@ const fetch = async (id: string) => {
   });
 }
 
-useLazyAsyncData( () => fetch(''), { server: false });
+onMounted( async () => {
+  // await getTodaysCollection()
+  await getOverview('')
+})
+
+watchEffect( async () => {
+  const pageV = page.value
+  const limitV = limit.value
+  await fetch(limitV, pageV)
+})
+
+// useLazyAsyncData( () => fetch(''), { server: false });
 
 definePageMeta({
-  // auth: false
+    layout: 'super',
 })
 </script>
 

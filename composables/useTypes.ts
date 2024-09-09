@@ -46,3 +46,10 @@ interface data {
 export interface User {
     data: data
 }
+
+export interface Overview {
+    total_citizens: number
+    total_price: number
+    total_weight: number
+  }
+  

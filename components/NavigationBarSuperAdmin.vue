@@ -1,5 +1,5 @@
 <template>
-<nav class="py-7 h-full 2xl:w-[19.375rem] xl:w-80 hidden md:flex flex-col shadow-md flex-none bg-white sticky top-0">
+<nav class="py-7 h-full 2xl:w-[19.375rem] xl:w-80 hidden md:flex flex-col shadow-md flex-none bg-white sticky top-0 text-dahboardText">
     <div class="px-6">
         <!-- Login -->
         <button @click="$router.push('/super-admin')" class=" text-4xl text-secondary font-extrabold" to="/super-admin">Junkyard</button>
@@ -10,7 +10,7 @@
         <NuxtLink 
             to="/super-admin"
             class="flex gap-4 font-semibold hover:bg-secondary hover:bg-opacity-20 hover:border-r-secondary
-            hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-6 text-dahboardText hover:text-secondary"
+            hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-6  hover:text-secondary"
         >
             <svgo-dashboard_icon class="text-xl" />
             <p>Dashboard</p>
@@ -19,16 +19,25 @@
         <NuxtLink 
             to="/super-admin/transactions"
             class="flex gap-4 font-semibold hover:bg-secondary hover:bg-opacity-20 hover:border-r-secondary
-            hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-6 text-dahboardText hover:text-secondary"
+            hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-6  hover:text-secondary"
         >
             <svgo-fund_icon class="text-xl" />
             <p>Transactions</p>
         </NuxtLink>
 
+        <NuxtLink 
+            to="/super-admin/customers"
+            class="flex gap-4 font-semibold hover:bg-secondary hover:bg-opacity-20 hover:border-r-secondary
+            hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-6  hover:text-secondary"
+        >
+            <svgo-recycler_icon class="text-xl" />
+            <p>Customers</p>
+        </NuxtLink>
+
         <!-- <NuxtLink 
             to="/account"
             class="flex gap-4 font-semibold hover:bg-secondary hover:bg-opacity-20 hover:border-r-secondary
-            hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-6 text-dahboardText hover:text-secondary"
+            hover:border-r-8 transition-all ease-out transform duration-300 cursor-pointer py-3 px-6  hover:text-secondary"
         >
             <svgo-myAccount_icon class="text-xl" />
             <p>My Account</p>

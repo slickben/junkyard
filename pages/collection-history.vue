@@ -1,60 +1,12 @@
 <template>
     <div
-        class="bg-fakeWhite h-full flex-grow flex flex-col py-12 px-12 2xl:px-20 overflow-hidden"
+        class="bg-fakeWhite h-full flex-grow flex flex-col py-5 md:py-12 px-5 md:px-12 2xl:px-20 overflow-auto md:overflow-hidden "
       >
         <h1 class="2xl:text-4xl xl:text-2xl font-bold mb-5">Collection History</h1>
-        <div class="relative grid grid-cols-3 gap-16">
-          <!-- first overview -->
-          <div
-            class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalWeight.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Total Weight()Kg</p>
-              <p class="2xl:text-xl xl:text-sm font-bold">
-                {{ overview.total_weight }}
-              </p>
-            </div>
-            <!-- <p
-              class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p> -->
-          </div>
-          <div
-            class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalCitizens.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Total Citizens</p>
-              <p class="2xl:text-xl xl:text-sml font-bold">
-                {{ overview.total_citizens }}
-              </p>
-            </div>
-            <!-- <p
-              class="text-secondary font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_up_icon.svg" alt="" class="" />
-            </p> -->
-          </div>
-          <div
-            class="rounded-[32px] card-shadow backdrop-blur-xl flex items-center gap-4 w-full p-6 relative"
-          >
-            <img src="/img/totalWeight.png" alt="" width="61" />
-            <div class="flex flex-col">
-              <p class="text-textGray font-mediumn text-sm">Citizens Earning</p>
-              <p class="2xl:text-xl xl:text-sm font-bold">
-                {{ useCurrencyFormat(overview.total_price) }}
-              </p>
-            </div>
-            <!-- <p
-              class="text-error font-bold text-sm absolute flex items-center gap-1 bottom-2 right-4"
-            >
-              1.78% <img src="/img/Percentage_down_icon.svg" alt="" class="" />
-            </p> -->
-          </div>
-        </div>
-        <div class="flex justify-between mt-12 mb-4">
+        
+        <OverViewCard :overview="overview"  />
+
+        <div class="hidden md:flex justify-between mt-12 mb-4">
           <div class="flex gap-7 items-center">
             <p class="2xl:text-xl xl:text-sm xl:font-bold">Filter by:</p>
             <div class="flex gap-7">
@@ -99,39 +51,76 @@
           </div>
         </div>
 
-        <div
-          class="card-shadow rounded-xl w-full flex-grow overflow-y-auto hide-scroll"
+        <div class="card-shadow rounded-xl w-full flex-grow 
+        md:overflow-y-auto hide-scroll mt-5 md:mt-0 hidden md:block"
         >
-        <table class="w-full font-semibold 2xl:text-lg xl:text-sm table-auto">
-          <thead class="text-textGray 2xl:text-lg xl:text-sm font-semibold sticky top-0 bg-white">
-              <tr class="text-left border-b">
-                <th class="py-[16px] px-[32px]">Waste</th>
-                <th class="py-[16px] px-[32px]">Price</th>
-                <th class="py-[16px] px-[32px]">Collection model</th>
-                <th class="py-[16px] px-[32px]">Producer</th>
-                <th class="py-[16px] px-[32px]">Weight(KG)</th>
-              </tr>
-          </thead>
-          <tbody class="">
-              <tr v-for="item in filteredDatas" :key="item.id" class="border-b 2xl:text-[16px] xl:text-sm font-medium">
-                  <td class="py-[16px] px-[32px]">
-                    {{ wasteTypeNames(item.waste_type) }}
-                  </td>
-                  <td class="py-[16px] px-[32px]">
-                    {{ useCurrencyFormat(item.price) }}
-                  </td>
-                  <td class="py-[16px] px-[32px]">
-                    {{ item.collection_type }}
-                  </td>
-                  <td class="py-[16px] px-[32px]">
-                    {{ item.producer_type }}
-                  </td>
-                  <td class="py-[16px] px-[32px]">
-                    {{ item.weight }}
-                  </td>
-              </tr>
-          </tbody>
-        </table>
+          <table class="w-full font-semibold 2xl:text-lg xl:text-sm table-auto">
+            <thead class="text-textGray 2xl:text-lg xl:text-sm font-semibold md:sticky top-0 bg-white">
+                <tr class="text-left border-b">
+                  <th class="py-[1rem] px-[2rem]">Waste</th>
+                  <th class="py-[1rem] px-[2rem]">Price</th>
+                  <th class="py-[1rem] px-[2rem]">Collection model</th>
+                  <th class="py-[1rem] px-[2rem]">Producer</th>
+                  <th class="py-[1rem] px-[2rem]">Weight(KG)</th>
+                </tr>
+            </thead>
+            <tbody class="">
+                <tr v-for="item in filteredDatas" :key="item.id" class="border-b 2xl:text-[1rem] xl:text-sm font-medium">
+                    <td class="py-[1rem] px-[2rem]">
+                      {{ wasteTypeNames(item.waste_type) }}
+                    </td>
+                    <td class="py-[1rem] px-[2rem]">
+                      {{ useCurrencyFormat(item.price) }}
+                    </td>
+                    <td class="py-[1rem] px-[2rem]">
+                      {{ item.collection_type }}
+                    </td>
+                    <td class="py-[1rem] px-[2rem]">
+                      {{ item.producer_type }}
+                    </td>
+                    <td class="py-[1rem] px-[2rem]">
+                      {{ item.weight }}
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rounded-xl 2xl:max-h-[620px] mt-5 xl:max-h-[460px] overflow-y-auto hide-scroll  md:hidden space-y-2">
+          <div v-for="item in collections" :key="item.id" class="flex items-center bg-white px-3 py-2 space-x-1">
+            <vue-avatar class="flex-none" :username="item.collector_name" :size="40" />
+            <div class="text-base font-semibold text-black flex-grow">
+              <h2>{{ wasteTypeNames(item.waste_type) }}</h2>
+              <p class="text-xs font-normal text-[#515151]">
+                {{ useCurrencyFormat(item.price) }}
+              </p>
+            </div>
+            <div class="text-base font-semibold text-black flex-none">
+              <h2>{{ item.weight }}kg</h2>
+              <p class="text-xs font-normal text-[#515151]">
+                {{ item.collection_type }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="py-3 md:py-10">
+          <paginate
+            v-model="page"
+            :page-count="count"
+            :page-range="3"
+            :margin-pages="2"
+            :click-handler="clickCallback"
+            :prev-text="'Prev'"
+            :next-text="'Next'"
+            :container-class="'flex justify-center mt-4 space-x-2'"
+            :page-class="'px-3 py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+            :prev-class="'px-3 cursor-pointer py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+            :next-class="'px-3 cursor-pointer py-1 border border-gray-300 text-xs md:text-base rounded hover:bg-gray-200'"
+            :active-class="'bg-secondary text-white'"
+            :page-link-class="'cursor-pointer'"
+          >
+          </paginate>
         </div>
     </div>
 </template>
@@ -139,6 +128,7 @@
 <script setup lang="ts">
 import { arrayToCsv, downloadBlob } from '@/composables/helper';
 import { type User } from '@/composables/useTypes'
+import Paginate from "vuejs-paginate-next";
 interface Overview {
   total_citizens: number
   total_price: number
@@ -159,12 +149,13 @@ interface Collection {
   created_at: string
   collected_at: string
   collection_type: string
+  collector_name: string
   producer_type: string
   weight: string
   price: string
   location: string
+  waste_type: {id: string, name: string}[]
   waste_details: string
-  waste_type: WasteType[]
   status: string
 }
 interface CollectionHistory {
@@ -185,6 +176,14 @@ const overview = ref<Overview>({
   total_price: 0,
   total_weight: 0
 })
+
+const page = ref(1)
+const limit = ref(20)
+const count = ref(0)
+
+const clickCallback = (pageNum: any) => {
+    console.log(pageNum);
+}
 
 const getOverview = async (id: string) => {
   isLoading.value = true
@@ -230,9 +229,9 @@ const saveLogs = () => {
 }
 
 // ${params.id}
-const fetchCollection = async () => {
+const fetchCollection = async (limit: number, page: number) => {
   isLoading.value = true
-  await $fetch(`${useBaseUrl()}/admin/collections?limit=${40}&page=${1}`, {
+  await $fetch(`${useBaseUrl()}/admin/collections?limit=${limit}&page=${page}`, {
       headers: {
           Authorization: `${token.value}`,
       },
@@ -256,10 +255,16 @@ const fetchCollection = async () => {
   });
 }
 
+watchEffect( async () => {
+  const pageV = page.value
+  const limitV = limit.value
+  await fetchCollection(limitV, pageV)
+})
+
 const wasteTypeNames = (dataItem: any) => dataItem.map((item: any) => item.name).join(', ');
 
 onMounted( async () => {
-  await fetchCollection()
+  // await fetchCollection()
   await getOverview('')
 })
 // useL

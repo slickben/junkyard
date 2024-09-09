@@ -1,38 +1,40 @@
 <template>
-  <div class="px-12 2xl:px-20 py-12 w-full">
+  <div class="px-5 md:px-12 2xl:px-20 py-5 pt-0 md:pt-12 md:py-12 w-full ">
       <div class="flex justify-between">
         <div>
-          <p class="2xl:text-4xl text-2xl font-bold">My Account</p>
+          <p class="2xl:text-4xl md:text-2xl font-bold">My Account</p>
         </div>
-        <div class="flex items-center font-bold gap-12 text-lg">
+        <div class="hidden md:flex items-center font-bold gap-12 text-lg">
           <ChangePassword />
           <button type="button" @click.prevent="signOut({ callbackUrl: '/login' })" class="text-error">Logout</button>
         </div>
       </div>
-      <div class="flex mt-20 gap-20">
+      <div class="md:flex mt-8 md:mt-20 gap-20">
         <!-- Right -->
-        <div class="grid grid-cols-1 grid-rows-3 gap-12">
+        <div class="grid grid-cols-1 md:grid-rows-3 gap-5 md:gap-12">
           <div
-            class="rounded-3xl card-shadow flex gap-4 px-6 py-4 items-center row-span-1"
+            class="rounded md:rounded-3xl card-shadow md:flex gap-4 px-6 py-4 items-center row-span-1"
           >
             <div class="relative">
-              <img v-if="data.data.avatar" :src="data.data.avatar" alt="" class="w-[100px] h-[100px] rounded-full mx-auto object-cover" />
-              <vue-avatar class="mx-auto" v-else :username="`${data.data.businessInfo.name}`" :size="100" />
-              <button class="block bg-secondary text-white text-xs px-4 py-2 rounded-md font-semibold mt-3">
+              <img v-if="data.data.avatar" :src="data.data.avatar" alt="" class="w-[100px] h-[100px] hidden md:block rounded-full mx-auto object-cover " />
+              <img v-if="data.data.avatar" :src="data.data.avatar" alt="" class="w-[40px] h-[40px] md:hidden rounded-full mx-auto object-cover" />
+              <vue-avatar class="mx-auto hidden md:block" v-else :username="`${data.data.businessInfo.name}`" :size="100" />
+              <vue-avatar class="mx-auto md:hidden" v-else :username="`${data.data.businessInfo.name}`" :size="40" />
+              <button class="block bg-secondary text-white text-xs px-4 py-2 rounded-md font-semibold mt-3 mx-auto md:mx-0">
                 {{data.data.avatar ? 'Change Avator' : 'Upload Avatar'}}
                 <input @change="chageAvatar" class="absolute inset-0 opacity-0" type="file" name="" id="">
               </button>
             </div>
-            <div class="flex flex-col">
-              <p class="font-semibold mr-20">
+            <div class="flex flex-col text-center md:text-left mt-2 md:mt-0">
+              <p class="font-semibold md:mr-20 text-sm md:text-base">
                 {{ data.data.businessInfo.name }}
               </p>
-              <p>{{plan.name}} User</p>
+              <p class="text-sm md:text-base">{{plan.name}} User</p>
             </div>
           </div>
 
           <div
-            class="rounded-3xl card-shadow flex flex-col gap-7 px-6 2xl:py-7 xl:py-4  row-span-2"
+            class="rounded md:rounded-3xl card-shadow flex flex-col gap-7 px-4 md:px-6 2xl:py-7 py-4 xl:py-4  md:row-span-2"
           >
             <div class="flex items-center justify-between">
               <div
@@ -46,28 +48,21 @@
               <FundWallet />
             </div>
             <div
-              class="flex flex-col font-semibold 2xl:text-xl xl:text-lg mb-20 gap-2"
+              class="flex flex-col font-semibold 2xl:text-xl xl:text-lg md:mb-20 gap-2"
             >
               <p class="text-collectionText">Recycler Units:</p>
               <p>{{ collectors.length }} Units</p>
             </div>
           </div>
-          <!-- <div
-            class="flex card-shadow rounded-2xl px-6 py-7 items-center text-center justify-center"
-          >
-            <button type="button" class="text-center font-medium text-lg">
-              View transaction history
-            </button>
-          </div> -->
         </div>
 
         <!-- Left -->
         <div class="">
-          <form @submit.prevent="onSubmit" class="rounded-3xl card-shadow px-12 py-4">
+          <form @submit.prevent="onSubmit" class="rounded md:rounded-3xl card-shadow px-5 md:px-12 py-4 mt-10">
             <div class="2xl:text-xl xl:text-lg font-semibold flex">
               <p>Contact Information</p>
             </div>
-            <div class="grid grid-cols-2 mt-7 gap-9">
+            <div class="grid md:grid-cols-2 mt-7 gap-4 md:gap-9">
               <div class="flex flex-col relative">
                 <label for="" class="text-collectionText xl:text-sm"
                   >Full Name</label
@@ -94,7 +89,7 @@
                 />
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.company_name }}</p>
               </div>
-              <div class="flex flex-col col-span-2 relative">
+              <div class="flex flex-col md:col-span-2 relative">
                 <label for="" class="text-collectionText xl:text-sm"
                   >Company Addres</label
                 >
@@ -127,7 +122,7 @@
                     type="text"
                     v-model="state"
                     v-bind="stateAttrs"
-                    class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
+                    class="border-b-2 w-full border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                   />
                 </div>
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.state }}</p>
@@ -141,7 +136,7 @@
                     type="text"
                     v-model="country"
                     v-bind="countryAttrs"
-                    class="border-b-2 border-b-collectionText rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
+                    class="border-b-2 border-b-collectionText w-full rounded-md focus:border-secondary focus:ring-secondary focus:outline-none"
                   />
                 </div>
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.country }}</p>
@@ -159,7 +154,7 @@
                 />
                 <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.phone_number }}</p>
               </div>
-              <div class="flex flex-col col-span-2">
+              <div class="flex flex-col md:col-span-2">
                 <label for="" class="text-collectionText xl:text-sm"
                   >Email Address</label
                 >
@@ -172,9 +167,9 @@
                 />
               </div>
             </div>
-            <div class="2xl:py-7 xl:py-4">
+            <div class="py-6 2xl:py-7 xl:py-4">
               <button
-                class="text-white bg-secondary text-center px-10 font-bold py-3 2xl:text-lg rounded-md"
+                class="text-white bg-secondary text-center px-10 font-bold py-3 2xl:text-lg rounded-md w-full"
                 type="submit"
               >
                 Save changes

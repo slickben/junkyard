@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     "nuxt-svgo",
     "@pinia/nuxt",
     "@pinia-plugin-persistedstate/nuxt",
-    "nuxt-headlessui"
+    "nuxt-headlessui",
+    'dayjs-nuxt',
   ],
   headlessui: {
     prefix: 'Head'

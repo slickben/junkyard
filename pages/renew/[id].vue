@@ -1,9 +1,9 @@
 <template>
-    <div class="flex-grow p-12 2xl:px-20 pt-10">
+    <div class="flex-grow p-5 md:p-12 2xl:px-20 pt-5 md:pt-10 ">
         <div class="max-w-[979px] w-full">
             <div class="">
-            <h1 class="font-bold text-2xl">Subscription</h1>
-            <p class="text-sm text-textGray py-4 capitalize">
+            <h1 class="font-bold text-2xl hidden md:block">Subscription</h1>
+            <p class="text-sm text-textGray md:py-4 capitalize">
                 Subscription > {{ query.duration }} >  {{ plan.name }} >
                 <span class="text-black font-semibold text-sm"
                 >Review & Checkout</span
@@ -15,22 +15,22 @@
                 {{plan}}
             </pre> -->
 
-            <div class="flex gap-9">
+            <div class="md:flex gap-9">
     <!-- Right -->
-                <div class="w-[50%] mt-12 flex flex-col gap-6">
-                    <div class="card-shadow rounded-2xl flex flex-col px-7 py-4">
+                <div class="md:w-[50%] mt-12 flex flex-col gap-6">
+                    <div class="card-shadow rounded-2xl flex flex-col px-4 md:px-7 py-4">
                     <div
-                        class="flex justify-between  border-b border-b-[#F2F2F2] w-full py-3"
+                        class="flex justify-between  border-b border-b-[#F2F2F2] w-full py-3 text-sm md:text-base"
                     >
                         <p>SUBSCRIPTION PLAN</p>
                         <p class="mr-24">AMOUNT</p>
                     </div>
-                    <div class="justify-between flex border-b border-b-[#F2F2F2] w-full py-3">
+                    <div class="justify-between md:flex border-b border-b-[#F2F2F2] w-full md:py-3 text-sm md:text-base">
                         <p>
                             {{ plan.name }}
                         </p>
                         <div>
-                        <p>N{{plan.price}}</p>
+                        <p class=" hidden md:block">N{{plan.price}}</p>
                         <p class=" capitalize">Renewal {{plan.price}}/{{ query.duration }}</p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
         
         
-                    <div class="card-shadow rounded-2xl flex flex-col px-7 py-4">
+                    <div class="card-shadow rounded-2xl hidden md:flex flex-col px-7 py-4">
                     <div
                         class="border-b border-b-[#F2F2F2] w-full py-3"
                     >

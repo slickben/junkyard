@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!is_error" class="max-w-screen-xl px-16 mx-auto flex items-center justify-center h-full relative">
+  <div v-if="!is_error" class="max-w-screen-xl px-16 mx-auto flex items-center justify-center h-full relative ">
     <svg   
       class="w-32 h-32 animate-spin absolute left-1/2 -ml-2.5"
       fill="none"

@@ -1,84 +1,25 @@
 <template>
-    <div class="flex-grow p-12 2xl:px-20 pt-10">
+    <div class="flex-grow px-5 md:p-12 2xl:px-20 pt-10 ">
         <div class="max-w-[979px] mx-auto w-full">
             <div class="pb-10">
             <h1 class="font-bold text-2xl">Subscription Plan</h1>
             <p>Pick your preferred plan</p>
             </div>
 
-            <div class="grid grid-cols-3 gap-10 mb-16">
+            <div class="grid grid-cols-3 gap-2 gap-y-10 md:gap-10 mb-16">
                 <button
                     v-for="item in plans.filter(i => i.description !== 'Free plan')" :key="item.description"
                     @click="duration = item.description"
                     :class="[duration === item.description ? 'active' : '']"
-                    class="text-xl font-semibold hover:bg-secondary hover:text-white 2xl:py-7 xl:p-4
-                    2xl:px-20 xl:px-20 transition-all transform ease-in duration-300 rounded-3xl text-center card-shadow capitalize"
+                    class="text-sm md:text-xl font-semibold hover:bg-secondary hover:text-white p-2 px-2 2xl:py-7 xl:p-4
+                    2xl:px-20 xl:px-20 transition-all transform ease-in duration-300 rounded md:rounded-3xl text-center card-shadow capitalize"
                 >
                     {{item.description}}
                 </button>
-
-                <!-- <pre>
-                    {{ selectedPlans }}
-                </pre> -->
-
-                <!-- <div
-                    v-if="selectedPlans.length > 0"
-                    class="border-2 border-secondary card-shadow px-10 py-3 rounded-3xl">
-                    <div
-                    class="border-b-2 border-b-secondary text-center py-2 space-y-3" >
-                    <h2 class="text-2xl font-semibold">N{{ selectedPlans[0].price }}</h2>
-                    <p class="font-medium">
-                        {{ selectedPlans[0].name }}
-                    </p>
-                    <p class="text-sm">7 Days trial</p>
-                    </div>
-                    <div class="text-center space-y-2 py-2">
-                    <p><b>What's included</b></p>
-                    <p class="text-sm">5 User Acess</p>
-                    <p class="text-sm">Analytics Report</p>
-                    <p class="text-sm">Take Pick up Request</p>
-                    <p class="text-sm">Take Drop off Boking</p>
-                    </div>
-                    <div class="py-2 mt-6 flex items-center justify-center relative">
-                    <NuxtLink :to="`/welcome/subscribe/${ selectedPlans[0].id }?duration=${duration}`"
-                        class="bg-secondary text-white px-10 py-3 rounded-xl text-center font-semibold
-                        hover:bg-opacity-70 ease-out transition-opacity duration-300 transform">
-                        Select Plan
-                    </NuxtLink>
-                    <p v-if="selectedPlans.length < 1" class="absolute inset-0"></p>
-                    </div>
-                </div>
-                <div
-                    v-if="selectedPlans.length > 1"
-                    class="border-2 border-secondary card-shadow px-10 py-3 rounded-3xl" >
-                    <div
-                        class="border-b-2 border-b-secondary text-center py-2 space-y-3" >
-                        <h2 class="text-2xl font-semibold">N{{ selectedPlans[2].price }}</h2>
-                        <p class="font-medium">
-                            {{ selectedPlans[2].name }}
-                        </p>
-                        <p class="text-sm">7 Days trial</p>
-                    </div>
-                    <div class="text-center space-y-2 py-2">
-                        <p><b>What's included</b></p>
-                        <p class="text-sm">5 User Acess</p>
-                        <p class="text-sm">Analytics Report</p>
-                        <p class="text-sm">Take Pick up Request</p>
-                        <p class="text-sm">Take Drop off Boking</p>
-                        <p class="text-sm">Admin Panel Acess</p>
-                    </div>
-                    <div class="py-2 flex items-center justify-center relative">
-                        <NuxtLink :to="`/welcome/subscribe/${selectedPlans[2].id}?duration=${duration}`"
-                        class="bg-secondary text-white px-10 py-3 rounded-xl text-center font-semibold hover:bg-opacity-70
-                        ease-out transition-opacity duration-300 transform" >
-                        Select Plan
-                        </NuxtLink>
-                        <p v-if="selectedPlans.length < 1" class="absolute inset-0"></p>
-                    </div>
-                </div> -->
+                
                 <div
                 v-for="item in selectedPlans.sort((a, b) => parseInt(a.price) - parseInt(b.price))" :key="item.id"
-                    class="border-2 border-secondary card-shadow px-10 py-3 rounded-3xl">
+                    class="border-2 border-secondary card-shadow px-10 py-3 rounded-3xl col-span-3 md:col-span-1">
                     <div
                     class="border-b-2 border-b-secondary text-center py-2 space-y-3" >
                         <h2 class="text-2xl font-semibold">N{{ item.price }}</h2>
@@ -107,7 +48,7 @@
                 </div>
             </div>
 
-            <button @click="$router.push('/welcome/subscribe')" class="text-2xl text-textGray font-bold">PREVIOUS</button>
+            <button @click="$router.push('/welcome/subscribe')" class="text-2xl text-textGray font-bold mb-10 md:mb-0">PREVIOUS</button>
         </div>
     </div>
 </template>
