@@ -17,9 +17,9 @@
           <div
             class="justify-between flex items-center border-b border-b-[#F2F2F2] w-full py-3"
           >
-            <p><b>Free Plan</b></p>
+            <p><b>Basic Plan</b></p>
             <div>
-              <p>Free</p>
+              <p>Basic</p>
               <p>Renewal 0/Month</p>
             </div>
           </div>
@@ -44,8 +44,8 @@
     <div class="text-base md:text-2xl font-medium max-w-[988px]">
       <p class="font-bold mb-8">Note:</p>
       <p>
-        Junkyard Free Plan will give you access to create only 1 recycler
-        unit, and it is free forever.
+        Junkyard Basic Plan will give you access to create only 1 recycler
+        unit, and it is free for 7 days only.
       </p>
     </div>
 
@@ -179,7 +179,7 @@
             const res: Plan[] = response._data.data;
 
             res.forEach((plan) => {
-            if(plan.description === 'Free plan') {
+            if(plan.description === 'Basic') {
                 selectedPlans.value = plan
             }
             });
