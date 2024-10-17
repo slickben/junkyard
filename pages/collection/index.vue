@@ -49,9 +49,9 @@
                     :class="[open ? 'rotate-180' : '']"
                   />
                   <!-- <MinusIcon
-                            v-else
-                            class="h-5 w-5 text-black"
-                        /> -->
+							  v-else
+							  class="h-5 w-5 text-black"
+						  /> -->
                 </div>
               </HeadDisclosureButton>
               <HeadDisclosurePanel
@@ -69,7 +69,7 @@
                   >
                     <option value="">Select Type</option>
                     <option
-                      v-for="item in user.data.adminWasteType.filter(
+                      v-for="item in user.data.waste_type.filter(
                         (item) => item.name !== 'Others'
                       )"
                       :key="item.id"
@@ -433,8 +433,8 @@
     </HeadDialog>
   </HeadTransitionRoot>
 </template>
-
-<script setup lang="ts">
+  
+  <script setup lang="ts">
 import { useForm, useFieldArray, Field } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/yup";
 import * as yup from "yup";
@@ -571,7 +571,7 @@ const { remove, push, fields } = useFieldArray<Waste>("wastes");
 
 const getWasteTypeNameById = (id: string) => {
   let name: string = "";
-  user.data.adminWasteType.forEach((item) => {
+  user.data.waste_type.forEach((item) => {
     if (item.id === id) {
       name = item.name;
     }
@@ -623,14 +623,6 @@ watch(name, (newValue, oldValue) => {
   }
 });
 
-// watch(buyPrice, (newValue, oldValue) => {
-
-//     // Calculate the total price
-//     const totalPrice = totalWeight.value * buyPrice.value;
-
-//     setFieldValue('totalAmount', totalPrice)
-// })
-
 watch(paymentType, (newValue, oldValue) => {
   if (newValue === "Transfer") {
     addBankModal.value = true;
@@ -638,8 +630,7 @@ watch(paymentType, (newValue, oldValue) => {
 });
 
 const onSubmit = handleSubmit((values) => {
-  console.log(values);
-  useFetch(`${useBaseUrl()}/collections`, {
+  useFetch(`${useBaseUrl()}/admin/collections`, {
     method: "post",
     headers: {
       Authorization: `${token.value}`,
@@ -658,11 +649,12 @@ const onSubmit = handleSubmit((values) => {
       // Process the response data
       if (response.ok) {
         $toast.success(response._data.message);
-        $router.back();
+        setTimeout(() => {
+          $router.push("/collection-history");
+        }, 1000);
       }
     },
     onResponseError({ request, response, options }) {
-      // console.log(response)
       $toast.error(response._data.message);
     },
   });
@@ -689,7 +681,6 @@ const verifyBank = () => {
         if (response.ok) {
           $toast.success(response._data.message);
           // $router.back()
-          // console.log(response._data.data)
           setFieldValue(
             "accountDetails.account_name",
             response._data.data.account_name
@@ -698,7 +689,6 @@ const verifyBank = () => {
         isLoading.value = false;
       },
       onResponseError({ request, response, options }) {
-        // console.log(response)
         $toast.error(response._data.message);
         isLoading.value = false;
       },
@@ -708,7 +698,6 @@ const verifyBank = () => {
 
 const getBanks = async () => {
   //   isLoading.value = true
-  // console.log(data.value.data.id)s
   await $fetch(`${useBaseUrl()}/transactions/all-banks`, {
     headers: {
       Authorization: `${token.value}`,
@@ -721,7 +710,6 @@ const getBanks = async () => {
         banks.value = response._data.data;
         // payment_modal.value = true
         // overview.value = response._data
-        //   console.log(response._data.data)
       }
     },
     onResponseError({ request, response, options }) {
@@ -747,7 +735,6 @@ const getAddress = async (lat: number, long: number) => {
           //   banks.value = response._data.data
           // payment_modal.value = true
           // overview.value = response._data
-          //   console.log(response._data)
           // data.results[0].formatted_address
         }
       },
@@ -764,16 +751,13 @@ onMounted(async () => {
 
   //   navigator.geolocation.getCurrentPosition(
   //       position => {
-  //         console.log(position.coords.accuracy)
   //          getAddress(position.coords.latitude, position.coords.longitude)
   //       },
   //       error => {
-  //          console.log(error.message);
   //       },
   //    )
   navigator.geolocation.getCurrentPosition(
     function (position) {
-      console.log(position.coords.latitude, position.coords.longitude);
       getAddress(position.coords.latitude, position.coords.longitude);
     },
     function error(msg) {
@@ -787,6 +771,6 @@ definePageMeta({
   //   auth: false
 });
 </script>
-
-<style>
+  
+  <style>
 </style>
