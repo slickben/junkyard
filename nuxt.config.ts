@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: {enabled: true},
   modules: [
     "@sidebase/nuxt-auth",
     "@nuxtjs/tailwindcss",
@@ -8,29 +8,30 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@pinia-plugin-persistedstate/nuxt",
     "nuxt-headlessui",
-    'dayjs-nuxt',
+    "dayjs-nuxt",
+    "@primevue/nuxt-module",
   ],
   headlessui: {
-    prefix: 'Head'
+    prefix: "Head",
   },
   auth: {
     globalAppMiddleware: true,
     baseURL: `${process.env.api}/`,
     provider: {
-        type: 'local',
-        endpoints: {
-          signIn: { path: 'auth/login', method: 'post' },
-          signOut: { path: 'auth/logout', method: 'post' },
-          signUp: { path: 'auth/register', method: 'post' },
-          getSession: { path: 'users/me', method: 'get' },
-          // refresh: { path: '/refresh-token', method: 'post' }
-        },
-        token: { signInResponseTokenPointer: '/accessToken' },
-    }
+      type: "local",
+      endpoints: {
+        signIn: {path: "auth/login", method: "post"},
+        signOut: {path: "auth/logout", method: "post"},
+        signUp: {path: "auth/register", method: "post"},
+        getSession: {path: "users/me", method: "get"},
+        // refresh: { path: '/refresh-token', method: 'post' }
+      },
+      token: {signInResponseTokenPointer: "/accessToken"},
+    },
   },
   runtimeConfig: {
     public: {
-      baseUrl: ''
-    }
+      baseUrl: "",
+    },
   },
-})
+});
