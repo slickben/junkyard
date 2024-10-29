@@ -69,8 +69,8 @@ const updateChartData = () => {
       "Mar",
       "Apr",
       "May",
-      "Jun",
-      "Jul",
+      "June",
+      "July",
       "Aug",
       "Sept",
       "Oct",
@@ -200,14 +200,14 @@ watch(filter, (newValue) => {
         </option>
       </select>
     </div>
-    <div class="flex gap-10 card">
+    <div class="flex flex-col xl:flex-row gap-10 card">
       <Chart
-        class="w-2/3 max-h-[320px]"
+        class="w-full xl:w-3/6 2xl:w-2/3 max-h-[420px] 2xl:max-h-[320px]"
         type="bar"
         :data="chartData"
         :options="chartOptions"
       />
-      <div class="w-1/3 h-64 relative">
+      <div class="w-full xl:w-3/6 2xl:w-1/3 h-64 relative">
         <Chart
           class="absolute top-0 left-0 w-full h-full"
           type="doughnut"

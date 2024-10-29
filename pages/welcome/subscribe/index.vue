@@ -1,9 +1,12 @@
 <template>
   <div class="flex-grow p-5 md:p-12 2xl:px-20 pt-10 ">
     <div class="max-w-[979px] mx-auto w-full">
-      <div class="pb-10">
-        <h1 class="font-bold text-2xl">Subscription Plan</h1>
-        <p>Make payment for your preferred plan</p>
+      <div class="flex items-center justify-between pb-10">
+        <div class="">
+          <h1 class="font-bold text-2xl">Subscription Plan</h1>
+          <p>Make payment for your preferred plan</p>
+        </div>
+        <button type="button" @click.prevent="signOut({ callbackUrl: '/login' })" class="text-error text-lg font-semibold hidden md:block">Logout</button>
       </div>
 
       <div class="md:w-[50%] md:mt-12 flex flex-col gap-6">
@@ -161,7 +164,7 @@
         price: ''
     });
 
-    const { token, getSession } = useAuth();
+    const { token, getSession, signOut } = useAuth();
 
     const { $toast, $router, $config } = useNuxtApp();
     const getPlans = async () => {
