@@ -30,8 +30,10 @@
                             {{ plan.name }}
                         </p>
                         <div>
-                        <p class=" hidden md:block">N{{plan.price}}</p>
-                        <p class=" capitalize">Renewal {{plan.price}}/{{ query.duration }}</p>
+                        <p class=" hidden md:block">
+                            {{ plan.description === 'Monthly' ? useCurrencyFormat(plan.price) : useCurrencyFormat(calculateTenPercent(plan.price)) }} 
+                        </p>
+                        <p class=" capitalize">Renewal {{ plan.description === 'Monthly' ? useCurrencyFormat(plan.price) : useCurrencyFormat(calculateTenPercent(plan.price)) }} /{{ query.duration }}</p>
                         </div>
                     </div>
                     <div class="mt-2">
@@ -73,11 +75,13 @@
                     </div>
                     <div class="flex justify-between border-b border-b-textGray border-opacity-50 text-white text-sm py-4">
                         <p class="">Subtotal</p>
-                        <p>N{{plan.price}}</p>
+                        <p>{{ plan.description === 'Monthly' ? useCurrencyFormat(plan.price) : useCurrencyFormat(calculateTenPercent(plan.price)) }} </p>
                     </div>
-                    <div class="flex justify-between border-b border-b-textGray border-opacity-50 text-textGray py-4">
-                        <p>VAT @7.5%</p>
-                        <p>N425.78</p>
+                    <div v-if="plan.description !== 'Monthly'" class="flex justify-between border-b border-b-textGray border-opacity-50 text-textGray py-4">
+                        <p>Discount @10%</p>
+                        <p>
+                            {{useCurrencyFormat(calculateTenPercent(plan.price, 0.1))}}
+                        </p>
                     </div>
                     <div class="flex justify-between items-center border-b-textGray py-4">
                         <div class="flex flex-col">
@@ -85,12 +89,16 @@
                         <p class="text-white text-sm capitalize">{{ query.duration }}</p>
                         </div>
                         <div class="mt-4">
-                        <p class="text-white text-sm">N{{plan.price}}</p>
+                        <p class="text-white text-sm">
+                            {{ plan.description === 'Monthly' ? useCurrencyFormat(plan.price) : useCurrencyFormat(calculateTenPercent(plan.price)) }} 
+                        </p>
                         </div>
                     </div>
                     <div class="flex flex-col py-4">
                         <p class="text-textGray text-sm">Total due today</p>
-                        <p class="text-white text-2xl font-medium">N{{plan.price}}</p>
+                        <p class="text-white text-2xl font-medium">
+                            {{ plan.description === 'Monthly' ? useCurrencyFormat(plan.price) : useCurrencyFormat(calculateTenPercent(plan.price)) }} 
+                        </p>
                         <div class="flex items-center justify-center mt-7">
                         <button @click.prevent="pay" class="text-white text-lg rounded-lg border-2 border-white px-20 py-">checkout</button>
                         </div>
@@ -192,6 +200,10 @@
         description: '',
         price: ''
     })
+
+    function calculateTenPercent(amount: any, persent = 0.9) {
+        return Number(amount) * persent;
+    }
 
     interface Payment {
         gateway_response: string;

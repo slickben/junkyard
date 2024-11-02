@@ -20,11 +20,13 @@ const { errors, defineField, meta, handleSubmit, isSubmitting } = useForm({
       address: yup.string().required().label('Address'),
       state: yup.string().required().label('State'),
       country: yup.string().required().label('Country'),
+      phone_number: yup.string().required().label('Phone Number'),
     }),
   ),
   initialValues: {
     state: '',
     country: '',
+    phone_number: ''
   }
 });
 
@@ -33,6 +35,7 @@ const [name, nameAttrs] = defineField('company_name');
 const [address, addressAttrs] = defineField('address');
 const [state, stateAttrs] = defineField('state');
 const [country, countryAttrs] = defineField('country');
+const [phone_number, phone_numberAttrs] = defineField('phone_number');
 
 const onSubmit = handleSubmit( (values) => {
   useFetch(`${useBaseUrl()}/users/onboarding`, {
@@ -56,6 +59,12 @@ const onSubmit = handleSubmit( (values) => {
   })
 });
 const params = useRoute().params
+
+watch(phone_number, (newValue, oldValue) => {
+  const x = newValue?.replace(/\D/g, '').match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
+  phone_number.value = !x[2] ? x[1] : '' + x[1] + ' ' + x[2] + (x[3] ? '' + x[3] : '');
+
+})
 
 watch(country, newX => {
   const s: State[] = countries.default.find( i => i.name == newX)?.states
@@ -97,6 +106,19 @@ definePageMeta({
                 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary w-full"
               />
               <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.company_name }}</p>
+            </div>
+            <div class="relative md:col-span-2">
+              <input
+                type="text"
+                v-model="phone_number"
+                v-bind="phone_numberAttrs"
+                placeholder="+ 234 "
+                :class="[errors.phone_number ? 'border-red-500' : 'border-[#BDBDBD]']"
+                class="border-b-[4px] focus:outline-none py-2 2xl:text-3xl 
+                xl:text-xl ring-0 focus:ring-0 outline-none border-t-0 border-r-0 border-l-0 px-0 border-[#BDBDBD]
+                focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-secondary w-full"
+              />
+              <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500">{{ errors.phone_number }}</p>
             </div>
             <!-- Adjusted width here -->
             <div class="relative md:col-span-2">

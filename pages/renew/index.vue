@@ -74,11 +74,15 @@
                     class="border-2 border-secondary card-shadow px-10 py-3 rounded-3xl col-span-3 md:col-span-1">
                     <div
                     class="border-b-2 border-b-secondary text-center py-2 space-y-3" >
-                        <h2 class="text-2xl font-semibold">{{ useCurrencyFormat(item.price) }}</h2>
+                        <!-- <h2 class="text-2xl font-semibold">{{ useCurrencyFormat(item.price) }}</h2> -->
+                        <div>
+                            <h2 class="text-2xl font-semibold">{{ item.description === 'Monthly' ? useCurrencyFormat(item.price) : useCurrencyFormat(calculateTenPercent(item.price)) }} </h2>
+                            <h2 v-if="item.description !== 'Monthly'" class="text-lg font-semibold text-gray-500 line-through">{{ useCurrencyFormat(item.price) }}</h2>
+                        </div>
                         <p class="font-medium">
                             {{ item.name }}
                         </p>
-                        <!-- <p class="text-sm">7 Days trial</p> -->
+                        <!-- <p class="text-sm">{{item}}</p> -->
                     </div>
                     <div class="text-center space-y-2 py-2">
                         <p><b>What's included</b></p>
@@ -159,6 +163,10 @@
         price: ''
     });
 
+    function calculateTenPercent(amount: any) {
+        return Number(amount) * 0.9;
+    }
+
     const { $toast, $router } = useNuxtApp()
     const getPlans = async () => {
         isLoading.value = true
@@ -182,7 +190,7 @@
                     }
                     groupedPlans[plan.description].push({
                         id: plan.id, name: plan.name, price: plan.price,
-                        description: ''
+                        description: plan.description
                     });
                 });
 

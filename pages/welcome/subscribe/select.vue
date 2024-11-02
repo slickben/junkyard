@@ -49,8 +49,11 @@
                 v-for="item in selectedPlans.sort((a, b) => parseInt(a.price) - parseInt(b.price))" :key="item.id"
                     class="border-2 border-secondary card-shadow px-10 py-3 rounded-3xl col-span-3 md:col-span-1">
                     <div
-                    class="border-b-2 border-b-secondary text-center py-2 space-y-3" >
-                        <h2 class="text-2xl font-semibold">N{{ item.price }}</h2>
+                        class="border-b-2 border-b-secondary text-center py-2 space-y-3" >
+                        <div>
+                            <h2 class="text-2xl font-semibold">{{ item.description === 'Monthly' ? useCurrencyFormat(item.price) : useCurrencyFormat(calculateTenPercent(item.price)) }} </h2>
+                            <h2 v-if="item.description !== 'Monthly'" class="text-lg font-semibold text-gray-500 line-through">{{ useCurrencyFormat(item.price) }}</h2>
+                        </div>
                         <p class="font-medium">
                             {{ item.name }}
                         </p>
@@ -93,6 +96,10 @@
         gateway_response: '',
         status: ''
     });
+
+    function calculateTenPercent(amount: any, persent = 0.9) {
+        return Number(amount) * persent;
+    }
     const store = useStore()
 
     const duration = ref<string>('Monthly')
@@ -126,7 +133,7 @@
                     }
                     groupedPlans[plan.description].push({
                         id: plan.id, name: plan.name, price: plan.price,
-                        description: ''
+                        description: plan.description
                     });
                 });
 
