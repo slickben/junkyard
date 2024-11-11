@@ -188,7 +188,7 @@ watch(filter, (newValue) => {
 
 <template>
   <div
-    class="rounded-xl border md:border-none bg-gray-50 md:bg-transparent md:shadow-card-shadow backdrop-blur-xl flex flex-col gap-2 md:gap-4 w-full p-4 md:p-6 relative h-max"
+    class="rounded-xl mt-7 border md:border-none bg-gray-50 md:bg-transparent md:shadow-card-shadow backdrop-blur-xl flex flex-col gap-2 md:gap-4 w-full p-4 md:p-6 relative h-max"
   >
     <div class="flex justify-end">
       <select

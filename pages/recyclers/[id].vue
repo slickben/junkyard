@@ -411,7 +411,7 @@
 
     const fetchCollection = async (limit: number, page: number) => {
         isLoading.value = true
-        await $fetch(`${useBaseUrl()}/admin/today-collection/${params.id}?limit=${limit}&page=${page}`, {
+        await $fetch(`${useBaseUrl()}/collectors/collection/${params.id}?limit=${limit}&page=${page}`, {
             headers: {
                 Authorization: `${token.value}`,
             },

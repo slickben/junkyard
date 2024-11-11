@@ -215,6 +215,10 @@ const getOverview = async (id: string) => {
   });
 };
 
+const wasteTypeNames = (dataItem: any) =>
+  dataItem.map((item: any) => item.name).join(", ");
+
+
 const saveLogs = () => {
   const myLogs = arrayToCsv(collections.value);
 
@@ -222,10 +226,6 @@ const saveLogs = () => {
 
   // console.log('Logs has been saved')
 };
-
-const wasteTypeNames = (dataItem: any) =>
-  dataItem.map((item: any) => item.name).join(", ");
-
 const getTodaysCollection = async (limit: number, page: number) => {
   isLoading.value = true;
   // console.log(data.value.data.id)s

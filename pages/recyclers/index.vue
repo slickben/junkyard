@@ -1,7 +1,7 @@
 <template>
   <div class="flex-grow max-h-screen h-full overflow-y-auto relative">
     <div
-      class="sticky top-0 md:bg-white mb-[50px] px-5 md:px-12 2xl:px-20 flex-none pt-4 md:pt-10"
+      class="sticky top-0  mb-[50px] px-5 md:px-12 2xl:px-20 flex-none pt-4 md:pt-10"
     >
       <h1 class="2xl:text-4xl xl:text-2xl font-bold">Recycler Units</h1>
     </div>
@@ -11,7 +11,7 @@
       <!-- first overview -->
       <NuxtLink
         :to="`recyclers/${item.id}`"
-        v-for="item in collectors"
+        v-for="item in collectors.filter( item => item !== null)"
         :key="item.id"
         class="rounded-2xl border-[3px] border-secondary shadow-xl flex items-center md:flex-col p-4"
       >

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-fakeWhite h-full py-2 md:py-12 px-5 md:px-12 2xl:px-20 w-full overflow-auto"
+    class="bg-fakeWhite md:bg-white h-full py-2 md:py-12 px-5 md:px-12 2xl:px-20 w-full overflow-auto"
   >
     <div class="md:w-[741px]">
       <h1 class="2xl:text-4xl xl:text-2xl font-bold md:mb-5">Collect Item</h1>
@@ -12,283 +12,285 @@
       <!-- {{ errors }} -->
       <form @submit.prevent="onSubmit" class="mt-5 md:mt-12">
         <div
-          class="card-shadow px-4 md:px-12 py-5 md:py-9 rounded-3xl grid grid-cols-2 gap-5"
+          class="md:card-shadow grid grid-cols-2 gap-5"
         >
-          <div class="w-full rounded-2xl md:bg-white col-span-2">
-            <HeadDisclosure
-              v-for="(field, idx) in fields"
-              :key="field.key"
-              as="div"
-              class="mt-2 relative"
-              v-slot="{ open }"
-            >
-              <span
-                class="text-red-500"
-                v-if="
-                  errors[`wastes[${idx}].wasteType`] ||
-                  errors[`wastes[${idx}].weight`] ||
-                  errors[`wastes[${idx}].price`]
-                "
-                >{{ "All inputs must be filled" }}
-              </span>
-              <HeadDisclosureButton
-                :class="open ? 'rounded-b-none border-b-0 ' : ''"
-                class="flex w-full justify-between items-center rounded-lg px-4 py-2 text-left text-sm font-semibold focus:outline-none focus-visible:ring focus-visible:ring-secondary/75 border-2 border-secondary relative"
+          <div class="col-span-2">
+            <h2 class="text-xl font-medium pb-3">Step 1:</h2>
+            <p class="pb-1">Please choose item(s) below</p>
+            <div class="w-full rounded-2xl md:bg-white px-4 md:px-6 py-5 md:py-6 border h-fit">
+              <HeadDisclosure
+                v-for="(field, idx) in fields"
+                :key="field.key"
+                as="div"
+                class="mt-2 relative"
+                v-slot="{ open }"
               >
-                <button
-                  class="absolute -right-6 top-2 bg-red-500 text-white rounded"
-                >
-                  <MinusIcon @click="remove(idx)" class="h-5 w-5"> </MinusIcon>
-                </button>
-                <span>
-                  {{ getWasteTypeNameById(field.value.wasteType) }}
+                <span
+                  class="text-red-500"
+                  v-if="
+                    errors[`wastes[${idx}].wasteType`] ||
+                    errors[`wastes[${idx}].weight`] ||
+                    errors[`wastes[${idx}].price`]
+                  "
+                  >{{ "All inputs must be filled" }}
                 </span>
-                <div class="w-fit h-fit p-[1px] rounded-full">
-                  <ChevronDownIcon
-                    class="h-5 w-5 text-black"
-                    :class="[open ? 'rotate-180' : '']"
-                  />
-                  <!-- <MinusIcon
-							  v-else
-							  class="h-5 w-5 text-black"
-						  /> -->
-                </div>
-              </HeadDisclosureButton>
-              <HeadDisclosurePanel
-                class="px-4 pb-2 pt-4 text-sm text-gray-500 border-2 border-secondary rounded-b-lg space-y-2"
-              >
-                <div class="flex flex-col relative space-y-1">
-                  <label for="" class="font-medium text-black">Type</label>
-                  <select
-                    v-model="field.value.wasteType"
-                    as="select"
-                    type="number"
-                    class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded w-full px-3 py-1 focus:border-secondary focus:ring-0"
-                    required
-                    placeholder="0"
+                <HeadDisclosureButton
+                  :class="open ? 'rounded-b-none border-b-0 ' : ''"
+                  class="flex w-full justify-between items-center rounded-lg px-4 py-2 text-left text-sm font-semibold focus:outline-none focus-visible:ring focus-visible:ring-secondary/75 border-2 border-secondary relative"
+                >
+                  <button
+                    class="absolute -right-6 top-2 bg-red-500 text-white rounded"
                   >
-                    <option value="">Select Type</option>
-                    <option
-                      v-for="item in user.data.waste_type.filter(
-                        (item) => item.name !== 'Others'
-                      )"
-                      :key="item.id"
-                      :value="item.id"
+                    <MinusIcon @click="remove(idx)" class="h-5 w-5"> </MinusIcon>
+                  </button>
+                  <span>
+                    {{ field.value.wasteType ? getWasteTypeNameById(field.value.wasteType) : 'Select Item' }} 
+                  </span>
+                  <div class="w-fit h-fit p-[1px] rounded-full">
+                    <ChevronDownIcon
+                      class="h-5 w-5 text-black"
+                      :class="[open ? 'rotate-180' : '']"
+                    />
+                    <!-- <MinusIcon
+                              v-else
+                              class="h-5 w-5 text-black"
+                          /> -->
+                  </div>
+                </HeadDisclosureButton>
+                <HeadDisclosurePanel
+                  class="grid grid-cols-2 gap-x-3 px-4 pb-2 pt-4 text-sm text-gray-500 
+                  border-2 border-secondary rounded-b-lg space-y-2"
+                >
+                  <div class="flex flex-col col-span-2 relative space-y-1">
+                    <label for="" class="font-medium text-black">Type</label>
+                    <select
+                      v-model="field.value.wasteType"
+                      as="select"
+                      type="number"
+                      class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded w-full px-3 py-1 focus:border-secondary focus:ring-0"
+                      required
+                      placeholder="0"
                     >
-                      {{ item.name }}
-                    </option>
-                  </select>
-                  <p class="text-sm text-red-500">
-                    {{ errors[`wastes[${idx}].wasteType`] }}
-                  </p>
-                </div>
-                <div class="flex flex-col relative space-y-1">
-                  <label for="" class="font-medium text-black"
-                    >Weight (kg)</label
-                  >
-                  <input
-                    type="number"
-                    v-model="field.value.weight"
-                    step=".01"
-                    class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded w-full px-3 py-1 focus:border-secondary focus:ring-0"
-                    required
-                    placeholder="0"
-                  />
-                  <p class="text-sm text-red-500">
-                    {{ errors[`wastes[${idx}].weight`] }}
-                  </p>
-                  <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
-                </div>
-                <div class="flex flex-col relative space-y-1">
-                  <label for="" class="font-medium text-black"
-                    >Buy Price (kg)</label
-                  >
-                  <input
-                    type="number"
-                    v-model="field.value.price"
-                    step=".01"
-                    class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded w-full px-3 py-1 focus:border-secondary focus:ring-0"
-                    required
-                    placeholder="0"
-                  />
-                  <p class="text-sm text-red-500">
-                    {{ errors[`wastes[${idx}].price`] }}
-                  </p>
+                      <option value="">Select Type</option>
+                      <option
+                        v-for="item in user.data.waste_type.filter(
+                          (item) => item.name !== 'Others'
+                        )"
+                        :key="item.id"
+                        :value="item.id"
+                      >
+                        {{ item.name }}
+                      </option>
+                    </select>
+                    <p class="text-sm text-red-500">
+                      {{ errors[`wastes[${idx}].wasteType`] }}
+                    </p>
+                  </div>
+                  <div class="flex flex-col relative space-y-1">
+                    <label for="" class="font-medium text-black"
+                      >Weight (kg)</label
+                    >
+                    <input
+                      type="number"
+                      v-model="field.value.weight"
+                      step=".01"
+                      class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded w-full px-3 py-1 focus:border-secondary focus:ring-0"
+                      required
+                      placeholder="0"
+                    />
+                    <p class="text-sm text-red-500">
+                      {{ errors[`wastes[${idx}].weight`] }}
+                    </p>
+                    <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
+                  </div>
+                  <div class="flex flex-col relative space-y-1">
+                    <label for="" class="font-medium text-black"
+                      >Buy Price (kg)</label
+                    >
+                    <input
+                      type="number"
+                      v-model="field.value.price"
+                      step=".01"
+                      class="border-2 border-secondary focus:outline-none text-sm placeholder:text-black rounded w-full px-3 py-1 focus:border-secondary focus:ring-0"
+                      required
+                      placeholder="0"
+                    />
+                    <p class="text-sm text-red-500">
+                      {{ errors[`wastes[${idx}].price`] }}
+                    </p>
 
-                  <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
-                </div>
-              </HeadDisclosurePanel>
-            </HeadDisclosure>
-            <button
-              @click="push({ wasteType: '', weight: '', price: '' })"
-              class="bg-secondary w-fit px-2 flex items-center rounded py-1 ml-auto mt-2 text-white"
-            >
-              Add Item
-              <PlusIcon class="h-5 w-5" />
-            </button>
-          </div>
-          <div class="flex flex-col relative col-span-1">
-            <label for="">Customer Name</label>
-            <input
-              type="text"
-              v-model="name"
-              v-bind="nameAttrs"
-              placeholder="name"
-              class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
-            />
-            <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
-              {{ errors["user.name"] }}
-            </p>
-          </div>
-          <div class="flex flex-col relative col-span-1">
-            <label for="">Customer Address</label>
-            <input
-              type="text"
-              v-model="address"
-              v-bind="addressAttrs"
-              placeholder="address"
-              class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
-            />
-            <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
-              {{ errors["user.name"] }}
-            </p>
-          </div>
-          <div class="flex flex-col relative col-span-1">
-            <label for="">Customer Phone Number</label>
-            <input
-              type="text"
-              v-model="phoneNumber"
-              v-bind="phoneNumberAttrs"
-              placeholder="Phone number"
-              class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
-            />
-            <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
-              {{ errors["user.phoneNumber"] }}
-            </p>
-          </div>
-          <div class="flex flex-col relative space-y-1">
-            <label for="" class="font-medium text-black">Gender</label>
-            <select
-              v-model="gender"
-              as="select"
-              v-bind="genderAttrs"
-              type="number"
-              class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0"
-              required
-              placeholder="0"
-            >
-              <option value="">Select Gender</option>
-              <option
-                v-for="item in ['Male', 'Female']"
-                :key="item"
-                :value="item"
+                    <!-- <p class=" absolute inset-x-0 -bottom-6 text-sm text-red-500 ">{{ errors.name }}</p> -->
+                  </div>
+                </HeadDisclosurePanel>
+              </HeadDisclosure>
+              <button
+                @click="push({ wasteType: '', weight: '', price: '' })"
+                class="bg-secondary w-fit px-2 flex items-center rounded py-1 ml-auto mt-2 text-white"
               >
-                {{ item }}
-              </option>
-            </select>
-            <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
-              {{ errors["user.gender"] }}
-            </p>
-          </div>
-          <div class="flex flex-col relative">
-            <label for="" class="font-medium">Total Weight (kg) </label>
-            <input
-              type="text"
-              v-model="totalWeight"
-              v-bind="totalWeightAttrs"
-              class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0 cursor-not-allowed"
-              readonly
-              required
-              placeholder="0"
-            />
-            <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
-              {{ errors.totalWeight }}
-            </p>
+                Add another item
+                <PlusIcon class="h-5 w-5" />
+              </button>
+              <div class="flex items-start justify-between pt-5">
+                <div>
+                  <h3 class="text-lg font-medium">Total Weight (kg)</h3>
+                  <p>{{ totalWeight }}</p>
+                </div>
+
+                <div>
+                  <h3 class="text-lg font-medium">Amount (NGN)</h3>
+                  <p>{{ totalAmount }}</p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="flex flex-col relative">
-            <label for="" class="font-medium"> Amount (NGN) </label>
-            <input
-              v-model="totalAmount"
-              v-bind="totalAmountAttrs"
-              type="text"
-              placeholder="0"
-              class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0 cursor-not-allowed"
-              required
-              readonly
-            />
-            <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
-              {{ errors.totalAmount }}
-            </p>
+          <div class="col-span-2">
+            <h2 class="text-xl font-medium pb-3">Step 2:</h2>
+            <p class="pb-1">Please enter customer details below</p>
+
+            <div class="grid grid-cols-2 gap-5 rounded-2xl md:bg-white px-4 md:px-6 py-5 md:py-6 border">
+              <div class="flex flex-col relative col-span-1">
+                <label for="">Customer Name</label>
+                <input
+                  type="text"
+                  v-model="name"
+                  v-bind="nameAttrs"
+                  placeholder="name"
+                  class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
+                />
+                <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
+                  {{ errors["user.name"] }}
+                </p>
+              </div>
+              <div class="flex flex-col relative col-span-1">
+                <label for="">Customer Address</label>
+                <input
+                  type="text"
+                  v-model="address"
+                  v-bind="addressAttrs"
+                  placeholder="address"
+                  class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
+                />
+                <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
+                  {{ errors["user.name"] }}
+                </p>
+              </div>
+              <div class="flex flex-col relative col-span-1">
+                <label for="">Customer Phone Number</label>
+                <input
+                  type="text"
+                  v-model="phoneNumber"
+                  v-bind="phoneNumberAttrs"
+                  placeholder="Phone number"
+                  class="border-secondary focus:outline-none rounded-lg px-3 py-2 border-[3px]"
+                />
+                <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
+                  {{ errors["user.phoneNumber"] }}
+                </p>
+              </div>
+              <div class="flex flex-col relative">
+                <label for="" class="font-medium text-black">Gender</label>
+                <select
+                  v-model="gender"
+                  as="select"
+                  v-bind="genderAttrs"
+                  type="number"
+                  class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0"
+                  required
+                  placeholder="0"
+                >
+                  <option value="">Select Gender</option>
+                  <option
+                    v-for="item in ['Male', 'Female']"
+                    :key="item"
+                    :value="item"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+                <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
+                  {{ errors["user.gender"] }}
+                </p>
+              </div>
+            </div>
           </div>
-          <!-- </div> -->
-          <div class="flex flex-col relative space-y-1">
-            <label for="" class="font-medium text-black">Collection Type</label>
-            <select
-              v-model="collection_type"
-              as="select"
-              v-bind="collection_typeAttrs"
-              type="number"
-              class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0"
-              required
-              placeholder="0"
-            >
-              <option value="">Select Type</option>
-              <option
-                v-for="item in ['Pick up', 'Drop off']"
-                :key="item"
-                :value="item"
-              >
-                {{ item }}
-              </option>
-            </select>
-          </div>
-          <div class="flex flex-col relative space-y-1">
-            <label for="" class="font-medium text-black">Producer</label>
-            <select
-              v-model="producer_type"
-              as="select"
-              v-bind="producer_typeAttrs"
-              type="number"
-              class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0"
-              required
-              placeholder="0"
-            >
-              <option value="">Select Type</option>
-              <option
-                v-for="item in [
-                  'Household',
-                  'Corporate Clients',
-                  'Public Places',
-                  'Clean Up',
-                ]"
-                :key="item"
-                :value="item"
-              >
-                {{ item }}
-              </option>
-            </select>
-          </div>
-          <div class="flex flex-col col-span-2 relative space-y-1">
-            <label for="" class="font-medium text-black">Payment Type</label>
-            <select
-              v-model="paymentType"
-              as="select"
-              v-bind="paymentTypeAttrs"
-              type="number"
-              class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0"
-              required
-              placeholder="0"
-            >
-              <option value="">Select Type</option>
-              <option
-                v-for="item in ['Cash', 'Transfer']"
-                :key="item"
-                :value="item"
-              >
-                {{ item }}
-              </option>
-            </select>
+
+
+          <div class="col-span-2">
+            <h2 class="text-xl font-medium pb-3">Step 3:</h2>
+            <p class="pb-1">Payment Details</p>
+
+            <div class="grid grid-cols-2 gap-5 rounded-2xl md:bg-white px-4 md:px-6 py-5 md:py-6 border">
+              <div class="flex flex-col relative space-y-1">
+                <label for="" class="font-medium text-black">Collection Type</label>
+                <select
+                  v-model="collection_type"
+                  as="select"
+                  v-bind="collection_typeAttrs"
+                  type="number"
+                  class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0"
+                  required
+                  placeholder="0"
+                >
+                  <option value="">Select Type</option>
+                  <option
+                    v-for="item in ['Pick up', 'Drop off']"
+                    :key="item"
+                    :value="item"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col relative space-y-1">
+                <label for="" class="font-medium text-black">Producer</label>
+                <select
+                  v-model="producer_type"
+                  as="select"
+                  v-bind="producer_typeAttrs"
+                  type="number"
+                  class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0"
+                  required
+                  placeholder="0"
+                >
+                  <option value="">Select Type</option>
+                  <option
+                    v-for="item in [
+                      'Household',
+                      'Corporate Clients',
+                      'Public Places',
+                      'Clean Up',
+                    ]"
+                    :key="item"
+                    :value="item"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col col-span-2 relative space-y-1">
+                <label for="" class="font-medium text-black">Payment Type</label>
+                <select
+                  v-model="paymentType"
+                  as="select"
+                  v-bind="paymentTypeAttrs"
+                  type="number"
+                  class="border-2 border-secondary focus:outline-none text-base placeholder:text-black rounded-lg w-full px-3 py-2 focus:border-secondary focus:ring-0"
+                  required
+                  placeholder="0"
+                >
+                  <option value="">Select Type</option>
+                  <option
+                    v-for="item in ['Cash', 'Transfer']"
+                    :key="item"
+                    :value="item"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
           <button
             type="submit"
@@ -437,6 +439,7 @@
   <script setup lang="ts">
 import { useForm, useFieldArray, Field } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/yup";
+import { PlusIcon, MinusIcon, ChevronDownIcon } from '@heroicons/vue/24/solid'
 import * as yup from "yup";
 import { type User } from "@/composables/useTypes";
 
