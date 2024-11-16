@@ -87,7 +87,7 @@
                   </div>
                   <div class="flex flex-col relative space-y-1">
                     <label for="" class="font-medium text-black"
-                      >Weight (kg)</label
+                      >Weight (Per kg)</label
                     >
                     <input
                       type="number"
@@ -104,7 +104,7 @@
                   </div>
                   <div class="flex flex-col relative space-y-1">
                     <label for="" class="font-medium text-black"
-                      >Buy Price (kg)</label
+                      >Buy Price (Per kg)</label
                     >
                     <input
                       type="number"
@@ -220,6 +220,16 @@
             <h2 class="text-xl font-medium pb-3">Step 3:</h2>
             <p class="pb-1">Payment Details</p>
 
+            <div v-if="paymentType === `Transfer`" class="p-3">
+              <h3>
+                <strong>User Account Details</strong>
+              </h3>
+
+              <p>Account Name: {{ account_name }}</p>
+              <p>Account number: {{ account_number }}</p>
+              <p>Account number: {{ getbankByCode(bank_code) }}</p>
+            </div>
+
             <div class="grid grid-cols-2 gap-5 rounded-2xl md:bg-white px-4 md:px-6 py-5 md:py-6 border">
               <div class="flex flex-col relative space-y-1">
                 <label for="" class="font-medium text-black">Collection Type</label>
@@ -241,9 +251,12 @@
                     {{ item }}
                   </option>
                 </select>
+                <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
+                  {{ errors["collection_type"] }}
+                </p>
               </div>
               <div class="flex flex-col relative space-y-1">
-                <label for="" class="font-medium text-black">Producer</label>
+                <label for="" class="font-medium text-black">Generators</label>
                 <select
                   v-model="producer_type"
                   as="select"
@@ -267,6 +280,9 @@
                     {{ item }}
                   </option>
                 </select>
+                <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
+                  {{ errors["producer_type"] }}
+                </p>
               </div>
               <div class="flex flex-col col-span-2 relative space-y-1">
                 <label for="" class="font-medium text-black">Payment Type</label>
@@ -288,6 +304,9 @@
                     {{ item }}
                   </option>
                 </select>
+                <p class="absolute inset-x-0 -bottom-6 text-sm text-red-500">
+                  {{ errors["paymentType"] }}
+                </p>
               </div>
             </div>
           </div>
@@ -468,6 +487,7 @@ const {
   handleSubmit,
   isSubmitting,
   setFieldValue,
+  setFieldError,
   controlledValues,
 } = useForm({
   validationSchema: toTypedSchema(
@@ -637,6 +657,11 @@ watch(paymentType, (newValue, oldValue) => {
   if (newValue === "Transfer") {
     addBankModal.value = true;
   }
+  if(newValue === "Cash" && totalAmount.value > 5000) {
+    $toast.error(`You can't pay for transaction greater than 5,000 `);
+    setFieldValue("paymentType", "");
+    setFieldError("paymentType", "You can't pay for transaction greater than 5,000 ")
+  }
 });
 
 const onSubmit = handleSubmit((values) => {
@@ -707,6 +732,17 @@ const verifyBank = () => {
     });
   }
 };
+
+const getbankByCode = (code: string) => {
+  let bankN = ''
+  banks.value.forEach( item => {
+    if(item.bank_code === code){
+      bankN = item.bank_name
+    }
+  })
+
+  return bankN
+}
 
 const getBanks = async () => {
   //   isLoading.value = true
